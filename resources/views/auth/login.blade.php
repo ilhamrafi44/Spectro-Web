@@ -61,6 +61,9 @@
                 <button style="margin-top: 40px;">
                     <span>Masuk</span>
                 </button>
+                <h4 style="text-align:center; margin-top: 25px;">
+                    Lupa Kata Sandi? <a href="{{ route('password.request') }}" style="color: #b42424;"> <u> Klik Disini</u></a>
+                </h4>
                 <br>
                 <hr>
                 <br>

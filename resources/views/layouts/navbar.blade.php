@@ -105,7 +105,15 @@
         </ul>
         <!-- Navbar Right Menu-->
         <div class="navbar-custom-menu">
+
             <ul class="top-nav">
+                <li class="pc-rheader-submenu ">
+                    <a href="#!" class="drop icon-circle displayChatbox">
+                       <i class="icon-bubbles"></i>
+                       <span class="badge badge-danger header-badge">5</span>
+                    </a>
+
+                 </li>
                 <!--Notification Menu-->
                 <li class="dropdown notification-menu">
                     <a href="#!" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">
@@ -192,6 +200,7 @@
                     </ul>
                 </li>
             </ul>
+
 
             <!-- search -->
             <div id="morphsearch" class="morphsearch">

@@ -30,8 +30,8 @@ Route::get('google', [GoogleAuthController::class, 'redirect'])->name('google-au
 Route::get('google/call-back', [GoogleAuthController::class, 'callbackGoogle'])->name('google-callback');
 
 // Set Bahasa
-Route::get('lang/home', [LangController::class, 'index']);
-Route::get('lang/change', [LangController::class, 'change'])->name('changeLang');
+// Route::get('lang/home', [LangController::class, 'index']);
+// Route::get('lang/change', [LangController::class, 'change'])->name('changeLang');
 
 // Set Role akun
 Route::get('pre-home', [GhostController::class, 'pick_role'])->name('pre_home');

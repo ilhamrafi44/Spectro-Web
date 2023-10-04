@@ -18,6 +18,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $page_name = 'Dashboard';
+        return view('admin.home', compact('page_name'));
     }
 }

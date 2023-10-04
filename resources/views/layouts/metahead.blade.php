@@ -4,12 +4,16 @@
 
 <head>
     <base href="../" />
-    <title>Spectro</title>
+    <title>Spectro |
+        {{ Auth::user()->role == '3' ? 'Admin' : '' }}
+        {{ Auth::user()->role == '2' ? 'Employeer' : '' }}
+        {{ Auth::user()->role == '1' ? 'User' : '' }}
+        {{ $page_name }}
+
+    </title>
     <meta charset="utf-8" />
-    <meta name="description"
-        content="Spectro." />
-    <meta name="keywords"
-        content="spectro" />
+    <meta name="description" content="Spectro." />
+    <meta name="keywords" content="spectro" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />

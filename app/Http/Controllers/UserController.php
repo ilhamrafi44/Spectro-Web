@@ -23,7 +23,8 @@ class UserController extends Controller
 
     public function profile()
     {
-        return view('user.profile');
+        $page_name = "My Profile";
+        return view('user.profile', compact('page_name'));
     }
 
     public function settings()

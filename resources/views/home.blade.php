@@ -18,7 +18,7 @@
                                     <!--begin::Title-->
                                     <h1
                                         class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2x my-0">
-                                        FAQ</h1>
+                                        Page Title</h1>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Page title-->

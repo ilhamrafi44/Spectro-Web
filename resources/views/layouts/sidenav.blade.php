@@ -18,10 +18,6 @@
 
                     <!--begin:Menu link-->
                     <a class="menu-link" href="../dist/pages/about.html">
-                        <span class="menu-icon">
-                            <i class="bi bi-border-all fs-2x">
-                            </i>
-                        </span>
                         <span class="menu-title">Dashboard</span>
                         <span class="menu-arrow d-lg-none"></span>
                     </a>

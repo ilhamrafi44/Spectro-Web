@@ -18,7 +18,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $page_name = 'List User';
+
+        return view('home', compact('page_name'));
     }
 
     public function profile()
@@ -31,5 +33,4 @@ class UserController extends Controller
     {
         return view('user.profile');
     }
-
 }

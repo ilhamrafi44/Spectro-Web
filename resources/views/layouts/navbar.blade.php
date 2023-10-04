@@ -295,7 +295,7 @@
                             </div>
                             <!--end::Quick links-->
                             <!--begin::Chat-->
-                            <div class="app-navbar-item ms-1">
+                            {{-- <div class="app-navbar-item ms-1">
                                 <!--begin::Menu wrapper-->
                                 <div class="btn btn-icon btn-color-danger btn-active-color-dark"
                                     id="kt_drawer_chat_toggle">
@@ -305,7 +305,7 @@
                                     </i>
                                 </div>
                                 <!--end::Menu wrapper-->
-                            </div>
+                            </div> --}}
                             <!--end::Chat-->
                             <!--begin::User menu-->
                             <div class="app-navbar-item ms-3 me-6" id="kt_header_user_menu_toggle">
@@ -313,7 +313,8 @@
                                 <div class="cursor-pointer symbol symbol-35px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                     data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                                    <img class="symbol symbol-35px" src="assets/media/avatars/300-3.jpg"
+                                    <img class="symbol symbol-35px"
+                                        src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg"
                                         alt="user" />
                                 </div>
                                 <!--begin::User account menu-->
@@ -324,7 +325,8 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="assets/media/avatars/300-3.jpg" />
+                                                <img alt="Logo"
+                                                    src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" />
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->

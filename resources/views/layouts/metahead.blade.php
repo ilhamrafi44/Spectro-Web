@@ -4,11 +4,14 @@
 
 <head>
     <base href="../" />
-    <title>Spectro |
-        {{ Auth::user()->role == '3' ? 'Admin' : '' }}
-        {{ Auth::user()->role == '2' ? 'Employeer' : '' }}
-        {{ Auth::user()->role == '1' ? 'User' : '' }}
-        {{ $page_name }}
+    <title>Spectro
+        @if (Auth::check())
+            |
+            {{ Auth::user()->role == '3' ? 'Admin' : '' }}
+            {{ Auth::user()->role == '2' ? 'Employeer' : '' }}
+            {{ Auth::user()->role == '1' ? 'User' : '' }}
+            {{ $page_name }}
+        @endif
 
     </title>
     <meta charset="utf-8" />
@@ -29,6 +32,11 @@
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!--end::Global Stylesheets Bundle-->
 
     <script>

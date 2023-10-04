@@ -56,7 +56,7 @@
               <!--end::Page title-->
 
               <!--begin::Actions-->
-              <div class="d-flex align-items-center gap-3 gap-lg-5">
+              {{-- <div class="d-flex align-items-center gap-3 gap-lg-5">
                   <!--begin::Secondary button-->
                   <div class="m-0">
                       <a href="#" class="btn btn-flex btn-sm btn-color-gray-700 bg-body fw-bold px-4"
@@ -72,7 +72,7 @@
                       Reports
                   </a>
                   <!--end::Primary button-->
-              </div>
+              </div> --}}
               <!--end::Actions-->
           </div>
           <!--end::Toolbar wrapper-->

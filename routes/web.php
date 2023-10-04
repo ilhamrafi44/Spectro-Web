@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserControler;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\GhostController;
@@ -44,6 +45,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::middleware(['admin'])->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('/home', [AdminController::class, 'index'])->name('admin_home');
+            Route::get('/users', [UserControler::class, 'index'])->name('admin.list.user');
+            Route::get('/users/add', [UserControler::class, 'add'])->name('admin.add.user');
+            Route::post('/users/add', [UserControler::class, 'store'])->name('admin.add.users');
         });
     });
 

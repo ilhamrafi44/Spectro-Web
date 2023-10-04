@@ -37,6 +37,7 @@ class EmployerController extends Controller
     public function update(Request $request)
     {
         $fileData = NULL;
+        $fileData2 = NULL;
         $path = storage_path('images/');
         $make_path = 'images/';
         !is_dir($path) && mkdir($make_path, 0777, true);
@@ -51,11 +52,11 @@ class EmployerController extends Controller
         }
 
         if ($request->file('foto_sampul')) {
-            $file = $request->file('foto_sampul');
-            $fileDataUpload = $this->uploads($file, $make_path);
-            $fileData = $fileDataUpload['filePath'];
+            $file2 = $request->file('foto_sampul');
+            $fileDataUpload2 = $this->uploads($file, $make_path);
+            $fileData2 = $fileDataUpload2['filePath'];
             $employer->update([
-                'file_cv_id' => $fileData
+                'file_cv_id' => $fileData2
             ]);
         }
 

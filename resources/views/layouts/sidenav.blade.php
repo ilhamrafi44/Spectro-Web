@@ -16,12 +16,13 @@
                 <div class="menu-item menu-lg me-0 me-lg-2">
 
                     <!--begin:Menu link-->
-                    <a class="menu-link" href="{{ route('admin_home') }}">
+                    <a class="menu-link" href="{{ route('home') }}">
                         <span class="menu-title">Dashboard</span>
                         <span class="menu-arrow d-lg-none"></span>
                     </a>
 
                 </div>
+                @if (Auth::user()->role == '3')
                 <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
                     class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                     <span class="menu-link">
@@ -175,6 +176,7 @@
                         <span class="menu-arrow d-lg-none"></span>
                     </a>
                 </div>
+                @endif
 
 
                 <!--end:Menu item-->

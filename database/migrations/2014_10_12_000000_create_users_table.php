@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('file_sim_id')->nullable();
             $table->string('file_paspor_id')->nullable();
             $table->string('total_views')->nullable();
+            $table->string('deskripsi')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -55,6 +55,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::middleware(['employer'])->group(function () {
         Route::prefix('employer')->group(function () {
             Route::get('/home', [EmployerController::class, 'index'])->name('employer_home');
+            Route::get('/profile', [EmployerController::class, 'profile'])->name('employer_profile');
+            Route::post('/profile', [EmployerController::class, 'update'])->name('employer_profile_store');
         });
     });
 
@@ -68,4 +70,32 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', function(){
+    if (Auth::user()->role == 1) {
+        return redirect()->route('user_home');
+    }
+    if (Auth::user()->role == 2) {
+        return redirect()->route('employer_home');
+    }
+    if (Auth::user()->role == 3) {
+        return redirect()->route('admin_home');
+    }
+    if (Auth::user()->role == 0) {
+        return redirect()->route('pre_home');
+    }
+})->name('home');
+
+Route::get('/profile', function(){
+    if (Auth::user()->role == 1) {
+        return redirect()->route('user_profile');
+    }
+    if (Auth::user()->role == 2) {
+        return redirect()->route('employer_profile');
+    }
+    if (Auth::user()->role == 3) {
+        return redirect()->route('admin_profile');
+    }
+    if (Auth::user()->role == 0) {
+        return redirect()->route('pre_home');
+    }
+})->name('profile');

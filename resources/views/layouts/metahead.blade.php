@@ -24,7 +24,7 @@
     <meta property="og:url" content="https://keenthemes.com/products/oswald-html-pro" />
     <meta property="og:site_name" content="Keenthemes | Oswald HTML Free" />
     <link rel="canonical" href="https://preview.keenthemes.com/axel-html-free" />
-    <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/media/spectro-small.png') }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <!--end::Fonts-->

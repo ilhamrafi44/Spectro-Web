@@ -4,24 +4,16 @@
 @include('layouts.sidenav')
 
 <div class="app-wrapper  flex-column flex-row-fluid " id="kt_app_wrapper">
-
-
-
-
     <!--begin::Wrapper container-->
-    <div class="app-container  container-xxl d-flex flex-row flex-column-fluid ">
-
-
-
+    <div class="app-container container-xxl d-flex flex-row flex-column-fluid ">
         <!--begin::Main-->
         <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
             <!--begin::Content wrapper-->
             <div class="d-flex flex-column flex-column-fluid">
 
                 @include('layouts.headbar')
-
                 <!--begin::Content-->
-                <div id="kt_app_content" class="app-content  pb-0 ">
+                <div id="kt_app_content" class="app-content">
                     @yield('content')
                 </div>
                 <!--end::Content-->

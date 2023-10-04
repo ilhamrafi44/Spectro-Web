@@ -1,66 +1,74 @@
 @extends('layouts.default')
-
-@section('cucumber')
-<div class="row">
-    <div class="col-sm-12 p-0">
-        <div class="main-header">
-            <h4>Dashboard</h4>
-            <ol class="breadcrumb breadcrumb-title breadcrumb-arrow">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icofont icofont-home"></i></a>
-                </li>
-                <li class="breadcrumb-item"><a href="#">Spectro.id</a>
-                </li>
-                <li class="breadcrumb-item"><a href="#">Dashboard</a>
-                </li>
-            </ol>
-        </div>
-    </div>
-</div>
-@endsection
-
 @section('content')
-    <!-- 4-blocks row start -->
-    <div class="row dashboard-header">
-        <div class="col-lg-3 col-md-6">
-            <div class="card dashboard-product">
-                <span>Dilihat</span>
-                <h2 class="dashboard-total-products">4500</h2>
-                <span class="label label-warning">Dilihat</span>Total Profil
-                <div class="side-box">
-                    <i class="ti-signal text-warning-color"></i>
+    <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+        <!--begin::Wrapper container-->
+        <div class="app-container container-xxl d-flex flex-row flex-column-fluid">
+            <!--begin::Main-->
+            <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                <!--begin::Content wrapper-->
+                <div class="d-flex flex-column flex-column-fluid">
+                    <!--begin::Toolbar-->
+                    <div id="kt_app_toolbar" class="app-toolbar pt-lg-9 pt-6">
+                        <!--begin::Toolbar container-->
+                        <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack flex-wrap">
+                            <!--begin::Toolbar wrapper-->
+                            <div class="d-flex flex-stack flex-wrap gap-4 w-100">
+                                <!--begin::Page title-->
+                                <div class="page-title d-flex flex-column gap-3 me-3">
+                                    <!--begin::Title-->
+                                    <h1
+                                        class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-2x my-0">
+                                        FAQ</h1>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Page title-->
+                                <!--begin::Actions-->
+                                <div class="d-flex align-items-center gap-3 gap-lg-5">
+                                    <!--begin::Secondary button-->
+                                    <div class="m-0">
+                                        <a href="#"
+                                            class="btn btn-flex btn-sm btn-color-gray-700 bg-body fw-bold px-4"
+                                            data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">New Project</a>
+                                    </div>
+                                    <!--end::Secondary button-->
+                                    <!--begin::Primary button-->
+                                    <a href="#" class="btn btn-flex btn-center btn-dark btn-sm px-4"
+                                        data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">Reports</a>
+                                    <!--end::Primary button-->
+                                </div>
+                                <!--end::Actions-->
+                            </div>
+                            <!--end::Toolbar wrapper-->
+                        </div>
+                        <!--end::Toolbar container-->
+                    </div>
+                    <!--end::Toolbar-->
+
+                    <!--begin::Content-->
+                    <div id="kt_app_content" class="app-content pb-0">
+                        <!--begin::Faq main-->
+                        <div class="row">
+                            <div class="col-md-8">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h1 class="w-bolder">FAQ </h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+                <!--end::Content-->
+                <!--begin::Sidebar-->
+
             </div>
+            <!--end::Faq main-->
         </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card dashboard-product">
-                <span>Ulasan</span>
-                <h2 class="dashboard-total-products">37,500</h2>
-                <span class="label label-primary">Ulasan</span>Total Profil
-                <div class="side-box ">
-                    <i class="ti-gift text-primary-color"></i>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card dashboard-product">
-                <span>Pekerjaan Disimpan</span>
-                <h2 class="dashboard-total-products"><span>30,780</span></h2>
-                <span class="label label-success">Total Disimpan</span>Pekerjaan
-                <div class="side-box">
-                    <i class="ti-direction-alt text-success-color"></i>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card dashboard-product">
-                <span>Pekerjaan Dilamar</span>
-                <h2 class="dashboard-total-products"><span>30,780</span></h2>
-                <span class="label label-danger">Total Dilamar</span>Pekerjaan
-                <div class="side-box">
-                    <i class="ti-rocket text-danger-color"></i>
-                </div>
-            </div>
-        </div>
+        <!--end::Content-->
     </div>
-    <!-- 4-blocks row end -->
+    <!--end::Content wrapper-->
+    <!--end::App-->
 @endsection

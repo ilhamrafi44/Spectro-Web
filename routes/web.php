@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use Yajra\DataTables\Services\DataTable;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             //job controller
             Route::get('/jobs', [JobsController::class, 'index'])->name('employer.jobs');
+            Route::get('/jobs/add', [JobsController::class, 'add'])->name('employer.jobs.add');
+
+
             Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('employer.jobs.category');
             Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('employer.jobs.category.add');
             Route::get('/jobs/category/{id}', [JobsCategoryController::class, 'destroy'])->name('employer.jobs.category.delete');

@@ -69,6 +69,9 @@
 <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ asset('assets/js/custom/custom.js') }}"></script>
+
+@stack('scripts')
+
 <script>
     @if (Session::has('message'))
         toastr.options = {

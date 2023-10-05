@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Helper\ImageManager;
+
 
 class EmployerController extends Controller
 {
+    use ImageManager;
     public function __construct()
     {
-        $this->middleware('employer');
+        // $this->middleware('employer');
     }
 
     /**
@@ -20,7 +23,7 @@ class EmployerController extends Controller
      */
     public function index()
     {
-        return view('home', [
+        return view('employer.home', [
             "page_name" => "Home"
         ]);
     }
@@ -30,33 +33,45 @@ class EmployerController extends Controller
         $data = Auth::user();
         return view('employer.profile', [
             "page_name" => "My Profile",
-            "data" => $data
+            "data" => $data,
+        ]);
+    }
+
+    public function detail($id)
+    {
+        $data = User::find($id);
+        return view('employer.detail', [
+            "page_name" => "Detail Employer",
+            "data" => $data,
         ]);
     }
 
     public function update(Request $request)
     {
-        $fileData = NULL;
-        $fileData2 = NULL;
-        $path = storage_path('images/');
-        $make_path = 'images/';
-        !is_dir($path) && mkdir($make_path, 0777, true);
-        $employer = User::where('id', Auth::user()->id);
+
+        $ldate = date('Y_m_d');
+        $ltime = date('H_i_s');
+        $data_employer = explode(" ", Auth::user()->name);
+        $nama_employer = $data_employer[0];
+
+        $employer = User::where('id', '=', Auth::user()->id);
         if ($request->file('logo_perusahaan')) {
-            $file = $request->file('logo_perusahaan');
-            $fileDataUpload = $this->uploads($file, $make_path);
-            $fileData = $fileDataUpload['filePath'];
+            $logo_perusahaan = $request->file('logo_perusahaan');
+            $nama_file = "Logo_" . $nama_employer . "_Time_" . $ldate . "_" . $ltime . "." . $logo_perusahaan->extension();
+            $path = "public/file/images/employer";
+            $logo_perusahaan->storeAs($path, $nama_file);
             $employer->update([
-                'file_profile_id' => $fileData
+                'file_profile_id' => $nama_file
             ]);
         }
 
         if ($request->file('foto_sampul')) {
-            $file2 = $request->file('foto_sampul');
-            $fileDataUpload2 = $this->uploads($file, $make_path);
-            $fileData2 = $fileDataUpload2['filePath'];
+            $foto_sampul = $request->file('foto_sampul');
+            $nama_file_sampul = "Sampul_" . $nama_employer . "_Time_" . $ldate . "_" . $ltime . "." . $foto_sampul->extension();
+            $path_sampul = "public/file/images/employer";
+            $foto_sampul->storeAs($path_sampul, $nama_file_sampul);
             $employer->update([
-                'file_cv_id' => $fileData2
+                'file_cv_id' => $nama_file_sampul
             ]);
         }
 

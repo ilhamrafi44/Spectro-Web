@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Admin\UserControler;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Employer\JobsCategoryController;
+use App\Http\Controllers\Employer\JobsController;
+use App\Http\Controllers\Employer\JobsIndustryController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\GhostController;
 use App\Http\Controllers\GoogleAuthController;
@@ -25,7 +28,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 // OAuth Google
 Route::get('google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
 Route::get('google/call-back', [GoogleAuthController::class, 'callbackGoogle'])->name('google-callback');
@@ -45,9 +47,23 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::middleware(['admin'])->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('/home', [AdminController::class, 'index'])->name('admin_home');
+
+            // user
             Route::get('/users', [UserControler::class, 'index'])->name('admin.list.user');
             Route::get('/users/add', [UserControler::class, 'add'])->name('admin.add.user');
             Route::post('/users/add', [UserControler::class, 'store'])->name('admin.add.users');
+
+            //jobs
+
+            Route::get('/jobs', [JobsController::class, 'index'])->name('employer.jobs');
+            Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('admin.jobs.category');
+            Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('admin.jobs.category.add');
+            Route::get('/jobs/category/{id}', [JobsCategoryController::class, 'destroy'])->name('admin.jobs.category.delete');
+
+            Route::get('/jobs/industry', [JobsIndustryController::class, 'index'])->name('admin.jobs.industry');
+            Route::post('/jobs/industry', [JobsIndustryController::class, 'store'])->name('admin.jobs.industry.add');
+            Route::get('/jobs/industry/{id}', [JobsIndustryController::class, 'destroy'])->name('admin.jobs.industry.delete');
+
         });
     });
 
@@ -55,8 +71,21 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::middleware(['employer'])->group(function () {
         Route::prefix('employer')->group(function () {
             Route::get('/home', [EmployerController::class, 'index'])->name('employer_home');
+
+            //profile
             Route::get('/profile', [EmployerController::class, 'profile'])->name('employer_profile');
             Route::post('/profile', [EmployerController::class, 'update'])->name('employer_profile_store');
+
+            //job controller
+            Route::get('/jobs', [JobsController::class, 'index'])->name('employer.jobs');
+            Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('employer.jobs.category');
+            Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('employer.jobs.category.add');
+            Route::get('/jobs/category/{id}', [JobsCategoryController::class, 'destroy'])->name('employer.jobs.category.delete');
+
+            Route::get('/jobs/industry', [JobsIndustryController::class, 'index'])->name('employer.jobs.industry');
+            Route::post('/jobs/industry', [JobsIndustryController::class, 'store'])->name('employer.jobs.industry.add');
+            Route::get('/jobs/industry/{id}', [JobsIndustryController::class, 'destroy'])->name('employer.jobs.industry.delete');
+
         });
     });
 
@@ -70,18 +99,24 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
 });
 
+Route::get('/landing', [HomeController::class,'index'])->name('landing');
+
 Route::get('/home', function(){
-    if (Auth::user()->role == 1) {
-        return redirect()->route('user_home');
-    }
-    if (Auth::user()->role == 2) {
-        return redirect()->route('employer_home');
-    }
-    if (Auth::user()->role == 3) {
-        return redirect()->route('admin_home');
-    }
-    if (Auth::user()->role == 0) {
-        return redirect()->route('pre_home');
+    if(Auth::user()){
+        if (Auth::user()->role == 1) {
+            return redirect()->route('user_home');
+        }
+        if (Auth::user()->role == 2) {
+            return redirect()->route('employer_home');
+        }
+        if (Auth::user()->role == 3) {
+            return redirect()->route('admin_home');
+        }
+        if (Auth::user()->role == 0) {
+            return redirect()->route('pre_home');
+        }
+    } else {
+        return redirect()->route('landing');
     }
 })->name('home');
 
@@ -99,3 +134,5 @@ Route::get('/profile', function(){
         return redirect()->route('pre_home');
     }
 })->name('profile');
+
+Route::get('/employer/detail/{id}', [EmployerController::class, 'detail'])->name('detai.employer');

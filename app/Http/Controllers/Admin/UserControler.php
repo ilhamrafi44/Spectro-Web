@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Helper\ImageManager;
 use Illuminate\Support\Facades\Hash;
+use App\DataTables\UsersDataTable;
 
 class UserControler extends Controller
 {
@@ -16,16 +17,28 @@ class UserControler extends Controller
         $this->middleware('admin');
     }
 
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        $page_name = 'List User';
-        return view('admin.users.index', compact('page_name'));
+        return $dataTable->render('admin.users.index', [
+            'page_name' => 'User List'
+        ]);
     }
+
 
     public function add()
     {
         $page_name = 'Create User';
         return view('admin.users.add', compact('page_name'));
+    }
+
+    public function destroy(string $id)
+    {
+        $Industry = User::where('id', $id)->delete();
+        if ($Industry) {
+            return redirect()->back()->with('message', 'Data berhasil dihapus');
+        } else {
+            return redirect()->back()->with('error', 'Data gagal dihapus');
+        }
     }
 
     public function store(Request $request)

@@ -4,6 +4,7 @@
     <!--begin::Content-->
     <!--begin::Faq main-->
     <form action="{{ route('employer.jobs.add') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="row">
             <div class="col-md-12 mb-10">
                 <!--begin::Accordion-->
@@ -11,7 +12,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="w-bolder mb-5">My Profile </h4>
+                        <h4 class="w-bolder mb-5">Create Job </h4>
                         <div class="row d-flex">
                             <div class="col-md-6">
                                 <div class="mb-5">
@@ -39,8 +40,9 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-labe l">Nama Pekerjaan</label>
-                                    <input name="text" type="text" class="form-control form-control-solid"
+                                    <label for="exampleFormControlInput1" class="required form-labe l">Nama
+                                        Pekerjaan</label>
+                                    <input name="name" type="text" class="form-control form-control-solid"
                                         placeholder="" />
                                 </div>
                             </div>
@@ -60,27 +62,36 @@
             <div class="col-md-6 mb-10">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="w-bolder mb-5">Media Sosial </h4>
+                        <h4 class="w-bolder mb-5">Informasi Gaji </h4>
                         <div class="col-md-12">
                             <div class="mb-5">
-                                <label for="exampleFormControlInput1" class="required form-label">Instagram</label>
-                                <input name="instagram" type="text" class="form-control form-control-solid"
-                                    placeholder="spectro.id" value="{{ Auth::user()->b_inggris }}" />
+                                <label for="exampleFormControlInput1" class="required form-label">Total Gaji (Yen)</label>
+                                <div class="input-group mb-5">
+                                    <span class="input-group-text">¥</span>
+                                    <input type="text" class="form-control"
+                                        aria-label="Amount (to the nearest dollar)" />
+                                    <span class="input-group-text">.00</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="mb-5">
-                                <label for="exampleFormControlInput1" class="required form-label">Youtube</label>
-                                <input name="youtube" type="text" class="form-control form-control-solid"
-                                    placeholder="https://www.youtube.com/channels/spectro.id"
-                                    value="{{ Auth::user()->b_jepang }}" />
+                                <label for="exampleFormControlInput1" class="required form-label">Tipe Gaji</label>
+                                <select class="form-select form-select-solid" aria-label="Select example"
+                                    data-control="select2" name="kategori_perusahaan">
+                                    <option value="1">Hourly</option>
+                                    <option value="1">Daily</option>
+                                    <option value="1">Monthly</option>
+                                    <option value="1">Yearly</option>
+                                    <option value="1">Projectly</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="mb-5">
-                                <label for="exampleFormControlInput1" class="required form-label">Twitter</label>
-                                <input name="twitter" type="text" class="form-control form-control-solid"
-                                    placeholder="@spectro.id" value="{{ Auth::user()->tempat_belajar }}" />
+                                <label for="exampleFormControlInput1" class="required form-label">Deskripsi
+                                    Gaji</label>
+                                <textarea class="form-control form-control-solid" placeholder="" rows="5" name="info_gaji" id="info_gaji" />  </textarea>
                             </div>
                         </div>
                     </div>
@@ -89,20 +100,24 @@
             <div class="col-md-6 mb-10">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="w-bolder mb-5">Lokasi Perusahaan </h4>
+                        <h4 class="w-bolder mb-5">Informasi Tunjangan </h4>
                         <div class="col-md-12">
                             <div class="mb-5">
-                                <label for="exampleFormControlInput1" class="required form-label">Negara</label>
-                                <input name="negara" type="text" class="form-control form-control-solid"
-                                    placeholder="Indonesia" value="{{ Auth::user()->sertifikat_lainnya }}" />
+                                <label for="exampleFormControlInput1" class="required form-label">Total Tunjangan
+                                    (Yen)</label>
+                                <div class="input-group mb-5">
+                                    <span class="input-group-text">¥</span>
+                                    <input type="text" class="form-control"
+                                        aria-label="Amount (to the nearest dollar)" />
+                                    <span class="input-group-text">.00</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="mb-5">
-                                <label for="exampleFormControlInput1" class="required form-label">Alamat</label>
-                                <input name="alamat" type="text" class="form-control form-control-solid"
-                                    placeholder="DKI Jakarta, Jakarta Selatan, Pondok Indah No.1"
-                                    value="{{ Auth::user()->kota }}" />
+                                <label for="exampleFormControlInput1" class="required form-label">Deskripsi
+                                    Tunjangan</label>
+                                <textarea rows="5" name="info_tunjangan" id="info_tunjangan" />  </textarea>
                             </div>
                         </div>
                     </div>
@@ -112,3 +127,18 @@
         </div>
     </form>
 @endsection
+
+@push('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#info_tunjangan'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#info_gaji'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush

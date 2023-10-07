@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             //job controller
             Route::get('/jobs', [JobsController::class, 'index'])->name('employer.jobs');
             Route::get('/jobs/add', [JobsController::class, 'add'])->name('employer.jobs.add');
+            Route::post('/jobs/add', [JobsController::class, 'store'])->name('employer.jobs.add');
 
 
             Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('employer.jobs.category');

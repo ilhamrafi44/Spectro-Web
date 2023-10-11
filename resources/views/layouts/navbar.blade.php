@@ -322,7 +322,7 @@
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                     data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
 
-                                    @if (Auth::user()->file_profile_id == null)
+                                    @if (Auth::user()?->file_profile_id == null)
                                         <img alt="Logo" class="symbol symbol-35px"
                                             src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" />
                                     @else

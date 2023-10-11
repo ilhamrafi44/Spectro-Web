@@ -4,29 +4,39 @@
     <div class="row d-flex">
 
         @foreach ($data as $item)
-            <div class="col-md-4 mb-5">
+            <div class="col-md-6 mb-5">
                 <div class="card border-1">
                     <div class="card-header">
                         <h3 class="card-title">{{ $item->name }}</h3>
                         <div class="card-toolbar">
-                            <button type="button" class="btn btn-sm btn-light">
+                            <button type="button" class="btn btn-sm m-1 btn-light">
                                 Open
+                            </button>
+                            <button type="button" class="btn btn-sm m-1 btn-warning">
+                                Edit
+                            </button>
+                            <button type="button" class="btn btn-sm m-1 btn-spectro">
+                                Delete
                             </button>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-3 mb-5">
                                 <i class="las la-briefcase fs-4x"></i>
                             </div>
                             <div class="col-md-9">
                                 <div class="row d-flex">
                                     <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-location-dot"></i> <b>Lokasi : </b></a>
+                                        <a><i class="fa-solid fa-location-dot"></i> <b>Lokasi : {{ $item->location_id }}</b></a>
 
                                     </div>
                                     <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Expired : </b></a>
+                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Expired : {{ $item->expired_date }}</b></a>
+
+                                    </div>
+                                    <div class="col-md-6 fs-7 mb-5">
+                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Created : {{ $item->created_at }}</b></a>
 
                                     </div>
                                     <div class="col-md-6 fs-7 mb-5">

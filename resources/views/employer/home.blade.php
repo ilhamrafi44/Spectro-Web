@@ -54,11 +54,11 @@
                                     <td>22 Oktober 2023</td>
                                     <td>Raihan Permadi</td>
                                     <td>3 Tahun</td>
-                                    <td> <a href="" class="btn btn-sm btn-danger"><i
+                                    <td> <a href="" class="btn btn-sm btn-icon btn-danger"><i
                                                 class="far fa-solid fa-trash text-white"></i></a>
-                                        <a href="" class="btn btn-sm btn-warning"><i
+                                        <a href="" class="btn btn-sm btn-icon btn-warning"><i
                                                 class="far fa-solid fa-pen text-white"></i></a>
-                                        <a href="" class="btn btn-sm btn-success"><i
+                                        <a href="" class="btn btn-sm btn-icon btn-success"><i
                                                 class="far fa-solid fa-list-check text-white"></i></a>
                                     </td>
                                 </tr>
@@ -66,11 +66,11 @@
                                     <td>15 Oktober 2023</td>
                                     <td>Ilham Rafi</td>
                                     <td>50 Tahun</td>
-                                    <td><a href="" class="btn btn-sm btn-danger"><i
+                                    <td><a href="" class="btn btn-sm btn-icon btn-danger"><i
                                                 class="far fa-solid fa-trash text-white"></i></a>
-                                        <a href="" class="btn btn-sm btn-warning"><i
+                                        <a href="" class="btn btn-sm btn-icon btn-warning"><i
                                                 class="far fa-solid fa-pen text-white"></i></a>
-                                        <a href="" class="btn btn-sm btn-success"><i
+                                        <a href="" class="btn btn-sm btn-icon btn-success"><i
                                                 class="far fa-solid fa-list-check text-white"></i></a>
                                     </td>
                                 </tr>
@@ -78,11 +78,11 @@
                                     <td>10 Oktober 2023</td>
                                     <td>Ayii Ramadhan</td>
                                     <td>2 Tahun</td>
-                                    <td><a href="" class="btn btn-sm btn-danger"><i
+                                    <td><a href="" class="btn btn-sm btn-icon btn-danger"><i
                                                 class="far fa-solid fa-trash text-white"></i></a>
-                                        <a href="" class="btn btn-sm btn-warning"><i
+                                        <a href="" class="btn btn-sm btn-icon btn-warning"><i
                                                 class="far fa-solid fa-pen text-white"></i></a>
-                                        <a href="" class="btn btn-sm btn-success"><i
+                                        <a href="" class="btn btn-sm btn-icon btn-success"><i
                                                 class="far fa-solid fa-list-check text-white"></i></a>
                                     </td>
                                 </tr>
@@ -90,11 +90,11 @@
                                     <td>8 Oktober 2023</td>
                                     <td>Hangga Budhi</td>
                                     <td>4 Tahun</td>
-                                    <td><a href="" class="btn btn-sm btn-danger"><i
+                                    <td><a href="" class="btn btn-sm btn-icon btn-danger"><i
                                                 class="far fa-solid fa-trash text-white"></i></a>
-                                        <a href="" class="btn btn-sm btn-warning"><i
+                                        <a href="" class="btn btn-sm btn-icon btn-warning"><i
                                                 class="far fa-solid fa-pen text-white"></i></a>
-                                        <a href="" class="btn btn-sm btn-success"><i
+                                        <a href="" class="btn btn-sm btn-icon btn-success"><i
                                                 class="far fa-solid fa-list-check text-white"></i></a>
                                     </td>
                                 </tr>

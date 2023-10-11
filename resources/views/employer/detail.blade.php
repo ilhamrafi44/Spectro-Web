@@ -1,21 +1,29 @@
-@extends('layouts.default')
+@extends('layouts.polos')
 
 @section('content')
     <!--begin::Content-->
     <!--begin::Faq main-->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mb-10">
             <div class="card">
-                <img src="/storage/file/images/employer/{{ $data->file_cv_id }}" alt="" class="card-img-top"
-                    height="200px">
+                @if ($profile?->file_sampul_id == null)
+                    <img src="/assets/media/banner-default.jpg" alt="" class="card-img-top" height="200px">
+                @else
+                    <img src="/storage/file/images/employer/{{ $profile->file_sampul_id }}" alt="" class="card-img-top"
+                        height="200px">
+                @endif
 
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-5">
                             <div class="symbol symbol-160px symbol-lg-160px symbol-fixed shadow mb-5"
                                 style="margin-top: -100%;">
-                                <img src="/storage/file/images/employer/{{ $data->file_profile_id }}" alt=""
-                                    height="300px">
+                                @if ($profile?->file_logo_id == null)
+                                    <img src="/assets/media/employer-avatar.jpg" alt="" height="300px">
+                                @else
+                                    <img src="/storage/file/images/employer/{{ $profile->file_logo_id }}" alt=""
+                                        height="300px">
+                                @endif
                             </div>
                             <div class="container">
                                 <h1 class="w-bold ">{{ $data->name }}
@@ -26,7 +34,7 @@
                                 </h1>
 
                                 <p>
-                                    {{ $data->deskripsi }}
+                                    {{ $profile->deskripsi }}
                                 </p>
 
                             </div>
@@ -36,11 +44,11 @@
                                 <div class="row d-flex">
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-location-dot"></i> <b>Lokasi : </b></a>
-                                        {{ $data->sertifikat_lainnya }}, {{ $data->kota }}
+                                        {{ $profile->alamat }}, {{ $profile->negara }}
                                     </div>
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-calendar-days"></i> <b>Berdiri Sejak : </b></a>
-                                        {{ $data->usia }}
+                                        {{ $profile->tahun_pendirian }}
                                     </div>
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-envelope"></i> <b>Email : </b></a>
@@ -51,7 +59,8 @@
                                         {{ $data->nomor_telepon }}
                                     </div>
                                     <div class="col-6 h-100">
-                                        <div class="btn btn-primary w-100"><i class="fa-solid fa-user-plus"></i> Follow </div>
+                                        <div class="btn btn-primary w-100"><i class="fa-solid fa-user-plus"></i> Follow
+                                        </div>
                                     </div>
                                     <div class="col-6 h-100">
                                         <div class="btn btn-warning w-100"><i class="fa-solid fa-comments"></i>Chat </div>
@@ -60,6 +69,34 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex">
+        <div class="col-md-8 mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h1>List Job</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Social Media</h1>
+                    <div class="separator mb-5"></div>
+                    <ul>
+
+                        @foreach ($profile->social_media as $sosmed)
+                        <li class="mb-5">
+
+                            <a href="{{ $sosmed->link }}">{{ $sosmed->jenis }}</a>
+                        </li>
+                        @endforeach
+                    </ul>
+
                 </div>
             </div>
         </div>

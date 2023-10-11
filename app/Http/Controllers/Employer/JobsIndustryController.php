@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Employer;
 
+use App\Models\User;
 use App\Models\JobsIndustry;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,7 @@ class JobsIndustryController extends Controller
 {
     function index()
     {
-        $data = JobsIndustry::all();
+        $data = JobsIndustry::with('creator')->orderBy('id', 'desc')->get();
         return view('employer.industries', [
             "page_name" => "Job Industri List",
             "data" => $data
@@ -40,6 +41,20 @@ class JobsIndustryController extends Controller
         } else {
             return redirect()->back()->with('error', 'Data gagal dihapus');
         }
+    }
+
+    public function update(Request $request)
+    {
+        $JobsIndustry = JobsIndustry::findOrFail($request->id);
+        $JobsIndustry->created_by = Auth::user()->id;
+        $JobsIndustry->name = $request->name;
+        $update = $JobsIndustry->update();
+
+        if ($update) {
+            return redirect()->back()->with('message', 'Industry Berhasil Diubah');
+        }
+        return redirect()->back()->with('error', 'Industry Berhasil Diubah');
+
     }
 
 

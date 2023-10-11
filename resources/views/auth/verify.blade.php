@@ -26,7 +26,7 @@
     </div>
 </div>
 @endsection --}}
-
+@php $page_name = 'Email Verify' @endphp
 @include('layouts.metahead')
 <!--begin::Root-->
 <div class="d-flex flex-column flex-root" id="kt_app_root">
@@ -35,12 +35,11 @@
         <!--begin::Content-->
         <div class="d-flex flex-row-fluid flex-column flex-column-fluid text-center p-10 py-lg-20">
             <!--begin::Logo-->
-            <a href="/oswald-html-pro/index.html" class="pt-lg-20 mb-12">
+            <a href="{{ route('home') }}" class="pt-lg-20 mb-12">
                 <img alt="Logo" src="{{ asset('assets/media/spectro.png') }}"
                     class="theme-light-show h-40px h-lg-50px" />
             </a>
             <!--end::Logo-->
-
 
             <!--begin::Logo-->
             <h1 class="fw-bold fs-2qx text-gray-800 mb-7">Verify Your Email</h1>

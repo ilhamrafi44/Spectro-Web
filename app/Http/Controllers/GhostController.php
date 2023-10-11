@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\EmployerProfile;
+use App\Models\CandidateProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -30,6 +32,16 @@ class GhostController extends Controller
         $user->update([
             'role' => $id
         ]);
+
+        if ($id == 1) {
+            CandidateProfile::create([
+                'user_id' => User::orderBy('created_at', 'desc')->first()->id,
+            ]);
+        } else {
+            EmployerProfile::create([
+                'user_id' => User::orderBy('created_at', 'desc')->first()->id,
+            ]);
+        }
 
         if ($id == 1) {
             return Redirect::route('user_home');

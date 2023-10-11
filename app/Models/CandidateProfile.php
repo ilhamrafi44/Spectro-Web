@@ -5,14 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobsIndustry extends Model
+class CandidateProfile extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
-
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by', 'id');
-    }
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\UserController;
 use Yajra\DataTables\Services\DataTable;
 
@@ -26,8 +28,18 @@ use Yajra\DataTables\Services\DataTable;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        'page_name' => "Landing Page"
+    ]);
 });
+
+Route::get('/register/candidate', function () {
+    return view('auth.candidate');
+})->name('register.candidate');
+
+Route::get('/register/employer', function () {
+    return view('auth.employer');
+})->name('register.employer');
 
 // OAuth Google
 Route::get('google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
@@ -55,7 +67,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::post('/users/add', [UserControler::class, 'store'])->name('admin.add.users');
 
             //jobs
-
             Route::get('/jobs', [JobsController::class, 'index'])->name('employer.jobs');
             Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('admin.jobs.category');
             Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('admin.jobs.category.add');
@@ -64,7 +75,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/jobs/industry', [JobsIndustryController::class, 'index'])->name('admin.jobs.industry');
             Route::post('/jobs/industry', [JobsIndustryController::class, 'store'])->name('admin.jobs.industry.add');
             Route::get('/jobs/industry/{id}', [JobsIndustryController::class, 'destroy'])->name('admin.jobs.industry.delete');
-
         });
     });
 
@@ -77,6 +87,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/profile', [EmployerController::class, 'profile'])->name('employer_profile');
             Route::post('/profile', [EmployerController::class, 'update'])->name('employer_profile_store');
 
+            // sosmed
+            Route::post('/sosmed/add', [SocialMediaController::class, 'sosmed_add'])->name('employer.sosmed.add');
+            Route::post('/sosmed/update', [SocialMediaController::class, 'sosmed_update'])->name('employer.sosmed.update');
+            Route::get('/sosmed/delete/{id}', [SocialMediaController::class, 'sosmed_delete'])->name('employer.sosmed.delete');
+
+            // karyawan
+            Route::post('/karyawan/add', [KaryawanController::class, 'karyawan_add'])->name('employer.karyawan.add');
+            Route::post('/karyawan/update', [KaryawanController::class, 'karyawan_update'])->name('employer.karyawan.update');
+            Route::get('/karyawan/delete/{id}', [KaryawanController::class, 'karyawan_delete'])->name('employer.karyawan.delete');
+
             //job controller
             Route::get('/jobs', [JobsController::class, 'index'])->name('employer.jobs');
             Route::get('/jobs/add', [JobsController::class, 'add'])->name('employer.jobs.add');
@@ -85,12 +105,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('employer.jobs.category');
             Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('employer.jobs.category.add');
+            Route::post('/jobs/category/update', [JobsCategoryController::class, 'update'])->name('employer.jobs.category.update');
             Route::get('/jobs/category/{id}', [JobsCategoryController::class, 'destroy'])->name('employer.jobs.category.delete');
 
             Route::get('/jobs/industry', [JobsIndustryController::class, 'index'])->name('employer.jobs.industry');
             Route::post('/jobs/industry', [JobsIndustryController::class, 'store'])->name('employer.jobs.industry.add');
+            Route::post('/jobs/industry/update', [JobsIndustryController::class, 'update'])->name('employer.jobs.industry.update');
             Route::get('/jobs/industry/{id}', [JobsIndustryController::class, 'destroy'])->name('employer.jobs.industry.delete');
-
         });
     });
 
@@ -104,10 +125,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
 });
 
-Route::get('/landing', [HomeController::class,'index'])->name('landing');
+Route::get('/landing', [HomeController::class, 'index'])->name('landing');
 
-Route::get('/home', function(){
-    if(Auth::user()){
+Route::get('/home', function () {
+    if (Auth::user()) {
         if (Auth::user()->role == 1) {
             return redirect()->route('user_home');
         }
@@ -121,11 +142,11 @@ Route::get('/home', function(){
             return redirect()->route('pre_home');
         }
     } else {
-        return redirect()->route('landing');
+        return redirect('/');
     }
 })->name('home');
 
-Route::get('/profile', function(){
+Route::get('/profile', function () {
     if (Auth::user()->role == 1) {
         return redirect()->route('user_profile');
     }

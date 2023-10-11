@@ -46,4 +46,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function employer_profile()
+    {
+        return $this->belongsTo(EmployerProfile::class, 'user_id', 'id');
+    }
+
+    public function candidate_profile()
+    {
+        return $this->belongsTo(CandidateProfile::class, 'user_id', 'id');
+    }
+
 }

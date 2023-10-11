@@ -69,7 +69,7 @@
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('login') }}" method="POST">
                             @csrf
                             <!--begin::Heading-->
-                            <div class="text-center mb-10">
+                            <div class="text-center mb-7">
                                 <!--begin::Title-->
                                 <h1 class="text-dark mb-3">Sign In to Spectro.id</h1>
                                 <!--end::Title-->
@@ -82,7 +82,7 @@
                             </div>
                             <!--begin::Heading-->
                             <!--begin::Input group-->
-                            <div class="fv-row mb-10">
+                            <div class="fv-row mb-7">
                                 <!--begin::Label-->
                                 <label class="form-label fs-6 fw-bold text-dark">Email</label>
                                 <!--end::Label-->
@@ -93,7 +93,7 @@
                             </div>
                             <!--end::Input group-->
                             <!--begin::Input group-->
-                            <div class="fv-row mb-10">
+                            <div class="fv-row mb-7">
                                 <!--begin::Wrapper-->
                                 <div class="d-flex flex-stack mb-2">
                                     <!--begin::Label-->
@@ -110,7 +110,7 @@
                                     name="password" autocomplete="off" id="password" />
                                 <!--end::Input-->
                             </div>
-                            <div class="fv-row mb-10">
+                            <div class="fv-row mb-7">
                                 <!--begin::Wrapper-->
                                 <div class="d-flex flex-stack mb-2">
                                     <div class="form-check">

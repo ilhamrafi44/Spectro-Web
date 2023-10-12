@@ -73,7 +73,7 @@
 
                 <div class="col-md-3">
                     <div class="mt-7">
-                    <a href="" class="btn btn-lg btn-primary col-12">Cari Kerja</a>
+                        <a href="" class="btn btn-lg btn-primary col-12">Cari Kerja</a>
                     </div>
                 </div>
             </div>
@@ -84,11 +84,112 @@
             <h1>Explore Category</h1>
             <div class="row d-flex">
                 @foreach ($category as $item_c)
-                    <a href="#" class="btn btn-light bg-white border m-2 btn-lg fs-1 p-10 col-md-4 col-6"><i class="fas fa-solid fa-briefcase fs-1 me-2"></i>  {{ $item_c->name }}</a>
+                    <div class="card col-md-4 col-12 border m-3 shadow-sm">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2 mb-3">
+                                    <i class="fas fa-solid fa-briefcase fs-1 me-2"></i>
+                                </div>
+                                <div class="col-auto">
+                                    <h3>
+                                        {{ $item_c->name }}
+                                    </h3>
+                                    Total Pekerjaan : 9
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {{-- <a href="#" class="btn btn-light bg-white border m-2 btn-lg fs-1 p-10 col-md-4 col-5"><i class="fas fa-solid fa-briefcase fs-1 me-2"></i>  {{ $item_c->name }} <br> Total Lowongan : 9</a> --}}
                 @endforeach
             </div>
         </div>
     </div>
 
+    <div class="row bg-white my-10">
+        <div class="container p-5 my-10">
+            <h1>Explore Category</h1>
+            <div class="row d-flex">
+                @foreach ($data_job as $item)
+                    <div class="col-md-4 mb-5">
+                        <div class="card border-1 shadow-sm">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ $item->name }}</h3>
+                                <div class="card-toolbar">
+                                    <button type="button" class="btn btn-sm m-1 btn-light">
+                                        Open
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3 mb-5">
+                                        <i class="las la-briefcase fs-4x"></i>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="row d-flex">
+                                            <div class="col-md-6 fs-7 mb-5">
+                                                <a><i class="fa-solid fa-location-dot"></i> <b>Lokasi :
+                                                        {{ $item->location_id }}</b></a>
 
+                                            </div>
+                                            <div class="col-md-6 fs-7 mb-5">
+                                                <a><i class="fa-solid fa-calendar-days"></i> <b>Expired :
+                                                        {{ $item->expired_date }}</b></a>
+
+                                            </div>
+                                            <div class="col-md-6 fs-7 mb-5">
+                                                <a><i class="fa-solid fa-calendar-days"></i> <b>Created :
+                                                        {{ $item->created_at }}</b></a>
+
+                                            </div>
+                                            <div class="col-md-6 fs-7 mb-5">
+                                                <a><i class="fa-solid fa-envelope"></i> <b>Total Pelamar : </b></a>
+
+                                            </div>
+                                            <div class="col-md-6 fs-7 mb-5">
+                                                <a><i class="fa-solid fa-bookmark"></i> <b>Total Disimpan: </b></a>
+
+                                            </div>
+                                            {{-- <div class="col-6 h-100">
+                                    <div class="btn btn-primary w-100"><i class="fa-solid fa-user-plus"></i> Follow </div>
+                                </div>
+                                <div class="col-6 h-100">
+                                    <div class="btn btn-warning w-100"><i class="fa-solid fa-comments"></i>Chat </div>
+                                </div> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <div class="row bg-white my-10">
+        <div class="container p-5 my-10">
+            <h1 class="mb-17">Our Client</h1>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-2 mx-5 my-10 col-auto">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/cariilmu.png" class="img-fluid" style="height: 50px;" alt="">
+                </div>
+                <div class="col-md-2 mx-5 my-10 col-auto">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/ids.png" class="img-fluid" style="height: 50px;" alt="">
+                </div>
+                <div class="col-md-2 mx-5 my-10 col-auto">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/edufund.jpeg" class="img-fluid" style="height: 50px;" alt="">
+                </div>
+                <div class="col-md-2 mx-5 my-10 col-auto">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/personix.jpeg" class="img-fluid" style="height: 50px;" alt="">
+                </div>
+                <div class="col-md-2 mx-5 my-10 col-auto">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/univ-siber.png" class="img-fluid" style="height: 50px;" alt="">
+                </div>
+                <div class="col-md-2 mx-5 my-10 col-auto">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/karirmu.png" class="img-fluid" style="height: 50px;" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

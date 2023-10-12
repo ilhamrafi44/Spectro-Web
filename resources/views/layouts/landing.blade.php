@@ -21,14 +21,16 @@
             </div>
             <!--end::Content wrapper-->
 
+        </div>
+    </div>
 
             <!--begin::Footer-->
             <div id="kt_app_footer"
-                class="app-footer  align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3 py-lg-6 ">
+                class="app-footer bg-spectro align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3 py-lg-6 ">
                 <!--begin::Copyright-->
-                <div class="text-dark order-2 order-md-1">
+                <div class="text-dark order-2 ml-10">
                     <span class="text-muted fw-semibold me-1">2023 ©</span>
-                    <a href="#" class="text-gray-800 text-hover-primary">Spectro.id</a>
+                    <a href="#" class="text-white text-hover-light">Spectro.id</a>
                 </div>
                 <!--end::Copyright-->
 

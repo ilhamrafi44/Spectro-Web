@@ -34,7 +34,7 @@
                     <!--begin::Header-->
                     <div class="d-flex flex-row-fluid flex-column text-center p-5 p-lg-10 pt-lg-20">
                         <!--begin::Logo-->
-                        <a href="../dist/index.html" class="py-2 py-lg-20">
+                        <a href="/" class="py-2 py-lg-20">
                             <img alt="Logo" src="{{ asset('assets/media/spectro-white.png') }}"
                                 class="h-40px h-lg-50px" />
                         </a>
@@ -75,7 +75,7 @@
                                 Kerja</a>
                         </div>
 
-                        <a href="" class="text-primary fs-3 text-center mt-5 p-5">.. Kembali</a>
+                        <a href="/login" class="text-primary fs-3 text-center mt-5 p-5">.. Kembali</a>
 
                         <!--end::Form-->
                     </div>
@@ -85,12 +85,14 @@
                 <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
                     <!--begin::Links-->
                     <div class="d-flex flex-center fw-semibold fs-6">
-                        <a href="https://keenthemes.com" class="text-muted text-hover-primary px-2"
-                            target="_blank">About</a>
-                        <a href="https://devs.keenthemes.com" class="text-muted text-hover-primary px-2"
-                            target="_blank">Support</a>
-                        <a href="https://keenthemes.com/products/oswald-html-pro"
-                            class="text-muted text-hover-primary px-2" target="_blank">Purchase</a>
+                        <div class="d-flex flex-center fw-semibold fs-6">
+                            <a href="/" class="text-muted text-hover-primary px-2"
+                                target="_blank">Cari Kerja</a>
+                            <a href="/" class="text-muted text-hover-primary px-2"
+                                target="_blank">Cari Kandidat</a>
+                            <a href="https://arkalearn.com/"
+                                class="text-muted text-hover-primary px-2" target="_blank">Belajar Di Arka</a>
+                        </div>
                     </div>
                     <!--end::Links-->
                 </div>

@@ -14,6 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\UserController;
+use App\Models\JobsCategory;
 use Yajra\DataTables\Services\DataTable;
 
 /*
@@ -28,8 +29,10 @@ use Yajra\DataTables\Services\DataTable;
 */
 
 Route::get('/', function () {
+    $category = JobsCategory::all();
     return view('welcome', [
-        'page_name' => "Landing Page"
+        'page_name' => "Landing Page",
+        'category' => $category
     ]);
 });
 

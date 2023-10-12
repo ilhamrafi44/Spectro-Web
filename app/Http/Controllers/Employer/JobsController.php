@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class JobsController extends Controller
 {
-    function index()
+    public function index()
     {
         $data = Jobs::all();
         return view('employer.job', [
@@ -20,7 +20,16 @@ class JobsController extends Controller
         ]);
     }
 
-    function add()
+    public function detail(int $id)
+    {
+        $job = Jobs::with('category', 'industry', 'user')->where('id', $id)->first();
+        return view('jobs.detail', [
+            'page_name' => "Job Detail",
+            'data' => $job
+        ]);
+    }
+
+    public function add()
     {
         $category = JobsCategory::all();
         $industry = JobsIndustry::all();

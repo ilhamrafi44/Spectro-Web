@@ -61,6 +61,10 @@ Route::get('set-role/{id}', [GhostController::class, 'set_role'])->name('set_rol
 
 Auth::routes(['verify' => true]);
 
+Route::prefix('job')->group(function () {
+    Route::get('/detail/{id}', [JobsController::class, 'detail'])->name('job.detail');
+});
+
 Route::group(['middleware' => ['auth', 'verified']], function () {
     //role admin
     Route::middleware(['admin'])->group(function () {
@@ -83,6 +87,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/jobs/industry/{id}', [JobsIndustryController::class, 'destroy'])->name('admin.jobs.industry.delete');
         });
     });
+
+
 
     //role employer
     Route::middleware(['employer'])->group(function () {

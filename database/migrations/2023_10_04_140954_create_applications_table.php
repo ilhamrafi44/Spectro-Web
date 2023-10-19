@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('job_id')->nullable();
             $table->string('employer_id')->nullable();
-            $table->integer('candidate_id')->default(1);
+            $table->integer('candidate_id')->nullable();
             $table->string('note')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

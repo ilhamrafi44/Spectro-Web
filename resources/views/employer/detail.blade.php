@@ -165,7 +165,7 @@ From:
                             @if (Auth::user())
                                 <p>Berkomentar Sebagai : {{ Auth::user()->name }}</p>
                             @endif
-                            <input type="hidden" name="id_parent" value="{{ $data->id }}">
+                            <input type="hidden" name="user_id" value="{{ $data->id }}">
                             <label for="" class="mb-2">Rating:</label>
                             <div class="rating mb-5">
                                 <!--begin::Reset rating-->

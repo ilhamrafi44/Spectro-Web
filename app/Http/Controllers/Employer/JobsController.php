@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Applications;
 use App\Models\Jobs;
 use App\Models\JobsCareerLevel;
 use App\Models\JobsCategory;
@@ -39,7 +40,7 @@ class JobsController extends Controller
 
     public function myjob()
     {
-        $data = Jobs::where('user_id', Auth::user()->id);
+        $data = Jobs::where('user_id', Auth::user()->id)->get();
         return view('employer.job', [
             "page_name" => "Job List Saya",
             "data" => $data
@@ -48,12 +49,19 @@ class JobsController extends Controller
 
     public function detail(int $id)
     {
+        $check = 0;
+
+        if(Auth::user()){
+            $check = Applications::where('candidate_id', Auth::user()->id)->where('job_id', $id)->count();
+        }
+
         $job = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', $id)->first();
         $pics = JobsPic::with('karyawan')->where('job_id', $id)->get();
         return view('jobs.detail', [
             'page_name' => "Job Detail",
             'data' => $job,
-            'pics' => $pics
+            'pics' => $pics,
+            'check' => $check
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserControler;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\Employer\JobsCareerLevelController;
 use App\Http\Controllers\Employer\JobsCategoryController;
 use App\Http\Controllers\Employer\JobsController;
@@ -51,6 +52,7 @@ Route::get('/', function () {
 
 Route::get('/register/candidate', function () {
     return view('auth.candidate');
+
 })->name('register.candidate');
 
 Route::get('/register/employer', function () {
@@ -80,6 +82,7 @@ Route::prefix('job')->group(function () {
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('/rating/add', [RatingController::class, 'store'])->name('rating.store');
+
 
     //role admin
     Route::middleware(['admin'])->group(function () {
@@ -158,6 +161,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/home', [UserController::class, 'index'])->name('user_home');
             Route::get('/profile', [UserController::class, 'profile'])->name('user_profile');
             Route::get('/settings', [UserController::class, 'settings'])->name('user_settings');
+
+            // job apply
+            Route::post('/app/store', [ApplicationController::class, 'apply'])->name('jobs.apply');
+            Route::get('/app', [ApplicationController::class, 'index'])->name('jobs.index');
+            Route::get('/app/cancelss/{id}', [ApplicationController::class, 'cancelss'])->name('jobs.cancel');
+            Route::get('/app/delete', [ApplicationController::class, 'destroy'])->name('jobs.destroy');
+
         });
     });
 });

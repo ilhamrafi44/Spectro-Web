@@ -148,41 +148,6 @@
                             </div>
                         </div>
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                            data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                            <span class="menu-link">
-                                <span class="menu-title">Application</span>
-                                <span class="menu-arrow d-lg-none"></span>
-                            </span>
-                            <div
-                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-
-                                <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">List Application</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Create Application</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Application Settings</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                             data-kt-menu-placement="bottom-start" class="menu-item menu-lg me-0 me-lg-2">
                             <a class="menu-link" href="../dist/pages/about.html">
                                 <span class="menu-title">Messages</span>
@@ -225,42 +190,40 @@
                                 </div>
                             </div>
                         </div>
-                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                            data-kt-menu-placement="bottom-start"
-                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                            <span class="menu-link">
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('home') }}">
                                 <span class="menu-title">Application</span>
                                 <span class="menu-arrow d-lg-none"></span>
-                            </span>
-                            <div
-                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
+                            </a>
 
-                                <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">List Application</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Create Application</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Application Settings</span>
-                                    </a>
-                                </div>
-                            </div>
                         </div>
+                    @else
+                    <div class="menu-item menu-lg me-0 me-lg-2">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('job.index') }}">
+                            <span class="menu-title">Cari Kerja</span>
+                            <span class="menu-arrow d-lg-none"></span>
+                        </a>
+
+                    </div>
+                    <div class="menu-item menu-lg me-0 me-lg-2">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('job.index') }}">
+                            <span class="menu-title">Resume Saya</span>
+                            <span class="menu-arrow d-lg-none"></span>
+                        </a>
+
+                    </div>
+                    <div class="menu-item menu-lg me-0 me-lg-2">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('job.index') }}">
+                            <span class="menu-title">Lamaran Saya</span>
+                            <span class="menu-arrow d-lg-none"></span>
+                        </a>
+
+                    </div>
                     @endif
                 @else
                     <div class="menu-item menu-lg me-0 me-lg-2">
@@ -300,8 +263,6 @@
 
                     </div>
                 @endif
-
-
                 <!--end:Menu item-->
                 <!--begin:Menu item-->
             </div>

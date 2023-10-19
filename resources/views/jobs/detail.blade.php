@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-auto mb-5">
 
-                                 {{ $data->location_id }}
+                                {{ $data->location_id }}
                             </div>
                             <div class="col-auto mb-5">
                                 <i class="fas fa-regular fa-clock fs-3"></i>
@@ -49,9 +49,17 @@
                     Lamaran Ditutup : <a href="" class="text-primary fw-bolder">
                         {{ \Carbon\Carbon::parse($data->expired_date)->toFormattedDateString() }} </a>
                 </div>
-                <a href="#" class="btn btn-lg btn-primary m-1 col-8">Apply JOB</a>
-                <a href="#" class="btn btn-lg btn-light m-1 btn-icon col-4"><i
-                        class="fas fa-regular fa-bookmark"></i></a>
+                <form action="{{ route('jobs.apply') }}" method="POST">
+                    @if ($check)
+                        <button class="btn btn-lg btn-light m-1 col-8" disabled>Already Apply</button>
+                    @else
+                        @csrf
+                        <input type="hidden" name="job_id" value="{{ $data->id }}">
+                        <input type="hidden" name="employer_id" value="{{ $data->user->id }}">
+                        <button type="submit" class="btn btn-lg btn-primary m-1 col-8">Apply JOB</button>
+                    @endif <a href="#" class="btn btn-lg btn-light m-1 btn-icon col-4"><i
+                            class="fas fa-regular fa-bookmark"></i></a>
+                </form>
             </div>
         </div>
     </div>

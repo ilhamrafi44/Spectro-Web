@@ -28,17 +28,16 @@ class UsersDataTable extends DataTable
                     ->setTableId('users-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('add'),
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload'),
-                    ]);
+                    ->orderBy(0)
+                    ->filter(function ($query) {
+                        if (request()->has('name')) {
+                            $query->where('name', 'like', "%" . request('name') . "%");
+                        }
+
+                        if (request()->has('email')) {
+                            $query->where('email', 'like', "%" . request('email') . "%");
+                        }
+                    });
     }
     public function getColumns(): array
     {

@@ -40,6 +40,8 @@ return new class extends Migration
             $table->string('category_id')->nullable();
             $table->string('industry_id')->nullable();
             $table->string('job_type')->nullable();
+            $table->string('mata_gaji')->nullable();
+            $table->string('mata_tunjangan')->nullable();
             $table->string('slug')->nullable()->unique();
             $table->timestamps();
         });

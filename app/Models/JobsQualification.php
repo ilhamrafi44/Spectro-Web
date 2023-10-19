@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobsCategory extends Model
+class JobsQualification extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
 
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
-    }
-
-    public function jobs()
-    {
-        return $this->hasMany(Jobs::class, 'category_id', 'id');
     }
 }

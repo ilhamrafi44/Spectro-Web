@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Helper\ImageManager;
-use App\Models\EmployerProfile;
 use App\Models\SocialMedia;
+use App\Helper\ImageManager;
+use App\Models\ProfileViews;
+use Illuminate\Http\Request;
+use App\Models\EmployerProfile;
+use Illuminate\Support\Facades\Auth;
 
 class EmployerController extends Controller
 {
@@ -24,8 +26,20 @@ class EmployerController extends Controller
      */
     public function index()
     {
+        $date_list = array();
+        for ($i = 6; $i > -1; $i--) {
+            $date_list[] = date('Y-m-d', strtotime('-' . $i . ' days'));
+        }
+        $collect_profile_views = collect(ProfileViews::where('user_id', Auth::user()->id)->whereBetween('created_at', [Carbon::parse($date_list[0]), $date_list[6] . ' 23:59:59'])->get());
+        for ($i = 0; $i < count($date_list); $i++) {
+
+            $data_hasil = $collect_profile_views->whereBetween('created_at', [$date_list[$i] . ' 00:00:00', $date_list[$i] . ' 23:59:59'])->count();
+            $data[] = ['date' => $date_list[$i], 'total_data' => $data_hasil];
+        }
+
         return view('employer.home', [
-            "page_name" => "Home"
+            "page_name" => "Home",
+            'chart' => $data
         ]);
     }
 
@@ -43,7 +57,12 @@ class EmployerController extends Controller
     public function detail($id)
     {
         $data = User::find($id);
-        $data2 = EmployerProfile::with('social_media', 'karyawan')->where('user_id', '=', $id)->first();
+        $data2 = EmployerProfile::with('social_media', 'karyawan', 'jobs', 'comments')->where('user_id', '=', $id)->first();
+        if($data2) {
+            ProfileViews::create([
+                'user_id' => $id
+            ]);
+        }
         return view('employer.detail', [
             "page_name" => "Detail Employer",
             "data" => $data,

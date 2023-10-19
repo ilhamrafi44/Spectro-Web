@@ -21,4 +21,14 @@ class EmployerProfile extends Model
         return $this->hasMany(Karyawan::class, 'user_id', 'user_id');
     }
 
+    public function jobs()
+    {
+        return $this->hasMany(Jobs::class, 'user_id', 'user_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Rating::class, 'user_id', 'user_id');
+    }
+
 }

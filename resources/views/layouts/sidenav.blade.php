@@ -63,37 +63,36 @@
                             </div>
                         </div>
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                    data-kt-menu-placement="bottom-start"
-                    class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                    <span class="menu-link">
-                        <span class="menu-title">Jobs</span>
-                        <span class="menu-arrow d-lg-none"></span>
-                    </span>
-                    <div
-                        class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-                        <div class="menu-item">
-                            <a class="menu-link" href="../dist/pages/about.html">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">List Job</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="../dist/pages/about.html">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Create Job</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                            data-kt-menu-placement="bottom-start"
-                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                            data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                             <span class="menu-link">
-                                <span class="menu-title">Jobs Kategori</span>
+                                <span class="menu-title">Jobs</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </span>
+                            <div
+                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
+                                <div class="menu-item">
+                                    <a class="menu-link" href="../dist/pages/about.html">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">List Job</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="../dist/pages/about.html">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Create Job</span>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                            data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                            <span class="menu-link">
+                                <span class="menu-title">Jobs Master</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </span>
                             <div
@@ -103,41 +102,47 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">List Job Kategori</span>
+                                        <span class="menu-title">Master Jobs Category</span>
                                     </a>
                                 </div>
-                                <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Create Job Kategori</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                            data-kt-menu-placement="bottom-start"
-                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                            <span class="menu-link">
-                                <span class="menu-title">Jobs Industri</span>
-                                <span class="menu-arrow d-lg-none"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{ route('admin.jobs.industry') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">List Job Industri</span>
+                                        <span class="menu-title">Master Jobs Industry</span>
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
+                                    <a class="menu-link" href="{{ route('admin.master.jobs.type') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Create Job Industri</span>
+                                        <span class="menu-title">Master Jobs Type</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('admin.master.jobs.experience') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Master Jobs Experience</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('admin.master.jobs.qualification') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Master Jobs Qualification</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('admin.master.jobs.career') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Master Jobs Career Level</span>
                                     </a>
                                 </div>
                             </div>
@@ -193,53 +198,36 @@
                         </div>
                     @endif
                     @if (Auth::user()->role == '2')
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                    data-kt-menu-placement="bottom-start"
-                    class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                    <span class="menu-link">
-                        <span class="menu-title">Jobs</span>
-                        <span class="menu-arrow d-lg-none"></span>
-                    </span>
-                    <div
-                        class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('employer.jobs') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">List Job</span >
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('employer.jobs.add') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Create Job</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-item menu-lg me-0 me-lg-2">
-
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="{{ route('employer.jobs.category') }}">
-                        <span class="menu-title">Jobs Category</span>
-                        <span class="menu-arrow d-lg-none"></span>
-                    </a>
-
-                </div>
-                <div class="menu-item menu-lg me-0 me-lg-2">
-
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="{{ route('employer.jobs.industry') }}">
-                        <span class="menu-title">Jobs Industry</span>
-                        <span class="menu-arrow d-lg-none"></span>
-                    </a>
-
-                </div>
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                            data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                            data-kt-menu-placement="bottom-start"
+                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                            <span class="menu-link">
+                                <span class="menu-title">Jobs</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </span>
+                            <div
+                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('employer.jobs') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">List Job</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('employer.jobs.add') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Create Job</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                            data-kt-menu-placement="bottom-start"
+                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                             <span class="menu-link">
                                 <span class="menu-title">Application</span>
                                 <span class="menu-arrow d-lg-none"></span>
@@ -278,7 +266,7 @@
                     <div class="menu-item menu-lg me-0 me-lg-2">
 
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('home') }}">
+                        <a class="menu-link" href="{{ route('job.index') }}">
                             <span class="menu-title">Cari Kerja</span>
                             <span class="menu-arrow d-lg-none"></span>
                         </a>

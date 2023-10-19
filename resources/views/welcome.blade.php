@@ -16,10 +16,12 @@
                         100+ Pekerjaan
                     </p>
                 </div>
-                <div class="column align-self-start">
-                    <a href="{{ route('login') }}" class="btn m-1 btn-lg btn-spectro">Masuk</a>
-                    <a href="{{ route('register') }}" class="btn m-1 btn-lg btn-light">Daftar</a>
-                </div>
+                @if (!Auth::user())
+                    <div class="column align-self-start">
+                        <a href="{{ route('login') }}" class="btn m-1 btn-lg btn-spectro">Masuk</a>
+                        <a href="{{ route('register') }}" class="btn m-1 btn-lg btn-light">Daftar</a>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="col-md-6 d-flex align-items-center">
@@ -29,7 +31,7 @@
         </div>
     </div>
 
-    <div class="row bg-white shadow-lg rounded-3 mb-10 py-5 my-19">
+    <div class="row bg-white shadow-lg rounded-3 mb-10 py-5 my-19 hover-elevate-up parent-hover">
         <div class="container p-5">
             <h1>Cari Pekerjaan</h1>
             <div class="separator my-5"></div>
@@ -51,8 +53,8 @@
                         <label for="exampleFormControlInput1" class="required form-label">Jobs Industry</label>
                         <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
                             name="category_id">
-                            @foreach ($category as $item_c)
-                                <option value="{{ $item_c->id }}">{{ $item_c->name }}</option>
+                            @foreach ($industry as $item_i)
+                                <option value="{{ $item_i->id }}">{{ $item_i->name }}</option>
                             @endforeach
 
                         </select>
@@ -63,8 +65,8 @@
                         <label for="exampleFormControlInput1" class="required form-label">Jobs Location</label>
                         <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
                             name="category_id">
-                            @foreach ($category as $item_c)
-                                <option value="{{ $item_c->id }}">{{ $item_c->name }}</option>
+                            @foreach ($location as $locationss)
+                                <option value="{{ $locationss->location_id }}">{{ $locationss->location_id }}</option>
                             @endforeach
 
                         </select>
@@ -84,7 +86,7 @@
             <h1>Explore Category</h1>
             <div class="row d-flex">
                 @foreach ($category as $item_c)
-                    <div class="card col-md-4 col-12 border m-3 shadow-sm">
+                    <a href="#" class="card col-md-4 col-12 border m-3 hover-elevate-up parent-hover">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-2 mb-3">
@@ -94,12 +96,12 @@
                                     <h3>
                                         {{ $item_c->name }}
                                     </h3>
-                                    Total Pekerjaan : 9
+                                    Total Pekerjaan : {{ $item_c->jobs->count() ?? 'Belum Ada' }}
                                 </div>
                             </div>
 
                         </div>
-                    </div>
+                    </a>
                     {{-- <a href="#" class="btn btn-light bg-white border m-2 btn-lg fs-1 p-10 col-md-4 col-5"><i class="fas fa-solid fa-briefcase fs-1 me-2"></i>  {{ $item_c->name }} <br> Total Lowongan : 9</a> --}}
                 @endforeach
             </div>
@@ -108,60 +110,45 @@
 
     <div class="row bg-white my-10">
         <div class="container p-5 my-10">
-            <h1>Explore Category</h1>
-            <div class="row d-flex">
-                @foreach ($data_job as $item)
-                    <div class="col-md-4 mb-5">
-                        <div class="card border-1 shadow-sm">
-                            <div class="card-header">
-                                <h3 class="card-title">{{ $item->name }}</h3>
-                                <div class="card-toolbar">
-                                    <button type="button" class="btn btn-sm m-1 btn-light">
-                                        Open
-                                    </button>
-                                </div>
-                            </div>
+            <h1>Explore Jobs</h1>
+            <div class="row d-flex mt-10">
+                @foreach ($data_job as $jobs)
+                    <div class="col-md-4">
+
+                        <a href="{{ route('job.detail', ['id' => $jobs->id]) }}"
+                            class="card hover-elevate-up border parent-hover">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3 mb-5">
-                                        <i class="las la-briefcase fs-4x"></i>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="row d-flex">
-                                            <div class="col-md-6 fs-7 mb-5">
-                                                <a><i class="fa-solid fa-location-dot"></i> <b>Lokasi :
-                                                        {{ $item->location_id }}</b></a>
-
-                                            </div>
-                                            <div class="col-md-6 fs-7 mb-5">
-                                                <a><i class="fa-solid fa-calendar-days"></i> <b>Expired :
-                                                        {{ $item->expired_date }}</b></a>
-
-                                            </div>
-                                            <div class="col-md-6 fs-7 mb-5">
-                                                <a><i class="fa-solid fa-calendar-days"></i> <b>Created :
-                                                        {{ $item->created_at }}</b></a>
-
-                                            </div>
-                                            <div class="col-md-6 fs-7 mb-5">
-                                                <a><i class="fa-solid fa-envelope"></i> <b>Total Pelamar : </b></a>
-
-                                            </div>
-                                            <div class="col-md-6 fs-7 mb-5">
-                                                <a><i class="fa-solid fa-bookmark"></i> <b>Total Disimpan: </b></a>
-
-                                            </div>
-                                            {{-- <div class="col-6 h-100">
-                                    <div class="btn btn-primary w-100"><i class="fa-solid fa-user-plus"></i> Follow </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h3> {{ $jobs->name }} </h3>
+                                    <button class="btn btn-sm btn-light m-1 btn-icon col-4 "><i
+                                            class="fas fa-regular fa-bookmark"></i></button>
                                 </div>
-                                <div class="col-6 h-100">
-                                    <div class="btn btn-warning w-100"><i class="fa-solid fa-comments"></i>Chat </div>
-                                </div> --}}
-                                        </div>
+                                <hr>
+                                <div class="row d-flex mt-7">
+                                    <div class="col-auto mb-5">
+                                        <i class="fas fa-solid fa-briefcase fs-3"></i> {{ $jobs->category->name }}
+                                    </div>
+                                    <div class="col-auto mb-5">
+                                        <i class="fas fa-solid fa-location-dot fs-3"></i> {{ $jobs->location_id }}
+                                    </div>
+                                    <div class="col-auto mb-5">
+                                        <i class="fas fa-regular fa-clock fs-3"></i>
+                                        {{ \Carbon\Carbon::parse($jobs->created_at)->toFormattedDateString() }}
+                                    </div>
+                                    <div class="col-auto mb-5">
+                                        <i class="fas fa-solid fa-money-bill-wave fs-3"></i>
+                                        @if ($jobs->mata_gaji == 1)
+                                            ¥
+                                        @elseif ($jobs->mata_gaji == 2)
+                                            USD
+                                        @else
+                                            Rp
+                                        @endif {{ number_format($jobs->salary) }}
+                                        / {{ $jobs->salary_type }}
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 @endforeach
             </div>
@@ -172,22 +159,28 @@
             <h1 class="mb-17">Our Client</h1>
             <div class="row d-flex justify-content-center">
                 <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/cariilmu.png" class="img-fluid" style="height: 50px;" alt="">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/cariilmu.png" class="img-fluid"
+                        style="height: 50px;" alt="">
                 </div>
                 <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/ids.png" class="img-fluid" style="height: 50px;" alt="">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/ids.png" class="img-fluid" style="height: 50px;"
+                        alt="">
                 </div>
                 <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/edufund.jpeg" class="img-fluid" style="height: 50px;" alt="">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/edufund.jpeg" class="img-fluid"
+                        style="height: 50px;" alt="">
                 </div>
                 <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/personix.jpeg" class="img-fluid" style="height: 50px;" alt="">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/personix.jpeg" class="img-fluid"
+                        style="height: 50px;" alt="">
                 </div>
                 <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/univ-siber.png" class="img-fluid" style="height: 50px;" alt="">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/univ-siber.png" class="img-fluid"
+                        style="height: 50px;" alt="">
                 </div>
                 <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/karirmu.png" class="img-fluid" style="height: 50px;" alt="">
+                    <img src="https://spectro.id/wp-content/uploads/2023/07/karirmu.png" class="img-fluid"
+                        style="height: 50px;" alt="">
                 </div>
             </div>
         </div>

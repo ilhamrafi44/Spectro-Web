@@ -5,13 +5,13 @@
         <div class="col-md-8 mb-5">
             <div class="card">
                 <div class="card-body">
-                    <h1>List Job Category</h1>
+                    <h1>List Data Career Level</h1>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="fw-bold fs-6 text-gray-800">
                                     <th scope="col">#</th>
-                                    <th scope="col">Nama Category</th>
+                                    <th scope="col">Nama</th>
                                     <th scope="col">Diubah Oleh</th>
                                     <th scope="col">Tanggal Diubah</th>
                                     <th scope="col">Aksi</th>
@@ -24,24 +24,26 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->creator->name }}</td>
                                         <td>{{ $item->updated_at }}</td>
-                                        <td><a href="{{ route('admin.jobs.category.delete', ['id' => $item->id]) }}"
-                                                class="btn btn-icon btn-spectro btn-sm"><i
+                                        <td><a href="{{ route('admin.master.jobs.career.delete', ['id' => $item->id]) }}"
+                                                class="btn btn-icon btn-primary btn-sm  "><i
                                                     class="far fa-solid fa-trash text-white"></i></a>
                                             <button type="button" class="btn btn-sm btn-icon btn-warning"
                                                 data-bs-toggle="modal" data-bs-target="#kt_modal_{{ $loop->iteration }}"><i
                                                     class="far fa-solid fa-pen text-white"></i></button>
                                         </td>
                                     </tr>
+
                                     {{-- Modal Begin --}}
+
                                     <div class="modal fade" tabindex="-1" id="kt_modal_{{ $loop->iteration }}">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <form action="{{ route('admin.jobs.category.update') }}" method="POST"
+                                                <form action="{{ route('admin.master.jobs.career.update') }}" method="POST"
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $item->id }}">
                                                     <div class="modal-header">
-                                                        <h3 class="modal-title">Edit Jobs Category</h3>
+                                                        <h3 class="modal-title">Edit Data</h3>
 
                                                         <!--begin::Close-->
                                                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
@@ -59,15 +61,16 @@
                                                             <div class="col-md-12">
                                                                 <div class="mb-5">
                                                                     <label for="exampleFormControlInput1"
-                                                                        class="required form-label">Jobs Category
+                                                                        class="required form-label">Data
                                                                         Created By</label>
                                                                     <input name="name" type="text"
                                                                         class="form-control form-control-solid"
-                                                                        placeholder="" value="{{ $item->creator->name }}" disabled />
+                                                                        placeholder="" value="{{ $item->creator->name }}"
+                                                                        disabled />
                                                                 </div>
                                                                 <div class="mb-5">
                                                                     <label for="exampleFormControlInput1"
-                                                                        class="required form-label">Jobs Category
+                                                                        class="required form-label">Data
                                                                         Name</label>
                                                                     <input name="name" type="text"
                                                                         class="form-control form-control-solid"
@@ -99,14 +102,15 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h1>Create Job Category</h1>
-                    <form action="{{ route('admin.jobs.category.add') }}" method="POST" enctype="multipart/form-data">
+                    <h1>Create Data</h1>
+                    <form action="{{ route('admin.master.jobs.career.add') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="row d-flex">
 
                             <div class="col-md-12">
                                 <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-label">Jobs Category
+                                    <label for="exampleFormControlInput1" class="required form-label">Data
                                         Name</label>
                                     <input name="name" type="text" class="form-control form-control-solid"
                                         placeholder="" />
@@ -114,7 +118,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-5">
-                                    <button class="btn btn-primary btn-md" type="submit">Create Category</button>
+                                    <button class="btn btn-primary btn-md" type="submit">Create Data</button>
                                 </div>
                             </div>
                         </div>

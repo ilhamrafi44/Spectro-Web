@@ -12,6 +12,7 @@
             <div class="d-flex flex-column flex-column-fluid">
 
                 {{-- @include('layouts.headbar') --}}
+
                 <!--begin::Content-->
                 <div id="kt_app_content" class="app-content">
                     @yield('content')
@@ -24,38 +25,38 @@
         </div>
     </div>
 
-            <!--begin::Footer-->
-            <div id="kt_app_footer"
-                class="app-footer bg-spectro align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3 py-lg-6 ">
-                <!--begin::Copyright-->
-                <div class="text-dark order-2 ml-10">
-                    <span class="text-muted fw-semibold me-1">2023 ©</span>
-                    <a href="#" class="text-white text-hover-light">Spectro.id</a>
-                </div>
-                <!--end::Copyright-->
-
-                <!--begin::Menu-->
-                {{-- <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-                    <li class="menu-item"><a href="https://keenthemes.com" target="_blank"
-                            class="menu-link px-2">About</a>
-                    </li>
-
-                    <li class="menu-item"><a href="https://devs.keenthemes.com" target="_blank"
-                            class="menu-link px-2">Support</a>
-                    </li>
-
-                    <li class="menu-item"><a href="https://keenthemes.com/products/oswald-html-pro" target="_blank"
-                            class="menu-link px-2">Purchase</a></li>
-                </ul> --}}
-                <!--end::Menu-->
-            </div>
-            <!--end::Footer-->
+    <!--begin::Footer-->
+    <div id="kt_app_footer"
+        class="app-footer bg-spectro align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3 py-lg-6 px-lg-20">
+        <!--begin::Copyright-->
+        <div class="text-white ml-10">
+            <span class="fw-semibold me-1">2023 ©</span>
+            <a href="#" class="text-white text-hover-light">Spectro.id</a>
         </div>
-        <!--end:::Main-->
+        <!--end::Copyright-->
 
+        <!--begin::Menu-->
+        <ul class="menu menu-hover-primary fw-semibold order-1">
+            <li class="menu-item"><a href="https://keenthemes.com" target="_blank"
+                    class="menu-link px-2 text-white">About</a>
+            </li>
 
+            <li class="menu-item"><a href="https://devs.keenthemes.com" target="_blank"
+                    class="menu-link px-2 text-white">Support</a>
+            </li>
+
+            <li class="menu-item"><a href="https://keenthemes.com/products/oswald-html-pro" target="_blank"
+                    class="menu-link px-2 text-white">Purchase</a></li>
+        </ul>
+        <!--end::Menu-->
     </div>
-    <!--end::Wrapper container-->
+    <!--end::Footer-->
+</div>
+<!--end:::Main-->
+
+
+</div>
+<!--end::Wrapper container-->
 </div>
 
 <!--end::Wrapper-->

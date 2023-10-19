@@ -24,7 +24,7 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->creator->name }}</td>
                                     <td>{{ $item->updated_at }}</td>
-                                    <td><a href="{{ route('employer.jobs.industry.delete', ['id' => $item->id]) }}" class="btn btn-icon btn-primary btn-sm  "><i
+                                    <td><a href="{{ route('admin.jobs.industry.delete', ['id' => $item->id]) }}" class="btn btn-icon btn-primary btn-sm  "><i
                                         class="far fa-solid fa-trash text-white"></i></a>
                                         <button type="button" class="btn btn-sm btn-icon btn-warning"
                                                 data-bs-toggle="modal" data-bs-target="#kt_modal_{{ $loop->iteration }}"><i
@@ -37,7 +37,7 @@
                                 <div class="modal fade" tabindex="-1" id="kt_modal_{{ $loop->iteration }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('employer.jobs.industry.update') }}" method="POST"
+                                            <form action="{{ route('admin.jobs.industry.update') }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $item->id }}">
@@ -103,7 +103,7 @@
         <div class="card">
             <div class="card-body">
                 <h1>Create Job Industri</h1>
-                <form action="{{ route('employer.jobs.industry.add') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.jobs.industry.add') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row d-flex">
 

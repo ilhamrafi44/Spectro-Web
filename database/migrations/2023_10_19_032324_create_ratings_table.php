@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applications', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->string('job_id')->nullable();
-            $table->string('employer_id')->nullable();
-            $table->integer('candidate_id')->default(1);
-            $table->string('note')->nullable();
-            $table->string('status')->nullable();
+            $table->string('user_id')->nullable();
+            $table->string('from_id')->nullable();
+            $table->integer('rating')->default(1);
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applications');
+        Schema::dropIfExists('ratings');
     }
 };

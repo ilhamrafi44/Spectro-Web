@@ -12,7 +12,6 @@
             {{ Auth::user()->role == '1' ? 'User' : '' }}
             {{ $page_name }}
         @endif
-
     </title>
     <meta charset="utf-8" />
     <meta name="description" content="Spectro." />
@@ -20,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Oswald HTML Free - Bootstrap 5 HTML Multipurpose Admin Dashboard Theme" />
+    <meta property="og:title" content="Spectro.id" />
     <meta property="og:url" content="https://keenthemes.com/products/oswald-html-pro" />
     <meta property="og:site_name" content="Keenthemes | Oswald HTML Free" />
     <link rel="canonical" href="https://preview.keenthemes.com/axel-html-free" />
@@ -32,12 +31,10 @@
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
-        type="text/css" />
-        <script src="/assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js"></script>
+    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <script src="/assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js"></script>
 
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <!--end::Global Stylesheets Bundle-->
 

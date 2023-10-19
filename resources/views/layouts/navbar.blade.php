@@ -52,7 +52,7 @@
                                 </button>
                                 <!--end::Header toggle-->
                                 <!--begin::Logo-->
-                                <a href="../dist/index.html" class="d-flex align-items-center mb-1 mb-lg-0 pt-lg-1">
+                                <a href="{{ route('home') }}" class="d-flex align-items-center mb-1 mb-lg-0 pt-lg-1">
                                     <img alt="Logo" src="{{ asset('assets/media/spectro-small.png') }}"
                                         class="d-block d-sm-none" height="30px" />
                                     <img alt="Logo" src="{{ asset('assets/media/spectro.png') }}"
@@ -60,7 +60,6 @@
                                 </a>
                                 <!--end::Logo-->
                             </div>
-
                             <!--end::Logo wrapper-->
                         </div>
                         <!--end::Logo and search-->

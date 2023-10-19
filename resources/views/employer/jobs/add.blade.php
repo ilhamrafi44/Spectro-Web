@@ -31,7 +31,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-labe l">URL Video Perkenalan</label>
+                                    <label for="exampleFormControlInput1" class="required form-labe l">URL Video
+                                        Perkenalan</label>
                                     <input name="link" type="text" class="form-control form-control-solid"
                                         placeholder="" />
                                 </div>
@@ -70,6 +71,33 @@
                             </div>
 
 
+                            <div class="col-md-6">
+                                <div class="mb-5">
+                                    <label for="exampleFormControlInput1" class="required form-label">PIC 1</label>
+                                    <select class="form-select form-select-solid" aria-label="Select example"
+                                        data-control="select2" name="pic_1">
+                                        @foreach ($karyawan as $item_c)
+                                            <option value="{{ $item_c->id }}">{{ $item_c->nama }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-5">
+                                    <label for="exampleFormControlInput1" class="required form-label">PIC 2</label>
+                                    <select class="form-select form-select-solid" aria-label="Select example"
+                                        data-control="select2" name="pic_2">
+                                        <option value="0">Tidak Dipilih</option>
+                                        @foreach ($karyawan as $item_c)
+                                            <option value="{{ $item_c->id }}">{{ $item_c->nama }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+
+
                             <div class="col-md-12">
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Deskripsi
@@ -82,7 +110,7 @@
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-labe l">Jumlah
                                         Kandidat</label>
-                                    <input name="jumlah_kandidat" type="text" class="form-control form-control-solid"
+                                    <input name="jumlah_kandidat" type="number" class="form-control form-control-solid"
                                         placeholder="" />
                                 </div>
                             </div>
@@ -104,12 +132,9 @@
                                     <label for="exampleFormControlInput1" class="required form-labe l">Pengalaman</label>
                                     <select class="form-select form-select-solid" aria-label="Select example"
                                         data-control="select2" name="experience">
-                                        <option value="fresh">Fresh</option>
-                                        <option value="1">1 Tahun</option>
-                                        <option value="2">2 Tahun</option>
-                                        <option value="3">3 Tahun</option>
-                                        <option value="4">4 Tahun</option>
-                                        <option value="5">5 Tahun</option>
+                                        @foreach ($experience as $item_e)
+                                            <option value="{{ $item_e->id }}">{{ $item_e->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -119,11 +144,9 @@
                                     <label for="exampleFormControlInput1" class="required form-labe l">Kualifikasi</label>
                                     <select class="form-select form-select-solid" aria-label="Select example"
                                         data-control="select2" name="kualifikasi">
-                                        <option value="Certificate">Certificate</option>
-                                        <option value="Associate Degree">Associate Degree</option>
-                                        <option value="Bachelor Degree">Bachelor Degree</option>
-                                        <option value="Master's Degree">Master's Degree</option>
-                                        <option value="Doctorate Degree">Doctorate Degree</option>
+                                        @foreach ($qualification as $item_k)
+                                            <option value="{{ $item_k->id }}">{{ $item_k->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -133,12 +156,9 @@
                                     <label for="exampleFormControlInput1" class="required form-labe l">Level Karir</label>
                                     <select class="form-select form-select-solid" aria-label="Select example"
                                         data-control="select2" name="career_level">
-                                        <option value="Not Specified">Not Specified</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Officer">Officer</option>
-                                        <option value="Student">Student</option>
-                                        <option value="Executive">Executive</option>
-                                        <option value="Others">Others</option>
+                                        @foreach ($career as $item_c)
+                                            <option value="{{ $item_c->id }}">{{ $item_c->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -148,11 +168,9 @@
                                     <label for="exampleFormControlInput1" class="required form-labe l">Job Tipe</label>
                                     <select class="form-select form-select-solid" aria-label="Select example"
                                         data-control="select2" name="job_type">
-                                        <option value="Freelance">Freelance</option>
-                                        <option value="Full Time">Full Time</option>
-                                        <option value="Internship">Internship</option>
-                                        <option value="Part Time">Part Time</option>
-                                        <option value="Temporary">Temporary</option>
+                                        @foreach ($type as $item_t)
+                                            <option value="{{ $item_t->id }}">{{ $item_t->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -202,11 +220,14 @@
                         <h4 class="w-bolder mb-5">Informasi Gaji </h4>
                         <div class="col-md-12">
                             <div class="mb-5">
-                                <label for="exampleFormControlInput1" class="required form-label">Total Gaji (Yen)</label>
+                                <label for="exampleFormControlInput1" class="required form-label">Total Gaji</label>
                                 <div class="input-group mb-5">
-                                    <span class="input-group-text">¥</span>
-                                    <input type="number" name="salary" class="form-control"
-                                        aria-label="Amount (to the nearest dollar)" />
+                                    <select class="form-select" aria-label="Default select example" name="mata_gaji">
+                                        <option value="1">¥ (Yen)</option>
+                                        <option value="2">USD (US Dollar)</option>
+                                        <option value="3">Rp (Rupiah)</option>
+                                    </select>
+                                    <input type="number" name="salary" class="form-control" />
                                     <span class="input-group-text">.00</span>
                                 </div>
                             </div>
@@ -216,11 +237,11 @@
                                 <label for="exampleFormControlInput1" class="required form-label">Tipe Gaji</label>
                                 <select class="form-select form-select-solid" aria-label="Select example"
                                     data-control="select2" name="salary_type">
-                                    <option value="1">Hourly</option>
-                                    <option value="1">Daily</option>
-                                    <option value="1">Monthly</option>
-                                    <option value="1">Yearly</option>
-                                    <option value="1">Projectly</option>
+                                    <option value="Hourly">Hourly</option>
+                                    <option value="Daily">Daily</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Yearly">Yearly</option>
+                                    <option value="Projectly">Projectly</option>
                                 </select>
                             </div>
                         </div>
@@ -241,11 +262,15 @@
                         <div class="col-md-12">
                             <div class="mb-5">
                                 <label for="exampleFormControlInput1" class="required form-label">Total Tunjangan
-                                    (Yen)</label>
+                                </label>
                                 <div class="input-group mb-5">
-                                    <span class="input-group-text">¥</span>
-                                    <input type="number" name="total_tunjangan" class="form-control"
-                                        aria-label="Amount (to the nearest dollar)" />
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="mata_tunjangan">
+                                        <option value="1">¥ (Yen)</option>
+                                        <option value="2">USD (US Dollar)</option>
+                                        <option value="3">Rp (Rupiah)</option>
+                                    </select>
+                                    <input type="number" name="total_tunjangan" class="form-control" />
                                     <span class="input-group-text">.00</span>
                                 </div>
                             </div>
@@ -292,12 +317,12 @@
             .catch(error => {
                 console.error(error);
             });
-            ClassicEditor
+        ClassicEditor
             .create(document.querySelector('#catatan'))
             .catch(error => {
                 console.error(error);
             });
-            ClassicEditor
+        ClassicEditor
             .create(document.querySelector('#waktu_kerja'))
             .catch(error => {
                 console.error(error);

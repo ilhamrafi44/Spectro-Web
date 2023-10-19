@@ -201,7 +201,22 @@
                                     <textarea class="form-control form-control-solid" placeholder="" rows="5" name="deskripsi" />  {{ $profile->deskripsi }} </textarea>
                                 </div>
                             </div>
-
+                            <div class="col-md-6">
+                                <div class="mb-5">
+                                    <label for="exampleFormControlInput1" class="required form-label">Negara</label>
+                                    <input name="negara" type="text" class="form-control form-control-solid"
+                                        placeholder="Indonesia" value="{{ $profile->negara }}" form="form_profile" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-5">
+                                    <label for="exampleFormControlInput1" class="required form-label">Alamat</label>
+                                    <input name="alamat" type="text" class="form-control form-control-solid"
+                                        placeholder="DKI Jakarta, Jakarta Selatan, Pondok Indah No.1" value="{{ $profile->alamat }}"
+                                        form="form_profile" />
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-spectro" form="form_profile">Simpan / Update</button>
                         </div>
                     </div>
                 </div>
@@ -209,7 +224,8 @@
 
     </form>
 
-    <div class="col-md-6 mb-10">
+
+    <div class="col-md-12 mb-10">
         <div class="card">
             <div class="card-body">
                 <h4 class="w-bolder mb-5">Media Sosial </h4>
@@ -315,28 +331,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 mb-10">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="w-bolder mb-5">Lokasi Perusahaan </h4>
-                <div class="col-md-12">
-                    <div class="mb-5">
-                        <label for="exampleFormControlInput1" class="required form-label">Negara</label>
-                        <input name="negara" type="text" class="form-control form-control-solid"
-                            placeholder="Indonesia" value="{{ $profile->negara }}" form="form_profile" />
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-5">
-                        <label for="exampleFormControlInput1" class="required form-label">Alamat</label>
-                        <input name="alamat" type="text" class="form-control form-control-solid"
-                            placeholder="DKI Jakarta, Jakarta Selatan, Pondok Indah No.1" value="{{ $profile->alamat }}"
-                            form="form_profile" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="col-md-12 mb-10">
         <div class="card">
             <div class="card-body">
@@ -512,7 +507,6 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-spectro" form="form_profile">Simpan / Update</button>
     </div>
     <div class="modal fade" tabindex="-1" id="kt_modal_1">
         <div class="modal-dialog">

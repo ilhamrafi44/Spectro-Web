@@ -54,13 +54,15 @@ class EmployerController extends Controller
         ]);
     }
 
-    public function detail($id)
+    public function detail(Request $request)
     {
+        $id = $request->id;
         $data = User::find($id);
         $data2 = EmployerProfile::with('social_media', 'karyawan', 'jobs', 'comments')->where('user_id', '=', $id)->first();
         if($data2) {
             ProfileViews::create([
-                'user_id' => $id
+                'user_id' => $id,
+                'ip' => $request->ip()
             ]);
         }
         return view('employer.detail', [

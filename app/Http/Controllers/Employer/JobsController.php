@@ -49,29 +49,29 @@ class JobsController extends Controller
         ]);
     }
 
-    public function detail(Request $id)
+    public function detail(Request $request)
     {
         $check = 0;
         $check_saved = 0;
 
         if(Auth::user()){
-            $check = Applications::where('candidate_id', Auth::user()->id)->where('job_id', $id->id)->count();
-            $check_saved = SavedJobs::where('user_id', Auth::user()->id)->where('job_id', $id->id)->count();
+            $check = Applications::where('candidate_id', Auth::user()->id)->where('job_id', $request->id)->count();
+            $check_saved = SavedJobs::where('user_id', Auth::user()->id)->where('job_id', $request->id)->count();
         }
 
-        $related = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', '!=', $id->id)->limit(5)->get();
+        $related = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', '!=', $request->id)->limit(5)->get();
 
 
-        $job = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', $id->id)->first();
+        $job = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', $request->id)->first();
 
         if($job) {
             JobViews::firstOrCreate([
-                'job_id' => $id->id,
-                'ip' => $id->ip()
+                'job_id' => $request->id,
+                'ip' => $request->ip()
             ]);
         }
 
-        $pics = JobsPic::with('karyawan')->where('job_id', $id)->get();
+        $pics = JobsPic::with('karyawan')->where('job_id', $request->id)->get();
         return view('jobs.detail', [
             'page_name' => "Job Detail",
             'data' => $job,

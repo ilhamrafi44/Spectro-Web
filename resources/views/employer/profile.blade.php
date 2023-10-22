@@ -392,28 +392,8 @@
                                                                     <td>{{ $item->pengalaman }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Profile</td>
-                                                                    <td>{{ $item->file_profile_id }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Facebook URL</td>
-                                                                    <td>{{ $item->facebook_url }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Twitter URL</td>
-                                                                    <td>{{ $item->twitter_url }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>GooglePlus URL</td>
-                                                                    <td>{{ $item->googleplus_url }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Dribbble URL</td>
-                                                                    <td>{{ $item->dribbble_url }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Deskripsi</td>
-                                                                    <td>{{ $item->deskripsi }}</td>
+                                                                    <td>Email</td>
+                                                                    <td>{{ $item->email }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -436,13 +416,13 @@
                                 <div class="modal fade" tabindex="-1" id="kt_modal_karyawan_update{{ $loop->iteration }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('employer.sosmed.update') }}" method="POST">
+                                            <form action="{{ route('employer.karyawan.update') }}" method="POST">
                                                 @csrf
 
                                                 <input type="hidden" value="{{ $item->id }}" name="id">
 
                                                 <div class="modal-header">
-                                                    <h3 class="modal-title">Update Social Media</h3>
+                                                    <h3 class="modal-title">Update Data Karyawan</h3>
 
                                                     <!--begin::Close-->
                                                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
@@ -458,34 +438,33 @@
                                                     <div class="row d-flex">
 
                                                         <div class="col-md-12">
-
                                                             <div class="mb-5">
                                                                 <label for="exampleFormControlInput1"
-                                                                    class="required form-label">Jenis</label>
-                                                                <select class="form-select form-select-solid"
-                                                                    aria-label="Select example" data-control="select2"
-                                                                    name="jenis" id="select2">
-                                                                    <option value="{{ $item->jenis }}" selected>
-                                                                        {{ $item->jenis }}</option>
-                                                                    <option value="Instagram">Instagram</option>
-                                                                    <option value="Facebook">Facebook</option>
-                                                                    <option value="LinkedIn">LinkedIn</option>
-                                                                    <option value="Discord">Discord</option>
-                                                                    <option value="Twitter">Twitter</option>
-                                                                    <option value="Dribbble">Dribbble</option>
-                                                                    <option value="Tumblr">Tumblr</option>
-                                                                    <option value="TikTok">TikTok</option>
-                                                                    <option value="Telegram">Telegram</option>
-                                                                    <option value="Pinterest">Pinterest</option>
-                                                                    <option value="Youtube">Youtube</option>
-                                                                </select>
+                                                                    class="required form-label">Nama</label>
+                                                                <input name="nama" type="text"
+                                                                    class="form-control form-control-solid"
+                                                                    value="{{ $item->nama }}" />
                                                             </div>
                                                             <div class="mb-5">
                                                                 <label for="exampleFormControlInput1"
-                                                                    class="required form-label">URL</label>
-                                                                <input name="link" type="text"
+                                                                    class="required form-label">Jabatan</label>
+                                                                <input name="jabatan" type="text"
                                                                     class="form-control form-control-solid"
-                                                                    value="{{ $item->link }}" />
+                                                                    value="{{ $item->jabatan }}" />
+                                                            </div>
+                                                            <div class="mb-5">
+                                                                <label for="exampleFormControlInput1"
+                                                                    class="required form-label">Pengalaman</label>
+                                                                <input name="pengalaman" type="text"
+                                                                    class="form-control form-control-solid"
+                                                                    value="{{ $item->pengalaman }}" />
+                                                            </div>
+                                                            <div class="mb-5">
+                                                                <label for="exampleFormControlInput1"
+                                                                    class="required form-label">Email</label>
+                                                                <input name="email" type="text"
+                                                                    class="form-control form-control-solid"
+                                                                    value="{{ $item->email }}" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -607,50 +586,11 @@
                                     <input name="pengalaman" type="text" class="form-control form-control-solid" />
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-label">Foto Profile</label>
-                                    <input name="file_profile_id" type="file"
-                                        class="form-control form-control-solid" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-label">Facebook URL</label>
-                                    <input name="facebook_url" type="text" class="form-control form-control-solid" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-label">Twitter URL</label>
-                                    <input name="twitter_url" type="text" class="form-control form-control-solid" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-label">GooglePlus
-                                        URL</label>
-                                    <input name="googleplus_url" type="text"
-                                        class="form-control form-control-solid" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-label">LinkedIn URL</label>
-                                    <input name="linkedin_url" type="text" class="form-control form-control-solid" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-label">Dribbble URL</label>
-                                    <input name="dribbble_url" type="text" class="form-control form-control-solid" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-label">Deskripsi</label>
-                                    <textarea name="deskripsi" type="text" class="form-control form-control-solid">
-                                </textarea>
+                                    <label for="exampleFormControlInput1" class="required form-label">Email</label>
+                                    <input name="email" type="text" class="form-control form-control-solid" />
                                 </div>
                             </div>
 

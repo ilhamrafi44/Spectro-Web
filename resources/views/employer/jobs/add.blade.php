@@ -23,10 +23,13 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-5">
-                                    <label for="exampleFormControlInput1" class="required form-labe l">Lokasi
-                                        Pekerjaan</label>
-                                    <input name="location_id" type="text" class="form-control form-control-solid"
-                                        placeholder="" />
+                                    <label for="exampleFormControlInput1" class="required form-label">Lokasi Pekerjaan</label>
+                                    <select class="form-select form-select-solid" aria-label="Select example"
+                                        id="select-location" name="location_id">
+                                        @foreach ($location_available as $location)
+                                        <option value="{{ $location->location_id }}">{{ $location->location_id }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -291,6 +294,11 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $("#select-location").select2({
+            tags: true
+        });
+    </script>
     <script>
         ClassicEditor
             .create(document.querySelector('#info_tunjangan'))

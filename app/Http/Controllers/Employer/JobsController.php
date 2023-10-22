@@ -12,7 +12,9 @@ use App\Models\JobsIndustry;
 use App\Models\JobsPic;
 use App\Models\JobsQualification;
 use App\Models\JobsType;
+use App\Models\JobViews;
 use App\Models\Karyawan;
+use App\Models\SavedJobs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,21 +49,36 @@ class JobsController extends Controller
         ]);
     }
 
-    public function detail(int $id)
+    public function detail(Request $id)
     {
         $check = 0;
+        $check_saved = 0;
 
         if(Auth::user()){
-            $check = Applications::where('candidate_id', Auth::user()->id)->where('job_id', $id)->count();
+            $check = Applications::where('candidate_id', Auth::user()->id)->where('job_id', $id->id)->count();
+            $check_saved = SavedJobs::where('user_id', Auth::user()->id)->where('job_id', $id->id)->count();
         }
 
-        $job = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', $id)->first();
+        $related = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', '!=', $id->id)->limit(5)->get();
+
+
+        $job = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', $id->id)->first();
+
+        if($job) {
+            JobViews::firstOrCreate([
+                'job_id' => $id->id,
+                'ip' => $id->ip()
+            ]);
+        }
+
         $pics = JobsPic::with('karyawan')->where('job_id', $id)->get();
         return view('jobs.detail', [
             'page_name' => "Job Detail",
             'data' => $job,
             'pics' => $pics,
-            'check' => $check
+            'related' => $related,
+            'check' => $check,
+            'check_saved' => $check_saved,
         ]);
     }
 
@@ -73,6 +90,7 @@ class JobsController extends Controller
         $qualification = JobsQualification::all();
         $career = JobsCareerLevel::all();
         $experience = JobsExperience::all();
+        $location = Jobs::distinct()->get(['location_id']);
         $karyawan = Karyawan::where('user_id', Auth::user()->id)->get();
         return view('employer.jobs.add', [
             "page_name" => "Job List",
@@ -83,6 +101,7 @@ class JobsController extends Controller
             'qualification' => $qualification,
             'career' => $career,
             'experience' => $experience,
+            'location_available' => $location
         ]);
     }
 

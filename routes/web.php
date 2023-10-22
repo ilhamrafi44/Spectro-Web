@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\SavedJobsController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\UserController;
 use App\Models\Jobs;
@@ -70,6 +71,9 @@ Route::get('google/call-back', [GoogleAuthController::class, 'callbackGoogle'])-
 // Set Role akun
 Route::get('pre-home', [GhostController::class, 'pick_role'])->name('pre_home');
 Route::get('set-role/{id}', [GhostController::class, 'set_role'])->name('set_role');
+
+Route::post('save-job', [SavedJobsController::class, 'store'])->name('jobs.save');
+Route::post('delete-job', [SavedJobsController::class, 'delete'])->name('jobs.delete');
 
 Auth::routes(['verify' => true]);
 
@@ -127,8 +131,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         });
     });
 
-
-
     //role employer
     Route::middleware(['employer'])->group(function () {
         Route::prefix('employer')->group(function () {
@@ -152,6 +154,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/jobs', [JobsController::class, 'myjob'])->name('employer.jobs');
             Route::get('/jobs/add', [JobsController::class, 'add'])->name('employer.jobs.add');
             Route::post('/jobs/add', [JobsController::class, 'store'])->name('employer.jobs.add');
+
+            //app controller
+            Route::get('/app', [ApplicationController::class, 'employer'])->name('employer.app');
+            Route::get('/app/rejects/{id}', [ApplicationController::class, 'rejects'])->name('jobs.reject');
+            Route::get('/app/approves/{id}', [ApplicationController::class, 'approves'])->name('jobs.approve');
+
         });
     });
 

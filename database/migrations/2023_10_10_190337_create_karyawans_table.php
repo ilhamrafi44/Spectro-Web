@@ -17,13 +17,7 @@ return new class extends Migration
                 $table->string('nama')->nullable();
                 $table->string('jabatan')->nullable();
                 $table->string('pengalaman')->nullable();
-                $table->string('file_profile_id')->nullable();
-                $table->string('facebook_url')->nullable();
-                $table->string('twitter_url')->nullable();
-                $table->string('googleplus_url')->nullable();
-                $table->string('linkedin_url')->nullable();
-                $table->string('dribbble_url')->nullable();
-                $table->string('deskripsi')->nullable();
+                $table->string('email')->nullable();
                 $table->timestamps();
             });
         }

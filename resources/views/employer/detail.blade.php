@@ -78,7 +78,7 @@
             <div class="card mb-5">
                 <div class="card-body">
                     <h1 class="mb-5">List Job</h1>
-                    @foreach ($profile->jobs as $jobs)
+                    @forelse ($profile->jobs as $jobs)
                         <a href="{{ route('job.detail', ['id' => $jobs->id]) }}"
                             class="card hover-elevate-up border parent-hover">
                             <div class="card-body">
@@ -113,7 +113,9 @@
                                 </div>
                             </div>
                         </a>
-                    @endforeach
+                    @empty
+                        <h3>Belum ada Pekerjaan</h3>
+                    @endforelse
 
                 </div>
             </div>
@@ -121,12 +123,13 @@
             <div class="card mb-5">
                 <div class="card-body">
                     <h1 class="mb-5">Ulasan</h1>
-                    @foreach ($profile->comments as $comments)
+
+                    @forelse ($profile->comments as $comments)
                         <div class="card hover-elevate-up border parent-hover">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-From:
+                                        From:
                                         <h3> {{ $comments->creator->name }} </h3>
                                     </div>
                                     <div class="rating">
@@ -139,10 +142,10 @@ From:
                                         <div class="rating-label @if ($comments->rating > 2) checked @endif">
                                             <i class="ki-duotone ki-star fs-1"></i>
                                         </div>
-                                        <div class="rating-label @if ($comments->rating >3) checked @endif">
+                                        <div class="rating-label @if ($comments->rating > 3) checked @endif">
                                             <i class="ki-duotone ki-star fs-1"></i>
                                         </div>
-                                        <div class="rating-label @if ($comments->rating >4) checked @endif">
+                                        <div class="rating-label @if ($comments->rating > 4) checked @endif">
                                             <i class="ki-duotone ki-star fs-1"></i>
                                         </div>
                                     </div>
@@ -152,7 +155,9 @@ From:
                                 <p class="text-gray-800 fs-4">{{ $comments->comment }}</p>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <h3>Belum ada ulasan</h3>
+                    @endforelse
                 </div>
             </div>
 

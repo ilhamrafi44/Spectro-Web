@@ -20,7 +20,7 @@
                                 <i class="fas fa-solid fa-briefcase fs-3"></i> {{ $data->category->name }}
                             </div>
                             <div class="col-auto mb-5">
-
+                                <i class="fas fa-solid fa-location-dot fs-3"></i>
                                 {{ $data->location_id }}
                             </div>
                             <div class="col-auto mb-5">
@@ -50,15 +50,48 @@
                         {{ \Carbon\Carbon::parse($data->expired_date)->toFormattedDateString() }} </a>
                 </div>
                 <form action="{{ route('jobs.apply') }}" method="POST">
-                    @if ($check)
-                        <button class="btn btn-lg btn-light m-1 col-8" disabled>Already Apply</button>
-                    @else
-                        @csrf
-                        <input type="hidden" name="job_id" value="{{ $data->id }}">
-                        <input type="hidden" name="employer_id" value="{{ $data->user->id }}">
-                        <button type="submit" class="btn btn-lg btn-primary m-1 col-8">Apply JOB</button>
-                    @endif <a href="#" class="btn btn-lg btn-light m-1 btn-icon col-4"><i
-                            class="fas fa-regular fa-bookmark"></i></a>
+                    <div class="row d-flex align-items-center">
+                        @if ($check)
+                            <div class="col-auto">
+                                <button class="btn btn-lg btn-light" disabled>Already Apply</button>
+                            </div>
+                        @elseif (Auth::user())
+                            @if (Auth::user()->role == 2)
+                                <div class="col-auto">
+
+                                    <button class="btn btn-lg btn-light" disabled>You Cannot Apply</button>
+                                </div>
+                            @else
+                                @csrf
+                                <input type="hidden" name="job_id" value="{{ $data->id }}">
+                                <input type="hidden" name="employer_id" value="{{ $data->user->id }}">
+                                <div class="col-auto">
+
+                                    <button type="submit" class="btn btn-lg btn-primary">Apply JOB</button>
+                                </div>
+                            @endif
+                        @else
+                            @csrf
+                            <input type="hidden" name="job_id" value="{{ $data->id }}">
+                            <input type="hidden" name="employer_id" value="{{ $data->user->id }}">
+                            <div class="col-auto">
+
+                                <button type="submit" class="btn btn-lg btn-primary">Apply JOB</button>
+                            </div>
+                        @endif
+                        @if ($check_saved)
+                            <div id="response" class="col-2">
+                                <button type="button" onclick="destroy({{ $data->id }})"
+                                    class="btn btn-lg btn-light btn-icon col-1 delete"><i
+                                        class="fas fa-regular fa-bookmark text-success"></i></button>
+                            </div>
+                        @else
+                            <div id="response" class="col-2">
+                                <button type="button" class="btn btn-lg btn-light btn-icon col-1 save"
+                                    onclick="save({{ $data->id }})"><i class="fas fa-regular fa-bookmark"></i></button>
+                            </div>
+                        @endif
+                    </div>
                 </form>
             </div>
         </div>
@@ -219,7 +252,8 @@
                         <hr>
                         @foreach ($pics as $item_pic)
                             <div class="mb-5 fs-5">
-                                Nama : <b>{{ $item_pic->karyawan->nama }}</b>
+                                Nama : <b>{{ $item_pic->karyawan->nama }}</b><br>
+                                Email : <b>{{ $item_pic->karyawan->email }}</b>
                             </div>
                         @endforeach
                         <hr>
@@ -234,7 +268,125 @@
         <div class="col-md-8 mb-10">
             <div class="container p-5">
                 <h1>List Related Job :</h1>
+                <br>
+                @forelse ($related as $jobs)
+                    <a href="{{ route('job.detail', ['id' => $jobs->id]) }}"
+                        class="card hover-elevate-up border parent-hover">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3> {{ $jobs->name }} </h3>
+                                <button class="btn btn-sm btn-light m-1 btn-icon col-4 "><i
+                                        class="fas fa-regular fa-bookmark"></i></button>
+                            </div>
+                            <hr>
+                            <div class="row d-flex mt-7">
+                                <div class="col-auto mb-5">
+                                    <i class="fas fa-solid fa-briefcase fs-3"></i> {{ $jobs->category->name }}
+                                </div>
+                                <div class="col-auto mb-5">
+                                    <i class="fas fa-solid fa-location-dot fs-3"></i> {{ $jobs->location_id }}
+                                </div>
+                                <div class="col-auto mb-5">
+                                    <i class="fas fa-regular fa-clock fs-3"></i>
+                                    {{ \Carbon\Carbon::parse($jobs->created_at)->toFormattedDateString() }}
+                                </div>
+                                <div class="col-auto mb-5">
+                                    <i class="fas fa-solid fa-money-bill-wave fs-3"></i>
+                                    @if ($jobs->mata_gaji == 1)
+                                        ¥
+                                    @elseif ($jobs->mata_gaji == 2)
+                                        USD
+                                    @else
+                                        Rp
+                                    @endif {{ number_format($jobs->salary) }}
+                                    / {{ $jobs->salary_type }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @empty
+                    <h3>Belum ada Pekerjaan</h3>
+                @endforelse
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function save(idsave) {
+            var id = idsave;
+
+            var success =
+                '<button onclick="destroy(' + id +
+                ')" type="button" class="btn btn-lg btn-light btn-icon col-4 delete" id="destroy' + id +
+                '" ><i class="fas fa-regular fa-bookmark text-success"></i></button>';
+
+            var failed = '<span class="badge badge-soft-pink">' +
+                'disbale' +
+                '</span>';
+            $.ajax({
+                url: "{{ route('jobs.save') }}",
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                    "job_id": id,
+                    "_method": 'post',
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function() {
+                    $('#response').html(success);
+                    // $("#save" + id).remove();
+                    Swal.fire({
+                        text: "Pekerjaan berhasil ditambahkan ke list!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-success"
+                        }
+                    });
+                }
+            });
+            $('#alert-message').alert('Gagal');
+        };
+
+        function destroy(destroy) {
+            var id = destroy;
+
+            var success =
+                '<button onclick="save(' + id +
+                ')" type="button" class="btn btn-lg btn-light btn-icon col-4 save" id="save' + id +
+                '" ><i class="fas fa-regular fa-bookmark"></i></button>';
+
+            var failed = '<span class="badge badge-soft-pink">' +
+                'disbale' +
+                '</span>';
+            $.ajax({
+                url: "{{ route('jobs.delete') }}",
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                    "job_id": id,
+                    "_method": 'post',
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function() {
+                    $('#response').html(success);
+                    // $("#destroy" + id).remove();
+                    Swal.fire({
+                        text: "Pekerjaan berhasil di hapus dari list!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-success"
+                        }
+                    });
+                }
+            });
+
+            $('#alert-message').alert('Error');
+        };
+    </script>
+@endpush

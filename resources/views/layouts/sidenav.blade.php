@@ -193,37 +193,37 @@
                         <div class="menu-item menu-lg me-0 me-lg-2">
 
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ route('home') }}">
+                            <a class="menu-link" href="{{ route('employer.app') }}">
                                 <span class="menu-title">Application</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </a>
 
                         </div>
                     @else
-                    <div class="menu-item menu-lg me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('job.index') }}">
-                            <span class="menu-title">Cari Kerja</span>
-                            <span class="menu-arrow d-lg-none"></span>
-                        </a>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('job.index') }}">
+                                <span class="menu-title">Cari Kerja</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
 
-                    </div>
-                    <div class="menu-item menu-lg me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('job.index') }}">
-                            <span class="menu-title">Resume Saya</span>
-                            <span class="menu-arrow d-lg-none"></span>
-                        </a>
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('job.index') }}">
+                                <span class="menu-title">Resume Saya</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
 
-                    </div>
-                    <div class="menu-item menu-lg me-0 me-lg-2">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('job.index') }}">
-                            <span class="menu-title">Lamaran Saya</span>
-                            <span class="menu-arrow d-lg-none"></span>
-                        </a>
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('job.index') }}">
+                                <span class="menu-title">Lamaran Saya</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
 
-                    </div>
+                        </div>
                     @endif
                 @else
                     <div class="menu-item menu-lg me-0 me-lg-2">
@@ -270,9 +270,29 @@
         </div>
         <!--end::Menu wrapper-->
         <!--begin::Search-->
+        <style>
+            a.glink img {
+                width: 20px !important;
+                height: 20px !important;
+            }
+            .gt_container-unisv1>a.glink>span {
+                margin-right: 7px !important;
+                font-size: 15px !important;
+            }
+        </style>
+
         <div class="d-flex align-items-center w-100 w-lg-225px pt-5 pt-lg-0">
             <div class="w-100 position-relative mb-5 mb-lg-0">
-                <a href="" class="btn btn-primary text-white">Belajar Di Arka</a>
+                <div class="gtranslate_wrapper fs-6"></div>
+                <script>
+                    window.gtranslateSettings = {
+                        "default_language": "id",
+                        "languages": ["en", "ja", "id"],
+                        "wrapper_selector": ".gtranslate_wrapper",
+                        "flag_style": "3d"
+                    }
+                </script>
+                <script src="https://cdn.gtranslate.net/widgets/latest/popup.js"  defer></script>
             </div>
         </div>
         <!--end::Search-->

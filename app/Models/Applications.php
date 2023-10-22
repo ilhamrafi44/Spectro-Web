@@ -23,7 +23,7 @@ class Applications extends Model
 
     public function jobs()
     {
-        return $this->belongsTo(Jobs::class, 'job_id', 'id');
+        return $this->hasOne(Jobs::class, 'id', 'job_id');
     }
 
 }

@@ -8,10 +8,19 @@
                     <div class="px-5">
                         <div class="row d-flex justify-content-between align-items-center">
                             <div class="col-auto">
-                                <h3>Total Pekerjaan Dilamar : {{ $data->count() }}</h3>
+                                <h3>Total Pelamar : {{ $data->count() }}</h3>
                             </div>
                             <div class="col-auto">
                                 <div class="row d-flex align-items-center justify-content-end">
+                                    <div class="col-auto mb-5">
+                                        <label for="">Filter Pekerjaan</label>
+                                        <select class="form-select" aria-label="Select example" data-control="select2"
+                                            name="category_id">
+                                            @foreach ($data_job as $itemz)
+                                            <option value="{{ $itemz->id }}">{{ $itemz->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="col-auto mb-5">
                                         <label for="">Urut Bedasarkan</label>
                                         <select class="form-select" aria-label="Select example" data-control="select2"
@@ -36,17 +45,14 @@
                                 <div class="card hover-elevate-up border parent-hover mb-6">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <h3> {{ $jobs->jobs->name }} ({{ $jobs->employer->name }}) </h3>
+                                            <h3> {{ $jobs->candidate->name }} - {{ $jobs->jobs->name }}</h3>
                                             <div class="d-flex">
                                                 @if ($jobs->status == 1)
                                                 <div class="badge badge-warning fs-6 m-1">Pending</div>
-
                                                 @elseif ($jobs->status == 2)
                                                 <div class="badge badge-success fs-6 m-1">Approved</div>
-
                                                 @elseif ($jobs->status == 3)
                                                 <div class="badge badge-danger fs-6 m-1">Rejected</div>
-
                                                 @elseif ($jobs->status == 4)
                                                 <div class="badge badge-danger fs-6 m-1">Canceled</div>
                                                 @endif
@@ -54,36 +60,15 @@
                                         </div>
                                         <hr>
                                         <div class="row d-flex mt-7">
+
                                             <div class="col-auto mb-5">
-                                                <i class="fas fa-solid fa-briefcase fs-3"></i>
-                                                {{ $jobs->jobs->category->name }}
-                                            </div>
-                                            <div class="col-auto mb-5">
-                                                <i class="fas fa-solid fa-location-dot fs-3"></i>
-                                                {{ $jobs->jobs->location_id }}
-                                            </div>
-                                            <div class="col-auto mb-5">
-                                                <i class="fas fa-regular fa-clock fs-3"></i>
-                                                {{ \Carbon\Carbon::parse($jobs->jobs->created_at)->toFormattedDateString() }}
-                                            </div>
-                                            <div class="col-auto mb-5">
-                                                <i class="fas fa-solid fa-money-bill-wave fs-3"></i>
-                                                @if ($jobs->jobs->mata_gaji == 1)
-                                                    ¥
-                                                @elseif ($jobs->jobs->mata_gaji == 2)
-                                                    USD
-                                                @else
-                                                    Rp
-                                                @endif {{ number_format($jobs->jobs->salary) }}
-                                                / {{ $jobs->jobs->salary_type }}
-                                            </div>
-                                            <div class="col-auto mb-5">
-                                                | Dilamar :
+                                                Melamar Pada :
                                                 {{ \Carbon\Carbon::parse($jobs->created_at)->toFormattedDateString() }}
                                             </div>
                                             <div class="col-auto mb-5 ms-auto">
                                                 <a href="{{ route('job.detail', ['id' => $jobs->jobs->id]) }}" class="btn btn-light rounded-pill m-1">Lihat</a>
-                                                <a class="btn btn-primary rounded-pill m-1" href="{{ route('jobs.cancel', ['id' => $jobs->id]) }}">Cancel</a>
+                                                <a class="btn btn-sm fs-8 btn-primary rounded-pill m-1" href="{{ route('jobs.reject', ['id' => $jobs->id]) }}">Reject</a>
+                                                <a class="btn btn-sm fs-8 btn-success rounded-pill m-1" href="{{ route('jobs.approve', ['id' => $jobs->id]) }}">Approve</a>
                                             </div>
                                         </div>
                                     </div>

@@ -5,7 +5,6 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-md-12">
-
                     <div class="row d-flex justify-content-between align-items-center">
                         <div class="col-auto">
                             <h3>Total Pelamar : {{ $data->count() }}</h3>
@@ -86,8 +85,6 @@
                                                 Dokumen</a>
 
                                         </div>
-
-
                                         <div class="col-auto mb-3 ms-auto">
                                             <a href="{{ route('detai.candidate', ['id' => $jobs->candidate->id]) }}"
                                                 class="btn btn-light btn-sm rounded-pill m-1">Lihat Profile</a>

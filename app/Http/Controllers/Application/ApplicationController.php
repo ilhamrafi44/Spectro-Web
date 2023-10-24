@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\JobsQualification;
 use App\Http\Controllers\Controller;
 use App\Models\PrivateNotification;
+use App\Models\SswFlowMaster;
 use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
@@ -141,13 +142,23 @@ class ApplicationController extends Controller
         $update = $apply->update();
 
         if ($update) {
+
             $jobs = Jobs::findOrFail($apply->job_id);
+
             PrivateNotification::create([
                 'from_id' => $apply->employer_id,
                 'to_id' => $apply->candidate_id,
                 'subject' => "Anda telah diterima",
                 'message' => "Anda telah diterima pada pekerjaan $jobs->name.",
             ]);
+
+            SswFlowMaster::create([
+                'job_id' => $apply->job_id,
+                'employer_id' => $apply->employer_id,
+                'candidate_id' => $apply->employer_id,
+                'level' => 1
+            ]);
+
             return redirect()->back()->with('message', 'Job Berhasil di Approve');
         }
         return redirect()->back()->with('error', 'Job Berhasil di Approve');

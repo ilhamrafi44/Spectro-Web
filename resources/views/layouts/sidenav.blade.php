@@ -211,6 +211,15 @@
                             </a>
 
                         </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('employer.ssw.index') }}">
+                                <span class="menu-title">SSW Flow</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+
+                        </div>
                     @endif
                     @if (Auth::user()->role == '1')
                         <div class="menu-item menu-lg me-0 me-lg-2">
@@ -249,6 +258,14 @@
                             <!--begin:Menu link-->
                             <a class="menu-link" href="{{ route('following.saved') }}">
                                 <span class="menu-title">Perusahaan Disimpan</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('ssw.index') }}">
+                                <span class="menu-title">SSW Flow</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </a>
 

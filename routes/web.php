@@ -23,6 +23,7 @@ use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SavedJobsController;
 use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\SswFlowMasterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserResumeController;
 use App\Models\Jobs;
@@ -196,6 +197,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/following', [FollowingController::class, 'employer_index'])->name('employer.following.saved');
             Route::get('/following/destroy/{id}', [FollowingController::class, 'destroy'])->name('following.saved.destroy');
 
+            Route::get('ssw-flow', [SswFlowMasterController::class, 'employer_index'])->name('employer.ssw.index');
+            Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'employer_detail'])->name('employer.ssw.detail');
+            Route::get('ssw-flow/acc/{id}', [SswFlowMasterController::class, 'acc'])->name('ssw.acc');
+
+
+
         });
     });
 
@@ -231,6 +238,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('/following', [FollowingController::class, 'index'])->name('following.saved');
             Route::get('/following/destroy/{id}', [FollowingController::class, 'destroy'])->name('following.saved.destroy');
+
+            Route::get('ssw-flow', [SswFlowMasterController::class, 'index'])->name('ssw.index');
+            Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'detail'])->name('ssw.detail');
+            Route::post('ssw-flow/post', [SswFlowMasterController::class, 'store'])->name('ssw.store');
+            Route::get('ssw-flow/delete', [SswFlowMasterController::class, 'destroy'])->name('ssw.delete');
 
         });
     });

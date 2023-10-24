@@ -113,6 +113,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('/rating/add', [RatingController::class, 'store'])->name('rating.store');
 
+    Route::get('/password/resetsss', [UserController::class, 'reset_index'])->name('reset.index');
+    Route::post('/password/resetss', [UserController::class, 'reset_update'])->name('reset.update');
+
+    Route::get('/account/delete', [UserController::class, 'hapus_akun'])->name('hapus.akun');
+
+
 
     //role admin
     Route::middleware(['admin'])->group(function () {
@@ -186,6 +192,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/app', [ApplicationController::class, 'employer'])->name('employer.app');
             Route::get('/app/rejects/{id}', [ApplicationController::class, 'rejects'])->name('jobs.reject');
             Route::get('/app/approves/{id}', [ApplicationController::class, 'approves'])->name('jobs.approve');
+
+            Route::get('/following', [FollowingController::class, 'employer_index'])->name('employer.following.saved');
+            Route::get('/following/destroy/{id}', [FollowingController::class, 'destroy'])->name('following.saved.destroy');
 
         });
     });

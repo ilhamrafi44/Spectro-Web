@@ -1,7 +1,12 @@
 <!--begin::Body-->
 
 <body id="kt_body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
-    data-kt-app-header-secondary-enabled="true" data-kt-app-toolbar-enabled="true" class="app-default">
+    data-kt-app-header-secondary-enabled="true" data-kt-app-toolbar-enabled="true" class="app-default"
+    data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on">
+    <div class="page-loader flex-column bg-dark bg-opacity-25">
+        <span class="spinner-border text-primary" role="status"></span>
+        <span class="text-gray-800 fs-6 fw-semibold mt-5">Loading...</span>
+    </div>
     <!--begin::Theme mode setup on page load-->
     <script>
         var defaultThemeMode = "light";
@@ -83,8 +88,12 @@
                                         <!--begin::Heading-->
                                         <div class="d-flex flex-column bgi-no-repeat rounded-top bg-spectro">
                                             <!--begin::Title-->
+                                            @php
+                                                $notif_private = \App\Models\PrivateNotification::where('to_id', Auth::user()->id)->orderby('created_at', 'desc')
+                                                    ->limit(5)
+                                                    ->get();
+                                            @endphp
                                             <h3 class="text-white fw-semibold px-9 mt-10 mb-6">Notifications
-                                                <span class="fs-8 opacity-75 ps-3">24 reports</span>
                                             </h3>
                                             <!--end::Title-->
                                             <!--begin::Tabs-->
@@ -92,11 +101,12 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link text-white opacity-75 show active opacity-state-100 pb-4"
                                                         data-bs-toggle="tab"
-                                                        href="#kt_topbar_notifications_1">Alerts</a>
+                                                        href="#kt_topbar_notifications_1">Private</a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
-                                                        data-bs-toggle="tab" href="#kt_topbar_notifications_3">Logs</a>
+                                                        data-bs-toggle="tab"
+                                                        href="#kt_topbar_notifications_3">Public</a>
                                                 </li>
                                             </ul>
                                             <!--end::Tabs-->
@@ -110,35 +120,34 @@
                                                 <!--begin::Items-->
                                                 <div class="scroll-y mh-325px my-5 px-8">
                                                     <!--begin::Item-->
-                                                    <div class="d-flex flex-stack py-4">
-                                                        <!--begin::Section-->
-                                                        <div class="d-flex align-items-center">
-                                                            <!--begin::Symbol-->
-                                                            <div class="symbol symbol-35px me-4">
-                                                                <span class="symbol-label bg-light-primary">
-                                                                    <i
-                                                                        class="ki-duotone ki-abstract-28 fs-2 text-primary">
-                                                                        <span class="path1"></span>
-                                                                        <span class="path2"></span>
-                                                                    </i>
-                                                                </span>
-                                                            </div>
-                                                            <!--end::Symbol-->
-                                                            <!--begin::Title-->
-                                                            <div class="mb-0 me-2">
-                                                                <a href="#"
-                                                                    class="fs-6 text-gray-800 text-hover-primary fw-bold">Project
-                                                                    Alice</a>
-                                                                <div class="text-gray-400 fs-7">Phase 1 development
+
+                                                    @foreach ($notif_private as $notif)
+                                                        <div class="d-flex flex-stack py-4">
+                                                            <!--begin::Section-->
+                                                            <div class="d-flex align-items-center">
+                                                                <!--begin::Symbol-->
+
+                                                                <!--end::Symbol-->
+                                                                <!--begin::Title-->
+                                                                <div class="mb-0 me-2">
+                                                                    <a
+                                                                        class="fs-6 text-gray-800 text-hover-primary fw-bold">{{ $notif->subject }}</a>
+                                                                    <div class="text-gray-400 fs-7">
+                                                                        {{ $notif->message }}
+                                                                    </div>
                                                                 </div>
+                                                                <!--end::Title-->
                                                             </div>
-                                                            <!--end::Title-->
+                                                            <!--end::Section-->
+                                                            <!--begin::Label-->
+                                                            <span
+                                                                class="badge badge-light fs-8">{{ \Carbon\Carbon::parse($notif->created_at)->toFormattedDateString() }}</span>
+                                                            <!--end::Label-->
                                                         </div>
-                                                        <!--end::Section-->
-                                                        <!--begin::Label-->
-                                                        <span class="badge badge-light fs-8">1 hr</span>
-                                                        <!--end::Label-->
-                                                    </div>
+                                                    @endforeach
+                                                    @if ($notif_private->count() == 0)
+                                                        @include('layouts.data404')
+                                                    @endif
                                                     <!--end::Item-->
                                                 </div>
                                                 <!--begin::View more-->
@@ -388,7 +397,7 @@
 
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
-                                        <div class="menu-item px-5"
+                                        {{-- <div class="menu-item px-5"
                                             data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                             data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
                                             <a href="#" class="menu-link px-5">
@@ -435,12 +444,15 @@
                                                 <!--end::Menu item-->
                                             </div>
                                             <!--end::Menu sub-->
-                                        </div>
+                                        </div> --}}
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5 my-1">
-                                            <a href="../dist/account/settings.html" class="menu-link px-5">Account
-                                                Settings</a>
+                                            <a href="{{ route('reset.index') }}" class="menu-link px-5">Ganti
+                                                Password</a>
+                                        </div>
+                                        <div class="menu-item px-5 my-1">
+                                            <a href="{{ route('hapus.akun') }}" class="menu-link px-5">Hapus Akun</a>
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->

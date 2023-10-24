@@ -202,6 +202,15 @@
                             </a>
 
                         </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('employer.following.saved') }}">
+                                <span class="menu-title">Candidate Tersimpan</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+
+                        </div>
                     @endif
                     @if (Auth::user()->role == '1')
                         <div class="menu-item menu-lg me-0 me-lg-2">

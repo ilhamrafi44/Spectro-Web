@@ -39,6 +39,36 @@ class FollowingController extends Controller
         ]);
     }
 
+    public function employer_index(Request $request)
+    {
+        $order = 'desc';
+        if ($request->filled('direction')) {
+            $order = $request->input('direction');
+        }
+        $perPage = 10; // Jumlah item per halaman, dapat disesuaikan sesuai kebutuhan Anda
+
+        if ($request->filled('per_page')) {
+            $perPage = $request->input('per_page');
+        }
+        // Simpan data pencarian dalam sesi
+        $request->flash();
+
+        $results = Following::where('user_id', Auth::user()->id)
+            ->whereHas('following', function ($query) use ($request) {
+                if ($request->filled('name')) {
+                    $query->where('name', 'like', '%' . $request->input('name') . '%');
+                }
+            })
+            ->orderBy('created_at', $request->input('orderby', $order))
+            ->paginate($perPage)
+            ->appends($request->all());
+
+        return view('employer.following', [
+            'page_name' => "Daftar Ikuti Candidate",
+            'data' => $results,
+        ]);
+    }
+
     public function store(Request $request)
     {
         if (Auth::user()) {
@@ -47,12 +77,10 @@ class FollowingController extends Controller
                 return response()->json(['status' => 'error', 'data' => 'Tidak Bisa Memfollow Diri Sendiri.']);
             }
 
-
             $data = Following::firstOrCreate([
                 'employer_id' => $request->employer_id,
                 'user_id' => Auth::user()->id
             ]);
-
 
             if ($data) {
                 return response()->json(['status' => 'success', 'data' => 'Sukses Menambahkan Following.']);

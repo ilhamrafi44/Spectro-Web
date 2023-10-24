@@ -26,4 +26,9 @@ class Applications extends Model
         return $this->hasOne(Jobs::class, 'id', 'job_id');
     }
 
+    public function resume()
+    {
+        return  $this->hasOne(UserResume::class, 'user_id', 'candidate_id');
+    }
+
 }

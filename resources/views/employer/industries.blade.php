@@ -117,11 +117,11 @@
                         </table>
                     </div>
                     @if ($data->count() > 0)
-                    <!-- Tampilkan link pagination -->
-                    {{ $data->appends(request()->query())->links() }}
-                @else
-                    <h1 class="text-center">No data found.</h1>
-                @endif
+                        <!-- Tampilkan link pagination -->
+                        {{ $data->appends(request()->query())->links() }}
+                    @else
+                        @include('layouts.data404')
+                    @endif
 
                 </div>
             </div>

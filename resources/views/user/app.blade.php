@@ -173,7 +173,7 @@
                                             <!-- Tampilkan link pagination -->
                                             {{ $data->appends(request()->except('page'))->links() }}
                                         @else
-                                            <h1 class="text-center">No data found.</h1>
+                                            @include('layouts.data404')
                                         @endif
                                     </div>
                                 </div>

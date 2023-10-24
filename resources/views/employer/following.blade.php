@@ -5,7 +5,7 @@
         <div class="col-md-12 mb-5">
             <div class="card">
                 <div class="card-body">
-                    <h1>Perusahaan Diikuti</h1>
+                    <h1>Candidate Diikuti</h1>
                     <form>
                         <div class="row d-flex">
                             @csrf
@@ -48,7 +48,7 @@
                                         </p>
                                     </div>
                                     <div class="col-auto ms-auto">
-                                        <a href="{{ route('detai.employer', ['id' => $item->following->id]) }}"
+                                        <a href="{{ route('detai.candidate', ['id' => $item->following->id]) }}"
                                             class="btn btn-light m-1" target="_blank">Lihat</a>
                                         <a href="{{ route('following.saved.destroy', ['id' => $item->id]) }}"
                                             class="btn btn-primary m-1">Unfollow</a>

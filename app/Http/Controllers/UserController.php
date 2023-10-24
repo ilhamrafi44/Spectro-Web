@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Following;
 use App\Models\ProfileViews;
 use Illuminate\Http\Request;
 use App\Models\CandidateProfile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -56,14 +58,52 @@ class UserController extends Controller
      */
     public function index()
     {
-        $page_name = 'List User';
+        $page_name = 'Home';
 
         $check_complete = $this->check_completion(Auth::user()->id);
 
+        $date_list = array();
+        for ($i = 6; $i > -1; $i--) {
+            $date_list[] = date('Y-m-d', strtotime('-' . $i . ' days'));
+        }
+        $collect_profile_views = collect(ProfileViews::where('user_id', Auth::user()->id)->whereBetween('created_at', [Carbon::parse($date_list[0]), $date_list[6] . ' 23:59:59'])->get());
+        for ($i = 0; $i < count($date_list); $i++) {
+
+            $data_hasil = $collect_profile_views->whereBetween('created_at', [$date_list[$i] . ' 00:00:00', $date_list[$i] . ' 23:59:59'])->count();
+            $data[] = ['date' => $date_list[$i], 'total_data' => $data_hasil];
+        }
+
         return view('home', [
             'page_name' => $page_name,
-            'check_complete' => $check_complete
+            'check_complete' => $check_complete,
+            'chart' => $data
         ]);
+    }
+
+    public function reset_index()
+    {
+        return view('auth.reset_password', [
+            'page_name' => 'Reset Kata Sandi'
+        ]);
+    }
+
+    public function reset_update(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        $user = User::findOrFail(Auth::user()->id);
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->with('error', 'Password Saat ini Salah');
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->update();
+
+        return redirect()->back()->with('message', 'Berhasil memperbarui Password');
     }
 
     public function profile()
@@ -81,6 +121,17 @@ class UserController extends Controller
     public function settings()
     {
         return view('user.profile');
+    }
+
+    public function hapus_akun(Request $request)
+    {
+        if($request->yakin == 'ya') {
+            User::findOrFail(Auth::user()->id)->delete();
+            return redirect('/');
+        }
+        return view('auth.delete_account', [
+            'page_name' => 'Hapus Akun'
+        ]);
     }
 
     public function detail(Request $request)

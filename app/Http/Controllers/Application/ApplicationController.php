@@ -10,6 +10,7 @@ use App\Models\JobsIndustry;
 use Illuminate\Http\Request;
 use App\Models\JobsQualification;
 use App\Http\Controllers\Controller;
+use App\Models\PrivateNotification;
 use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
@@ -63,14 +64,38 @@ class ApplicationController extends Controller
         ]);
     }
 
-    public function employer()
+    public function employer(Request $request)
     {
-        $data = Applications::with('candidate', 'jobs')->where('employer_id', Auth::user()->id)->get();
+        $order = 'desc';
+        if ($request->filled('direction')) {
+            $order = $request->input('direction');
+        }
+        $perPage = 10; // Jumlah item per halaman, dapat disesuaikan sesuai kebutuhan Anda
+        if ($request->filled('per_page')) {
+            $perPage = $request->input('per_page');
+        }
+        // Simpan data pencarian dalam sesi
+        $request->flash();
+
+        $results = Applications::where('employer_id', Auth::user()->id)
+            ->whereHas('candidate', function ($query) use ($request) {
+                if ($request->filled('name')) {
+                    $query->where('name', 'like', '%' . $request->input('name') . '%');
+                }
+            })->whereHas('jobs', function ($query) use ($request) {
+                if ($request->filled('job_id')) {
+                    $query->where('id', $request->input('job_id'));
+                }
+            })
+            ->orderBy('created_at', $request->input('orderby', $order))
+            ->paginate($perPage)
+            ->appends($request->all());
+
         $data_job = Jobs::where('user_id', Auth::user()->id)->get();
         return view('employer.app.index', [
             "page_name" => "Pelamar Saya",
             'data_job' => $data_job,
-            "data" => $data
+            "data" => $results
         ]);
     }
 
@@ -85,10 +110,16 @@ class ApplicationController extends Controller
         ]);
 
         if ($apply) {
+            $jobs = Jobs::findOrFail($request->job_id);
+            PrivateNotification::create([
+                'from_id' => $request->employer_id,
+                'to_id' => Auth::user()->id,
+                'subject' => "Berhasil menambahkan lamaran",
+                'message' => "Berhasil melamar pada pekerjaan $jobs->name.",
+            ]);
             return redirect()->back()->with('message', 'Job Berhasil Dilamar');
         }
         return redirect()->back()->with('error', 'Job Berhasil Dilamar');
-
     }
 
     public function cancelss(string $id)
@@ -101,7 +132,6 @@ class ApplicationController extends Controller
             return redirect()->back()->with('message', 'Job Berhasil Dibatalkan');
         }
         return redirect()->back()->with('error', 'Job Berhasil Dibatalkan');
-
     }
 
     public function approves(string $id)
@@ -111,10 +141,16 @@ class ApplicationController extends Controller
         $update = $apply->update();
 
         if ($update) {
+            $jobs = Jobs::findOrFail($apply->job_id);
+            PrivateNotification::create([
+                'from_id' => $apply->employer_id,
+                'to_id' => $apply->candidate_id,
+                'subject' => "Anda telah diterima",
+                'message' => "Anda telah diterima pada pekerjaan $jobs->name.",
+            ]);
             return redirect()->back()->with('message', 'Job Berhasil di Approve');
         }
         return redirect()->back()->with('error', 'Job Berhasil di Approve');
-
     }
     public function rejects(string $id)
     {
@@ -123,10 +159,15 @@ class ApplicationController extends Controller
         $update = $apply->update();
 
         if ($update) {
+            $jobs = Jobs::findOrFail($apply->job_id);
+            PrivateNotification::create([
+                'from_id' => $apply->employer_id,
+                'to_id' => $apply->candidate_id,
+                'subject' => "Anda telah ditolak",
+                'message' => "Anda telah ditolak pada pekerjaan $jobs->name.",
+            ]);
             return redirect()->back()->with('message', 'Job Berhasil Direject');
         }
         return redirect()->back()->with('error', 'Job Berhasil Direject');
-
     }
-
 }

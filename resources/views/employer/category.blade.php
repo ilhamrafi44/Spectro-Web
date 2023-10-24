@@ -6,6 +6,27 @@
             <div class="card">
                 <div class="card-body">
                     <h1>List Job Category</h1>
+                    <form>
+                        <div class="row d-flex">
+                            @csrf
+                            <div class="col-md-5">
+                                <div class="mb-5 ">
+                                    <input type="text" name="name" value="{{ request()->get('name') }}"
+                                        class="form-control" placeholder="Enter your keyword..">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="mb-5 ">
+                                    <select class="form-select" aria-label="Select example" data-control="select2"
+                                        name="direction">
+                                        <option value="asc">Terlama</option>
+                                        <option value="desc">Terbaru</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-spectro col-md-2 mb-5" type="submit">Cari</button>
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -63,7 +84,8 @@
                                                                         Created By</label>
                                                                     <input name="name" type="text"
                                                                         class="form-control form-control-solid"
-                                                                        placeholder="" value="{{ $item->creator->name }}" disabled />
+                                                                        placeholder="" value="{{ $item->creator->name }}"
+                                                                        disabled />
                                                                 </div>
                                                                 <div class="mb-5">
                                                                     <label for="exampleFormControlInput1"
@@ -91,8 +113,12 @@
                             </tbody>
                         </table>
                     </div>
-
-
+                    @if ($data->count() > 0)
+                        <!-- Tampilkan link pagination -->
+                        {{ $data->appends(request()->query())->links() }}
+                    @else
+                        <h1 class="text-center">No data found.</h1>
+                    @endif
                 </div>
             </div>
         </div>

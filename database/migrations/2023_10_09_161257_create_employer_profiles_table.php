@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('ukuran_perusahaan')->nullable();
             $table->string('kategori_perusahaan')->nullable();
             $table->string('url_video')->nullable();
-            $table->string('deskripsi')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->string('sosial_id')->nullable();
             $table->string('negara')->nullable();
             $table->string('anggota_id')->nullable();

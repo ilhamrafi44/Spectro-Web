@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('pengalaman_kerjas', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id')->nullable();
+            $table->string('tanggal')->nullable();
+            $table->string('jabatan')->nullable();
+            $table->string('nama_perusahaan')->nullable();
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

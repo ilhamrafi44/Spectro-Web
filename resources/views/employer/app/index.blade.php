@@ -67,8 +67,11 @@
                                             </div>
                                             <div class="col-auto mb-5 ms-auto">
                                                 <a href="{{ route('job.detail', ['id' => $jobs->jobs->id]) }}" class="btn btn-light rounded-pill m-1">Lihat</a>
+                                                @if ($jobs->status != 4)
+
                                                 <a class="btn btn-sm fs-8 btn-primary rounded-pill m-1" href="{{ route('jobs.reject', ['id' => $jobs->id]) }}">Reject</a>
                                                 <a class="btn btn-sm fs-8 btn-success rounded-pill m-1" href="{{ route('jobs.approve', ['id' => $jobs->id]) }}">Approve</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

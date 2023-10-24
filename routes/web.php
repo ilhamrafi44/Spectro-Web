@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserControler;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Application\ApplicationController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\Employer\JobsCareerLevelController;
 use App\Http\Controllers\Employer\JobsCategoryController;
 use App\Http\Controllers\Employer\JobsController;
@@ -11,16 +12,19 @@ use App\Http\Controllers\Employer\JobsIndustryController;
 use App\Http\Controllers\Employer\JobsQualificationController;
 use App\Http\Controllers\Employer\JobsTypeController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\FollowingController;
 use App\Http\Controllers\GhostController;
 use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\PengalamanKerjaController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\SavedJobsController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserResumeController;
 use App\Models\Jobs;
 use App\Models\JobsCategory;
 use App\Models\JobsIndustry;
@@ -51,6 +55,25 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/about', function () {
+    return view('page.about',[
+        'page_name'=>"About Us"
+    ]);
+})->name('page.about');
+
+Route::get('/contact_us', function () {
+    return view('page.contact',[
+        'page_name'=>"About Us"
+    ]);
+})->name('page.contact');
+
+Route::post('/contact-store', [ContactUsController::class, 'store'])->name('contact.store');
+
+Route::prefix('blog')->group(function () {
+    Route::get('/', [JobsController::class, 'index'])->name('blog.index');
+    Route::get('/detail/{id}', [JobsController::class, 'detail'])->name('job.detail');
+});
+
 Route::get('/register/candidate', function () {
     return view('auth.candidate');
 
@@ -75,6 +98,9 @@ Route::get('set-role/{id}', [GhostController::class, 'set_role'])->name('set_rol
 Route::post('save-job', [SavedJobsController::class, 'store'])->name('jobs.save');
 Route::post('delete-job', [SavedJobsController::class, 'delete'])->name('jobs.delete');
 
+Route::post('save-following', [FollowingController::class, 'store'])->name('following.save');
+Route::post('delete-following', [FollowingController::class, 'delete'])->name('following.delete');
+
 Auth::routes(['verify' => true]);
 
 // Job Route
@@ -92,6 +118,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::middleware(['admin'])->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('/home', [AdminController::class, 'index'])->name('admin_home');
+            Route::get('/contact_us', [ContactUsController::class, 'index'])->name('admin.contact.index');
 
             // user
             Route::get('/users', [UserControler::class, 'index'])->name('admin.list.user');
@@ -168,13 +195,33 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::prefix('user')->group(function () {
             Route::get('/home', [UserController::class, 'index'])->name('user_home');
             Route::get('/profile', [UserController::class, 'profile'])->name('user_profile');
+            Route::post('/profile/update', [UserController::class, 'update'])->name('user.profile.update');
             Route::get('/settings', [UserController::class, 'settings'])->name('user_settings');
+            Route::get('/resume', [UserResumeController::class, 'index'])->name('user.resume');
+            Route::post('/resume/update', [UserResumeController::class, 'update'])->name('user.resume.update');
+            Route::get('/resume/reset', [UserResumeController::class, 'reset'])->name('user.resume.reset');
 
             // job apply
             Route::post('/app/store', [ApplicationController::class, 'apply'])->name('jobs.apply');
             Route::get('/app', [ApplicationController::class, 'index'])->name('jobs.index');
             Route::get('/app/cancelss/{id}', [ApplicationController::class, 'cancelss'])->name('jobs.cancel');
             Route::get('/app/delete', [ApplicationController::class, 'destroy'])->name('jobs.destroy');
+
+            Route::post('/sosmed/add', [SocialMediaController::class, 'sosmed_add'])->name('user.sosmed.add');
+            Route::post('/sosmed/update', [SocialMediaController::class, 'sosmed_update'])->name('user.sosmed.update');
+            Route::get('/sosmed/delete/{id}', [SocialMediaController::class, 'sosmed_delete'])->name('user.sosmed.delete');
+
+            // pengalaman kerja
+            Route::post('/pengalaman/add', [PengalamanKerjaController::class, 'add'])->name('user.pengalaman.add');
+            Route::post('/pengalaman/update', [PengalamanKerjaController::class, 'update'])->name('user.pengalaman.update');
+            Route::get('/pengalaman/delete/{id}', [PengalamanKerjaController::class, 'delete'])->name('user.pengalaman.delete');
+
+            //saved jobs
+            Route::get('/jobs-saved', [SavedJobsController::class, 'index'])->name('jobs.saved');
+            Route::get('/jobs-saved/destroy/{id}', [SavedJobsController::class, 'destroy'])->name('jobs.saved.destroy');
+
+            Route::get('/following', [FollowingController::class, 'index'])->name('following.saved');
+            Route::get('/following/destroy/{id}', [FollowingController::class, 'destroy'])->name('following.saved.destroy');
 
         });
     });
@@ -217,3 +264,4 @@ Route::get('/profile', function () {
 })->name('profile');
 
 Route::get('/employer/detail/{id}', [EmployerController::class, 'detail'])->name('detai.employer');
+Route::get('/candidate/detail/{id}', [UserController::class, 'detail'])->name('detai.candidate');

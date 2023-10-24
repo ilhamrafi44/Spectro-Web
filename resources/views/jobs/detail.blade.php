@@ -46,7 +46,7 @@
         <div class="col-md-4">
             <div class="p-5 ">
                 <div class="fs-5 mb-3">
-                    Lamaran Ditutup : <a href="" class="text-primary fw-bolder">
+                    Lamaran Ditutup : <a class="text-primary fw-bolder">
                         {{ \Carbon\Carbon::parse($data->expired_date)->toFormattedDateString() }} </a>
                 </div>
                 <form action="{{ route('jobs.apply') }}" method="POST">
@@ -334,16 +334,19 @@
                     "_method": 'post',
                     "_token": "{{ csrf_token() }}",
                 },
-                success: function() {
-                    $('#response').html(success);
-                    // $("#save" + id).remove();
+                success: function(response) {
+                    k = response;
+                    if (k.status == 'success') {
+                        $('#response').html(success);
+                    }
+                    // $("#destroy" + id).remove();
                     Swal.fire({
-                        text: "Pekerjaan berhasil ditambahkan ke list!",
-                        icon: "success",
+                        text: response.data,
+                        icon: response.status,
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
                         customClass: {
-                            confirmButton: "btn btn-success"
+                            confirmButton: "btn btn-primary"
                         }
                     });
                 }
@@ -371,12 +374,15 @@
                     "_method": 'post',
                     "_token": "{{ csrf_token() }}",
                 },
-                success: function() {
-                    $('#response').html(success);
+                success: function(response) {
+                    k = response;
+                    if (k.status == 'success') {
+                        $('#response').html(success);
+                    }
                     // $("#destroy" + id).remove();
                     Swal.fire({
-                        text: "Pekerjaan berhasil di hapus dari list!",
-                        icon: "success",
+                        text: response.data,
+                        icon: response.status,
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
                         customClass: {

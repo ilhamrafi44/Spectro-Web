@@ -12,10 +12,13 @@ use App\DataTables\UsersDataTable;
 class UserControler extends Controller
 {
     use ImageManager;
+
+
     public function __construct()
     {
         $this->middleware('admin');
     }
+
 
     public function index(UsersDataTable $dataTable)
     {

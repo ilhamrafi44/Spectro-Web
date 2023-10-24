@@ -35,50 +35,51 @@
         <div class="container p-5">
             <h1>Cari Pekerjaan</h1>
             <div class="separator my-5"></div>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="mb-4">
-                        <label for="exampleFormControlInput1" class="required form-label">Jobs Category</label>
-                        <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
-                            name="category_id">
-                            @foreach ($category as $item_c)
-                                <option value="{{ $item_c->id }}">{{ $item_c->name }}</option>
-                            @endforeach
+            <form action="{{ route('job.index') }}" method="GET">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="required form-label">Jobs Category</label>
+                            <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
+                                name="category_id">
+                                @foreach ($category as $item_c)
+                                    <option value="{{ $item_c->id }}">{{ $item_c->name }}</option>
+                                @endforeach
 
-                        </select>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="required form-label">Jobs Industry</label>
+                            <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
+                                name="industry_id">
+                                @foreach ($industry as $item_i)
+                                    <option value="{{ $item_i->id }}">{{ $item_i->name }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="required form-label">Jobs Location</label>
+                            <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
+                                name="location_id">
+                                @foreach ($location as $locationss)
+                                    <option value="{{ $locationss->location_id }}">{{ $locationss->location_id }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="mt-7">
+                            <button type="submit" href="" class="btn btn-lg btn-primary col-12">Cari Kerja</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="mb-4">
-                        <label for="exampleFormControlInput1" class="required form-label">Jobs Industry</label>
-                        <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
-                            name="category_id">
-                            @foreach ($industry as $item_i)
-                                <option value="{{ $item_i->id }}">{{ $item_i->name }}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="mb-4">
-                        <label for="exampleFormControlInput1" class="required form-label">Jobs Location</label>
-                        <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
-                            name="category_id">
-                            @foreach ($location as $locationss)
-                                <option value="{{ $locationss->location_id }}">{{ $locationss->location_id }}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="mt-7">
-                        <a href="" class="btn btn-lg btn-primary col-12">Cari Kerja</a>
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     <div class="row bg-white my-17">
@@ -86,7 +87,8 @@
             <h1>Explore Category</h1>
             <div class="row d-flex">
                 @foreach ($category as $item_c)
-                    <a href="#" class="card col-md-4 col-12 border m-3 hover-elevate-up parent-hover">
+                    <a href="{{ route('job.index', ['category_id' => $item_c]) }}"
+                        class="card col-md-4 col-12 border m-3 hover-elevate-up parent-hover">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-2 mb-3">

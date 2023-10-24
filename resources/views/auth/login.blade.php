@@ -65,8 +65,10 @@
                 <div class="d-flex flex-center flex-column flex-column-fluid">
                     <!--begin::Wrapper-->
                     <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+
                         <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('login') }}" method="POST">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
+                            action="{{ route('login') }}" method="POST">
                             @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-7">
@@ -80,6 +82,27 @@
                                 </div>
                                 <!--end::Link-->
                             </div>
+                            @if ($errors->has('password') || $errors->has('email'))
+                            <!--begin::Alert-->
+                            <div class="alert alert-danger d-flex align-items-center p-5">
+                                <!--begin::Icon-->
+                                <i class="ki-duotone ki-message-text-2 fs-2hx text-danger me-4 mb-5 mb-sm-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                <!--end::Icon-->
+
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-column">
+                                    <!--begin::Title-->
+                                    <h4 class="mb-1 text-danger">Gagal</h4>
+                                    <!--end::Title-->
+
+                                    <!--begin::Content-->
+                                    <span>Email atau Kata sandi salah.</span>
+                                    <!--end::Content-->
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
+                            <!--end::Alert-->
+                        @endif
                             <!--begin::Heading-->
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
@@ -100,8 +123,8 @@
                                     <label class="form-label fw-bold text-dark fs-6 mb-0">Password</label>
                                     <!--end::Label-->
                                     <!--begin::Link-->
-                                    <a href="{{ route('password.request') }}"
-                                        class="text-spectro fs-6 fw-bold">Forgot Password ?</a>
+                                    <a href="{{ route('password.request') }}" class="text-spectro fs-6 fw-bold">Forgot
+                                        Password ?</a>
                                     <!--end::Link-->
                                 </div>
                                 <!--end::Wrapper-->
@@ -114,7 +137,8 @@
                                 <!--begin::Wrapper-->
                                 <div class="d-flex flex-stack mb-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" />
+                                        <input class="form-check-input" type="checkbox" name="remember"
+                                            id="remember" />
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Remember Me
                                         </label>
@@ -135,7 +159,8 @@
                                 <div class="text-center text-muted text-uppercase fw-bold mb-5">or</div>
                                 <!--end::Separator-->
                                 <!--begin::Google link-->
-                                <a href="{{ route('google-auth') }}" class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
+                                <a href="{{ route('google-auth') }}"
+                                    class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
                                     <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg"
                                         class="h-20px me-3" />Continue with Google</a>
                                 <!--end::Google link-->
@@ -151,12 +176,10 @@
                 <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
                     <!--begin::Links-->
                     <div class="d-flex flex-center fw-semibold fs-6">
-                        <a href="/" class="text-muted text-hover-primary px-2"
-                            target="_blank">Cari Kerja</a>
-                        <a href="/" class="text-muted text-hover-primary px-2"
-                            target="_blank">Cari Kandidat</a>
-                        <a href="https://arkalearn.com/"
-                            class="text-muted text-hover-primary px-2" target="_blank">Belajar Di Arka</a>
+                        <a href="/" class="text-muted text-hover-primary px-2" target="_blank">Cari Kerja</a>
+                        <a href="/" class="text-muted text-hover-primary px-2" target="_blank">Cari Kandidat</a>
+                        <a href="https://arkalearn.com/" class="text-muted text-hover-primary px-2"
+                            target="_blank">Belajar Di Arka</a>
                     </div>
                     <!--end::Links-->
                 </div>

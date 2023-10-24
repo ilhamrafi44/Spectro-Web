@@ -54,7 +54,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function candidate_profile()
     {
-        return $this->belongsTo(CandidateProfile::class, 'user_id', 'id');
+        return $this->belongsTo(CandidateProfile::class, 'id', 'user_id');
+    }
+
+    public function candidate_resume()
+    {
+        return $this->belongsTo(UserResume::class, 'id', 'user_id');
+    }
+
+    public function pengalaman_kerja()
+    {
+        return $this->belongsTo(PengalamanKerja::class, 'id', 'user_id');
     }
 
 }

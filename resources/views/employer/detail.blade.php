@@ -17,10 +17,10 @@
                         <div class="col-md-5">
                             <div class="symbol symbol-160px symbol-lg-160px symbol-fixed shadow mb-5"
                                 style="margin-top: -100%;">
-                                @if ($profile?->file_logo_id == null)
+                                @if ($data?->file_profile_id == null)
                                     <img src="/assets/media/employer-avatar.jpg" alt="" height="300px">
                                 @else
-                                    <img src="/storage/file/images/employer/{{ $profile->file_logo_id }}" alt=""
+                                    <img src="/storage/file/images/profile/{{ $data->file_profile_id }}" alt=""
                                         height="300px">
                                 @endif
                             </div>
@@ -33,7 +33,7 @@
                                 </h1>
 
                                 <p>
-                                    {{ $profile->deskripsi }}
+                                    {{ $profile->deskripsi ?? 'Tidak Ada'}}
                                 </p>
 
                             </div>
@@ -43,23 +43,37 @@
                                 <div class="row d-flex">
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-location-dot"></i> <b>Lokasi : </b></a>
-                                        {{ $profile->alamat }}, {{ $profile->negara }}
+                                        {{ $profile->alamat ?? 'Tidak Ada'}}, {{ $profile->negara ?? 'Tidak Ada'}}
                                     </div>
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-calendar-days"></i> <b>Berdiri Sejak : </b></a>
-                                        {{ $profile->tahun_pendirian }}
+                                        {{ $profile->tahun_pendirian ?? 'Tidak Ada'}}
                                     </div>
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-envelope"></i> <b>Email : </b></a>
-                                        {{ $data->email }}
+                                        {{ $data->email ?? 'Tidak Ada'}}
                                     </div>
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-phone"></i> <b>No Telepon : </b></a>
-                                        {{ $data->nomor_telepon }}
+                                        {{ $data->nomor_telepon ?? 'Tidak Ada'}}
+                                    </div>
+                                    <div class="col-md-12 fs-5 mb-5">
+                                        <a><i class="fa-solid fa-user-plus"></i> <b>Pengikut : </b></a>
+                                        {{ number_format($profile->followers->count()) ?? 'Tidak Ada'}}
                                     </div>
                                     <div class="col-6 h-100">
-                                        <div class="btn btn-primary w-100"><i class="fa-solid fa-user-plus"></i> Follow
-                                        </div>
+                                        @if ($check)
+                                            <div id="response">
+                                                <button type="button" onclick="destroy({{ $data->id }})"
+                                                    class="btn btn-light w-100 delete"><i class="fa-solid fa-user-check"></i> Diikuti</button>
+                                            </div>
+                                        @else
+                                            <div id="response">
+                                                <button type="button" onclick="save({{ $data->id }})"
+                                                    class="btn btn-primary w-100 save"><i class="fa-solid fa-user-plus"></i> Ikuti</button>
+                                            </div>
+                                        @endif
+
                                     </div>
                                     <div class="col-6 h-100">
                                         <div class="btn btn-warning w-100"><i class="fa-solid fa-comments"></i>Chat </div>
@@ -80,7 +94,7 @@
                     <h1 class="mb-5">List Job</h1>
                     @forelse ($profile->jobs as $jobs)
                         <a href="{{ route('job.detail', ['id' => $jobs->id]) }}"
-                            class="card hover-elevate-up border parent-hover">
+                            class="card hover-elevate-up border parent-hover mb-5">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h3> {{ $jobs->name }} </h3>
@@ -236,9 +250,90 @@
                     @foreach ($profile->social_media as $sosmed)
                         <a href="{{ $sosmed->link }}" class="mb-5 btn btn-light border col-12">{{ $sosmed->jenis }}</a>
                     @endforeach
-
+                    @if ($profile->social_media->count() == 0)
+                        <h3>Belum Ada</h3>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function save(idsave) {
+            var id = idsave;
+
+            var success = '<button type="button" onclick="destroy(' + id + ')" class="btn btn-light w-100 delete"><i class="fa-solid fa-user-check"></i> Diikuti</button>';
+
+            var failed = '<span class="badge badge-soft-pink">' +
+                'disbale' +
+                '</span>';
+            $.ajax({
+                url: "{{ route('following.save') }}",
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                    "employer_id": id,
+                    "_method": 'post',
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(response) {
+                    k = response;
+                    if (k.status == 'success') {
+                        $('#response').html(success);
+                    }
+                    // $("#destroy" + id).remove();
+                    Swal.fire({
+                        text: response.data,
+                        icon: response.status,
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                }
+            });
+            $('#alert-message').alert('Gagal');
+        };
+
+        function destroy(destroy) {
+            var id = destroy;
+
+            var success = '<button type="button" onclick="save(' + id + ')" class="btn btn-primary w-100 save"><i class="fa-solid fa-user-plus"></i> Ikuti</button>';
+
+            var failed = '<span class="badge badge-soft-pink">' +
+                'disbale' +
+                '</span>';
+            $.ajax({
+                url: "{{ route('following.delete') }}",
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                    "employer_id": id,
+                    "_method": 'post',
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(response) {
+                    k = response;
+                    if (k.status == 'success') {
+                        $('#response').html(success);
+                    }
+                    // $("#destroy" + id).remove();
+                    Swal.fire({
+                        text: response.data,
+                        icon: response.status,
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-success"
+                        }
+                    });
+                }
+            });
+
+            $('#alert-message').alert('Error');
+        };
+    </script>
+@endpush

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('private_notifications', function (Blueprint $table) {
             $table->id();
+            $table->string('from_id')->nullable();
+            $table->string('to_id')->nullable();
+            $table->string('subject')->nullable();
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }

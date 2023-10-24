@@ -20,9 +20,45 @@ use Illuminate\Support\Facades\Auth;
 
 class JobsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Jobs::all();
+        $query = Jobs::query();
+
+        $queryParams = $request->query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->input('category_id'));
+        }
+
+        if ($request->filled('industry_id')) {
+            $query->where('industry_id', $request->input('industry_id'));
+        }
+
+        if ($request->filled('location_id')) {
+            $query->where('location_id', $request->input('location_id'));
+        }
+
+        $orderBy = 'created_at';
+        $direction = 'asc'; // Default direction
+
+        if ($request->filled('direction') && in_array($request->input('direction'), ['asc', 'desc'])) {
+            $direction = $request->input('direction');
+        }
+
+        $query->orderBy($orderBy, $direction);
+
+        $perPage = 10;
+
+        if ($request->has('per_page')) {
+            $perPage = $request->input('per_page');
+        }
+
+        $results = $query->paginate($perPage)->appends($queryParams);
+
         $category = JobsCategory::all();
         $industry = JobsIndustry::all();
         $type = JobsType::all();
@@ -36,7 +72,7 @@ class JobsController extends Controller
             'type' => $type,
             'qualification' => $qualification,
             'location' => $location,
-            "data" => $data
+            "data" => $results
         ]);
     }
 
@@ -54,7 +90,7 @@ class JobsController extends Controller
         $check = 0;
         $check_saved = 0;
 
-        if(Auth::user()){
+        if (Auth::user()) {
             $check = Applications::where('candidate_id', Auth::user()->id)->where('job_id', $request->id)->count();
             $check_saved = SavedJobs::where('user_id', Auth::user()->id)->where('job_id', $request->id)->count();
         }
@@ -64,7 +100,7 @@ class JobsController extends Controller
 
         $job = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', $request->id)->first();
 
-        if($job) {
+        if ($job) {
             JobViews::firstOrCreate([
                 'job_id' => $request->id,
                 'ip' => $request->ip()
@@ -140,8 +176,7 @@ class JobsController extends Controller
             'pic_id' => $request->pic_1
         ]);
 
-        if($request->pic_2 > 0)
-        {
+        if ($request->pic_2 > 0) {
             $pic = JobsPic::create([
                 'job_id' => $job->id,
                 'pic_id' => $request->pic_2
@@ -151,6 +186,6 @@ class JobsController extends Controller
         if ($job) {
             return redirect()->back()->with('message', 'Job Berhasil Ditambah');
         }
-        return redirect()->back()->with('error', 'Job Berhasil Ditambah');
+        return redirect()->back()->with('error', 'Job Gagal Ditambah');
     }
 }

@@ -14,13 +14,11 @@
                 id="kt_app_header_menu" data-kt-menu="true">
                 <!--begin:Menu item-->
                 <div class="menu-item menu-lg me-0 me-lg-2">
-
                     <!--begin:Menu link-->
                     <a class="menu-link" href="{{ route('home') }}">
                         <span class="menu-title">Dashboard</span>
                         <span class="menu-arrow d-lg-none"></span>
                     </a>
-
                 </div>
                 @if (Auth::user())
                     @if (Auth::user()->role == '3')
@@ -30,9 +28,7 @@
                                 <span class="menu-title">User</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </span>
-                            <div
-                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-
+                            <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{ route('admin.list.user') }}">
                                         <span class="menu-bullet">
@@ -49,17 +45,18 @@
                                         <span class="menu-title">Create User</span>
                                     </a>
                                 </div>
-
-                                {{-- <div class="menu-item">
-                            <!--begin:Menu link-->
-                            <a class="menu-link active" href="../dist/pages/faq.html">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Create</span>
-                            </a>
-                            <!--end:Menu link-->
-                        </div> --}}
+                            {{--
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link active" href="../dist/pages/faq.html">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Create</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
+                                --}}
                             </div>
                         </div>
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
@@ -154,6 +151,12 @@
                                 <span class="menu-arrow d-lg-none"></span>
                             </a>
                         </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <a class="menu-link" href="{{ route('admin.contact.index') }}">
+                                <span class="menu-title">List Contact</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+                        </div>
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                             data-kt-menu-placement="bottom-start" class="menu-item menu-lg me-0 me-lg-2">
                             <a class="menu-link" href="../dist/pages/about.html">
@@ -199,7 +202,8 @@
                             </a>
 
                         </div>
-                    @else
+                    @endif
+                    @if (Auth::user()->role == '1')
                         <div class="menu-item menu-lg me-0 me-lg-2">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="{{ route('job.index') }}">
@@ -210,7 +214,7 @@
                         </div>
                         <div class="menu-item menu-lg me-0 me-lg-2">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ route('job.index') }}">
+                            <a class="menu-link" href="{{ route('user.resume') }}">
                                 <span class="menu-title">Resume Saya</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </a>
@@ -218,8 +222,24 @@
                         </div>
                         <div class="menu-item menu-lg me-0 me-lg-2">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="{{ route('job.index') }}">
+                            <a class="menu-link" href="{{ route('jobs.index') }}">
                                 <span class="menu-title">Lamaran Saya</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('jobs.saved') }}">
+                                <span class="menu-title">Pekerjaan Disimpan</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('following.saved') }}">
+                                <span class="menu-title">Perusahaan Disimpan</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </a>
 
@@ -238,7 +258,7 @@
                     <div class="menu-item menu-lg me-0 me-lg-2">
 
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('home') }}">
+                        <a class="menu-link" href="{{ route('page.about') }}">
                             <span class="menu-title">About</span>
                             <span class="menu-arrow d-lg-none"></span>
                         </a>
@@ -247,7 +267,7 @@
                     <div class="menu-item menu-lg me-0 me-lg-2">
 
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('home') }}">
+                        <a class="menu-link" href="{{ route('blog.index') }}">
                             <span class="menu-title">Blog</span>
                             <span class="menu-arrow d-lg-none"></span>
                         </a>
@@ -256,13 +276,22 @@
                     <div class="menu-item menu-lg me-0 me-lg-2">
 
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('home') }}">
+                        <a class="menu-link" href="{{ route('page.contact') }}">
                             <span class="menu-title">Contact US</span>
                             <span class="menu-arrow d-lg-none"></span>
                         </a>
 
                     </div>
                 @endif
+                <div class="menu-item menu-lg me-0 me-lg-2">
+
+                    <!--begin:Menu link-->
+                    <a class="menu-link" href="https://arkalearn.com/" target="_blank">
+                        <span class="menu-title">Belajar di Arka</span>
+                        <span class="menu-arrow d-lg-none"></span>
+                    </a>
+
+                </div>
                 <!--end:Menu item-->
                 <!--begin:Menu item-->
             </div>

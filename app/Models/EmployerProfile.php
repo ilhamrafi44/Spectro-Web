@@ -31,4 +31,9 @@ class EmployerProfile extends Model
         return $this->hasMany(Rating::class, 'user_id', 'user_id');
     }
 
+    public function followers()
+    {
+        return $this->hasMany(Following::class, 'employer_id', 'user_id');
+    }
+
 }

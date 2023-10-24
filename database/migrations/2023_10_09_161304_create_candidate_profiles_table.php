@@ -30,14 +30,9 @@ return new class extends Migration
             $table->string('skor_bahasa')->nullable();
             $table->string('sertifikat_ssw')->nullable();
             $table->string('sim_mobil')->nullable();
-            $table->string('file_cv_id')->nullable();
-            $table->string('file_serti_bahasa_id')->nullable();
-            $table->string('file_serti_ssw_id')->nullable();
-            $table->string('file_serti_lain_id')->nullable();
-            $table->string('file_sim_id')->nullable();
-            $table->string('file_paspor_id')->nullable();
-            $table->string('total_views')->nullable();
-            $table->string('deskripsi')->nullable();
+            $table->string('total_bulan')->nullable();
+            $table->string('total_tahun')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->timestamps();
         });
     }

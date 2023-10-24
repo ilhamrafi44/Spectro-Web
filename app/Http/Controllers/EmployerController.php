@@ -9,6 +9,7 @@ use App\Helper\ImageManager;
 use App\Models\ProfileViews;
 use Illuminate\Http\Request;
 use App\Models\EmployerProfile;
+use App\Models\Following;
 use Illuminate\Support\Facades\Auth;
 
 class EmployerController extends Controller
@@ -56,9 +57,15 @@ class EmployerController extends Controller
 
     public function detail(Request $request)
     {
+        $check = 0;
+
+        if (Auth::user()) {
+            $check = Following::where('user_id', Auth::user()->id)->where('employer_id', $request->id)->count();
+        }
+
         $id = $request->id;
         $data = User::find($id);
-        $data2 = EmployerProfile::with('social_media', 'karyawan', 'jobs', 'comments')->where('user_id', '=', $id)->first();
+        $data2 = EmployerProfile::with('social_media', 'karyawan', 'jobs', 'comments', 'followers')->where('user_id', '=', $id)->first();
         if($data2) {
             ProfileViews::create([
                 'user_id' => $id,
@@ -68,7 +75,8 @@ class EmployerController extends Controller
         return view('employer.detail', [
             "page_name" => "Detail Employer",
             "data" => $data,
-            "profile" => $data2
+            "profile" => $data2,
+            "check" => $check
         ]);
     }
 
@@ -77,11 +85,13 @@ class EmployerController extends Controller
 
         $ldate = date('Y_m_d');
         $ltime = date('H_i_s');
-        $data_employer = explode(" ", Auth::user()->name);
+        $data_employer = str_replace(' ', '-', Auth::user()->name);;
         $nama_employer = $data_employer[0];
 
         $employer = User::where('id', '=', Auth::user()->id);
-        $employer_profile = EmployerProfile::where('user_id', '=', Auth::user()->id);
+        $employer_profile = EmployerProfile::firstOrCreate([
+            'user_id' => Auth::user()->id
+        ]);
         if ($request->file('logo_perusahaan')) {
             $logo_perusahaan = $request->file('logo_perusahaan');
             $nama_file = "Logo_" . $nama_employer . "_Time_" . $ldate . "_" . $ltime . "." . $logo_perusahaan->extension();

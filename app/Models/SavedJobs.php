@@ -11,9 +11,14 @@ class SavedJobs extends Model
 
     protected $guarded = [];
 
-    public function job()
+    public function employer()
     {
-        return $this->belongsTo(Jobs::class, 'id', 'job_id');
+        return $this->belongsTo(User::class, 'employer_id', 'id');
+    }
+
+    public function jobs()
+    {
+        return $this->hasOne(Jobs::class, 'id', 'job_id');
     }
 
 }

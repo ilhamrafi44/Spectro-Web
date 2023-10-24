@@ -9,12 +9,36 @@ use Illuminate\Support\Facades\Auth;
 
 class JobsTypeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = JobsType::with('creator')->orderBy('id', 'desc')->get();
+        $query = JobsType::query();
+
+        $queryParams = $request->query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        $orderBy = 'created_at';
+        $direction = 'asc'; // Default direction
+
+        if ($request->filled('direction') && in_array($request->input('direction'), ['asc', 'desc'])) {
+            $direction = $request->input('direction');
+        }
+
+        $query->orderBy($orderBy, $direction);
+
+        $perPage = 10;
+
+        if ($request->has('per_page')) {
+            $perPage = $request->input('per_page');
+        }
+
+        $results = $query->paginate($perPage)->appends($queryParams);
+
         return view('admin.master.jobs.type', [
             "page_name" => "Job Type Master",
-            "data" => $data
+            "data" => $results
         ]);
     }
 

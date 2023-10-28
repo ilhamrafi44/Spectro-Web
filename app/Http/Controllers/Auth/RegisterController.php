@@ -91,6 +91,7 @@ class RegisterController extends Controller
         if ($data['role'] == 1) {
             CandidateProfile::create([
                 'user_id' => User::orderBy('created_at', 'desc')->first()->id,
+
             ]);
         } else {
             EmployerProfile::create([

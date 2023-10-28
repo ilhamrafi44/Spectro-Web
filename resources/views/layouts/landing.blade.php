@@ -37,16 +37,16 @@
 
         <!--begin::Menu-->
         <ul class="menu menu-hover-primary fw-semibold order-1">
-            <li class="menu-item"><a href="https://keenthemes.com" target="_blank"
+            <li class="menu-item"><a href="{{ route('page.about') }}" target="_blank"
                     class="menu-link px-2 text-white">About</a>
             </li>
 
-            <li class="menu-item"><a href="https://devs.keenthemes.com" target="_blank"
-                    class="menu-link px-2 text-white">Support</a>
+            <li class="menu-item"><a href="{{ route('page.contact') }}" target="_blank"
+                    class="menu-link px-2 text-white">Contact Us</a>
             </li>
 
-            <li class="menu-item"><a href="https://keenthemes.com/products/oswald-html-pro" target="_blank"
-                    class="menu-link px-2 text-white">Purchase</a></li>
+            <li class="menu-item"><a href="{{ route('blog.index') }}" target="_blank"
+                    class="menu-link px-2 text-white">Blog</a></li>
         </ul>
         <!--end::Menu-->
     </div>
@@ -108,6 +108,9 @@
         toastr.warning("{{ session('warning') }}");
     @endif
 </script>
+@if (!Auth::user())
+    @include('auth.ajax')
+@endif
 <!--end::Global Javascript Bundle-->
 
 </body>

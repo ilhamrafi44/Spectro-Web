@@ -89,7 +89,8 @@
                                         <div class="d-flex flex-column bgi-no-repeat rounded-top bg-spectro">
                                             <!--begin::Title-->
                                             @php
-                                                $notif_private = \App\Models\PrivateNotification::where('to_id', Auth::user()->id)->orderby('created_at', 'desc')
+                                                $notif_private = \App\Models\PrivateNotification::where('to_id', Auth::user()->id)
+                                                    ->orderby('created_at', 'desc')
                                                     ->limit(5)
                                                     ->get();
                                             @endphp
@@ -212,8 +213,8 @@
                             <div class="app-navbar-item ms-1">
                                 <!--begin::Menu- wrapper-->
                                 <div class="btn btn-icon btn-color-danger btn-active-color-dark"
-                                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                    data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+                                    data-kt-menu-placement="bottom-end">
                                     <i class="ki-duotone ki-notification-status fs-1">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
@@ -324,80 +325,83 @@
                             <!--end::Chat-->
 
                             <!--begin::User menu-->
-                            <div class="app-navbar-item ms-3 me-6" id="kt_header_user_menu_toggle">
-                                <!--begin::Menu wrapper-->
-                                <div class="cursor-pointer symbol symbol-35px"
-                                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                    data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                            @if (Auth::user())
 
-                                    @if (Auth::user()?->file_profile_id == null)
-                                        <img alt="Logo" class="symbol symbol-35px"
-                                            src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" />
-                                    @else
-                                        <img alt="Logo" class="symbol symbol-35px"
-                                            src="/storage/file/images/profile/{{ Auth::user()->file_profile_id }}" />
-                                    @endif
-                                </div>
-                                <!--begin::User account menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
-                                    data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content d-flex align-items-center px-3">
-                                            @if (Auth::user())
-                                                <!--begin::Avatar-->
-                                                <div class="symbol symbol-50px me-5">
-                                                    @if (Auth::user()->file_profile_id == null)
-                                                        <img alt="Logo"
-                                                            src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" />
-                                                    @else
-                                                        <img alt="Logo"
-                                                            src="/storage/file/images/profile/{{ Auth::user()->file_profile_id }}" />
-                                                    @endif
-                                                </div>
-                                                <!--end::Avatar-->
-                                                <!--begin::Username-->
-                                                <div class="d-flex flex-column">
-                                                    <div class="fw-bold d-flex align-items-center fs-5">
-                                                        {{ Auth::user()->name }}
-                                                        <span
-                                                            class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">
-                                                            {{ Auth::user()->role == '3' ? 'Admin' : '' }}
-                                                            {{ Auth::user()->role == '2' ? 'Employeer' : '' }}
-                                                            {{ Auth::user()->role == '1' ? 'User' : '' }}</span>
-                                                    </div>
-                                                    <a href="#"
-                                                        class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
-                                                </div>
-                                                <!--end::Username-->
-                                            @endif
-                                        </div>
+                                <div class="app-navbar-item ms-3 me-6" id="kt_header_user_menu_toggle">
+                                    <!--begin::Menu wrapper-->
+                                    <div class="cursor-pointer symbol symbol-35px"
+                                        data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                        data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+
+                                        @if (Auth::user()?->file_profile_id == null)
+                                            <img alt="Logo" class="symbol symbol-35px"
+                                                src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" />
+                                        @else
+                                            <img alt="Logo" class="symbol symbol-35px"
+                                                src="/storage/file/images/profile/{{ Auth::user()->file_profile_id }}" />
+                                        @endif
                                     </div>
-                                    <!--end::Menu item-->
-                                    @if (Auth::user())
-                                        <!--begin::Menu separator-->
-                                        <div class="separator my-2"></div>
-                                        <!--end::Menu separator-->
+                                    <!--begin::User account menu-->
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
+                                        data-kt-menu="true">
                                         <!--begin::Menu item-->
-                                        <div class="menu-item px-5">
-                                            <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
+                                        <div class="menu-item px-3">
+                                            <div class="menu-content d-flex align-items-center px-3">
+                                                @if (Auth::user())
+                                                    <!--begin::Avatar-->
+                                                    <div class="symbol symbol-50px me-5">
+                                                        @if (Auth::user()->file_profile_id == null)
+                                                            <img alt="Logo"
+                                                                src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" />
+                                                        @else
+                                                            <img alt="Logo"
+                                                                src="/storage/file/images/profile/{{ Auth::user()->file_profile_id }}" />
+                                                        @endif
+                                                    </div>
+                                                    <!--end::Avatar-->
+                                                    <!--begin::Username-->
+                                                    <div class="d-flex flex-column">
+                                                        <div class="fw-bold d-flex align-items-center fs-5">
+                                                            {{ Auth::user()->name }}
+                                                            <span
+                                                                class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">
+                                                                {{ Auth::user()->role == '3' ? 'Admin' : '' }}
+                                                                {{ Auth::user()->role == '2' ? 'Employeer' : '' }}
+                                                                {{ Auth::user()->role == '1' ? 'User' : '' }}</span>
+                                                        </div>
+                                                        <a href="#"
+                                                            class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
+                                                    </div>
+                                                    <!--end::Username-->
+                                                @endif
+                                            </div>
                                         </div>
                                         <!--end::Menu item-->
-                                        <!--begin::Menu item-->
+                                        @if (Auth::user())
+                                            <!--begin::Menu separator-->
+                                            <div class="separator my-2"></div>
+                                            <!--end::Menu separator-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-5">
+                                                <a href="{{ route('profile') }}" class="menu-link px-5">My
+                                                    Profile</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
 
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-5">
-                                            <a href="#" class="menu-link px-5">Private Message</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
-                                        <div class="separator my-2"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-5">
+                                                <a href="{{ route('conversations.index') }}" class="menu-link px-5">Private Message</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu separator-->
+                                            <div class="separator my-2"></div>
+                                            <!--end::Menu separator-->
+                                            <!--begin::Menu item-->
 
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        {{-- <div class="menu-item px-5"
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            {{-- <div class="menu-item px-5"
                                             data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                             data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
                                             <a href="#" class="menu-link px-5">
@@ -445,41 +449,39 @@
                                             </div>
                                             <!--end::Menu sub-->
                                         </div> --}}
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-5 my-1">
-                                            <a href="{{ route('reset.index') }}" class="menu-link px-5">Ganti
-                                                Password</a>
-                                        </div>
-                                        <div class="menu-item px-5 my-1">
-                                            <a href="{{ route('hapus.akun') }}" class="menu-link px-5">Hapus Akun</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-5">
-                                            <a href="#" class="menu-link px-5"
-                                                onclick="event.preventDefault();
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-5 my-1">
+                                                <a href="{{ route('reset.index') }}" class="menu-link px-5">Ganti
+                                                    Password</a>
+                                            </div>
+                                            <div class="menu-item px-5 my-1">
+                                                <a href="{{ route('hapus.akun') }}" class="menu-link px-5">Hapus
+                                                    Akun</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-5">
+                                                <a href="#" class="menu-link px-5"
+                                                    onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"><i
-                                                    class="icon-logout"></i>
-                                                {{ __('Logout') }}</a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                class="d-none">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    @else
-                                        <div class="menu-item px-5 my-1">
-                                            <a href="{{ route('login') }}" class="menu-link px-5">Masuk</a>
-                                        </div>
-                                        <div class="menu-item px-5 my-1">
-                                            <a href="{{ route('register') }}" class="menu-link px-5">Daftar</a>
-                                        </div>
-                                    @endif
-                                    <!--end::Menu item-->
+                                                        class="icon-logout"></i>
+                                                    {{ __('Logout') }}</a>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </div>
+                                        @else
+                                        @endif
+                                        <!--end::Menu item-->
+                                    </div>
+                                    <!--end::User account menu-->
+                                    <!--end::Menu wrapper-->
                                 </div>
-                                <!--end::User account menu-->
-                                <!--end::Menu wrapper-->
-                            </div>
+                            @else
+                                @include('auth.modal')
+                            @endif
                             <!--end::User menu-->
                             <!--begin::Primary button-->
                             {{-- <a href="#"

@@ -21,11 +21,11 @@ class SavedJobsController extends Controller
         if ($request->filled('direction')) {
             $order = $request->input('direction');
         }
-        $perPage = 10; // Jumlah item per halaman, dapat disesuaikan sesuai kebutuhan Anda
+        $perPage = 10;
         if ($request->filled('per_page')) {
             $perPage = $request->input('per_page');
         }
-        // Simpan data pencarian dalam sesi
+
         $request->flash();
 
         $results = SavedJobs::where('user_id', Auth::user()->id)

@@ -257,6 +257,8 @@
                                                             {{ \Carbon\Carbon::parse($jobs->created_at)->toFormattedDateString() }}
                                                         </div>
                                                         <div class="col-auto mb-5 ms-auto">
+                                                            <a class="btn btn-light rounded-pill m-1"
+                                                                href="{{ route('job.detail', ['id' => $jobs->jobs->id]) }}">Lihat</a>
                                                             <a class="btn btn-primary rounded-pill m-1"
                                                                 href="{{ route('jobs.saved.destroy', ['id' => $jobs->id]) }}">Hapus</a>
                                                         </div>
@@ -268,7 +270,7 @@
                                             <!-- Tampilkan link pagination -->
                                             {{ $data->appends(request()->except('page'))->links() }}
                                         @else
-                                            <h1 class="text-center">No data found.</h1>
+                                            @include('layouts.data404')
                                         @endif
                                     </div>
                                 </div>

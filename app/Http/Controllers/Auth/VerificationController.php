@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
@@ -27,27 +30,23 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo;
+    protected $redirectTo = '/home';
 
-    public function redirectTo()
+    public function verify(Request $request)
     {
-        switch (Auth::user()->role) {
-            case '1':
-                $this->redirectTo = '/user/home';
-                return $this->redirectTo;
-                break;
-            case '2':
-                $this->redirectTo = '/employer/home';
-                return $this->redirectTo;
-                break;
-            case '3':
-                $this->redirectTo = '/admin/home';
-                return $this->redirectTo;
-                break;
-            default:
-                $this->redirectTo = '/login';
-                return $this->redirectTo;
+        $user = User::findOrFail($request->route('id'));
+
+        if ($user->hasVerifiedEmail()) {
+            return redirect($this->redirectPath());
         }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        Auth::login($user);
+
+        return redirect($this->redirectPath())->with('verified', true);
     }
 
     /**
@@ -57,8 +56,7 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('signed')->only('verify');
+        $this->middleware('auth')->except("verify");
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 }

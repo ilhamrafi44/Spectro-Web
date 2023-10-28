@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\UserControler;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\Chat\ConversationsController;
 use App\Http\Controllers\Employer\JobsCareerLevelController;
 use App\Http\Controllers\Employer\JobsCategoryController;
 use App\Http\Controllers\Employer\JobsController;
@@ -26,6 +27,9 @@ use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\SswFlowMasterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserResumeController;
+use App\Http\Controllers\LoginControllerAjax;
+use App\Http\Controllers\Chat\MessagesController;
+use App\Http\Controllers\RegisterControllerAjax;
 use App\Models\Jobs;
 use App\Models\JobsCategory;
 use App\Models\JobsIndustry;
@@ -45,26 +49,32 @@ use Yajra\DataTables\Services\DataTable;
 Route::get('/', function () {
     $category = JobsCategory::all();
     $industry = JobsIndustry::all();
+    $show_category = JobsCategory::limit(5)->get();
     $location = Jobs::distinct()->get(['location_id']);
-    $job = Jobs::all();
+    $job = Jobs::limit(5)->get();
     return view('welcome', [
         'page_name' => "Landing Page",
         'category' => $category,
         'industry' => $industry,
         'location' => $location,
-        'data_job' => $job
+        'data_job' => $job,
+        'show_category' => $show_category
     ]);
 });
 
+Route::post('/login/ajaxs', [LoginControllerAjax::class, 'login'])->name('login.ajax');
+Route::post('/register/ajaxs', [RegisterControllerAjax::class, 'register'])->name('register.ajax');
+Route::post('/verify/ajaxs', [LoginControllerAjax::class, 'sendEmailVerification'])->name('verify.ajax');
+
 Route::get('/about', function () {
-    return view('page.about',[
-        'page_name'=>"About Us"
+    return view('page.about', [
+        'page_name' => "About Us"
     ]);
 })->name('page.about');
 
 Route::get('/contact_us', function () {
-    return view('page.contact',[
-        'page_name'=>"About Us"
+    return view('page.contact', [
+        'page_name' => "About Us"
     ]);
 })->name('page.contact');
 
@@ -77,7 +87,6 @@ Route::prefix('blog')->group(function () {
 
 Route::get('/register/candidate', function () {
     return view('auth.candidate');
-
 })->name('register.candidate');
 
 Route::get('/register/employer', function () {
@@ -104,6 +113,8 @@ Route::post('delete-following', [FollowingController::class, 'delete'])->name('f
 
 Auth::routes(['verify' => true]);
 
+// private chat
+
 // Job Route
 Route::prefix('job')->group(function () {
     Route::get('/', [JobsController::class, 'index'])->name('job.index');
@@ -111,6 +122,13 @@ Route::prefix('job')->group(function () {
 });
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
+
+    Route::get('/conversations', [ConversationsController::class, 'index'])->name('conversations.index');
+    Route::get('/conversations/delete/{id}', [ConversationsController::class, 'delete'])->name('conversations.delete');
+    Route::get('/conversations/create/{target}', [ConversationsController::class, 'create'])->name('conversations.create');
+    Route::get('/conversations/{conversation_id}/messages', [MessagesController::class, 'index'])->name('messages.index');
+    Route::post('/conversations/{conversation_id}/messages', [MessagesController::class, 'store'])->name('messages.store');
+
 
     Route::post('/rating/add', [RatingController::class, 'store'])->name('rating.store');
 
@@ -131,6 +149,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/users', [UserControler::class, 'index'])->name('admin.list.user');
             Route::get('/users/add', [UserControler::class, 'add'])->name('admin.add.user');
             Route::post('/users/add', [UserControler::class, 'store'])->name('admin.add.users');
+            Route::post('/users/update', [UserControler::class, 'update'])->name('admin.users.update');
+            Route::get('/users/delete/{id}', [UserControler::class, 'delete'])->name('admin.users.delete');
 
             Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('admin.jobs.category');
             Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('admin.jobs.category.add');
@@ -162,6 +182,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::post('/jobs/qualification/update', [JobsQualificationController::class, 'update'])->name('admin.master.jobs.qualification.update');
             Route::get('/jobs/qualification/{id}', [JobsQualificationController::class, 'destroy'])->name('admin.master.jobs.qualification.delete');
 
+            Route::get('/app', [ApplicationController::class, 'admin'])->name('admin.app');
+            Route::get('/app/rejects/{id}', [ApplicationController::class, 'rejects'])->name('jobs.reject');
+            Route::get('/app/approves/{id}', [ApplicationController::class, 'approves'])->name('jobs.approve');
         });
     });
 
@@ -200,9 +223,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('ssw-flow', [SswFlowMasterController::class, 'employer_index'])->name('employer.ssw.index');
             Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'employer_detail'])->name('employer.ssw.detail');
             Route::get('ssw-flow/acc/{id}', [SswFlowMasterController::class, 'acc'])->name('ssw.acc');
-
-
-
         });
     });
 
@@ -243,7 +263,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'detail'])->name('ssw.detail');
             Route::post('ssw-flow/post', [SswFlowMasterController::class, 'store'])->name('ssw.store');
             Route::get('ssw-flow/delete', [SswFlowMasterController::class, 'destroy'])->name('ssw.delete');
-
         });
     });
 });

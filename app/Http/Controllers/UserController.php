@@ -26,19 +26,21 @@ class UserController extends Controller
         $jumlahTotalKolom = 0;
 
         // Hitung untuk tabel pertama
-        foreach ($data1->toArray() as $key => $value) {
+        foreach ($data1?->toArray() as $key => $value) {
             if ($value !== null) {
                 $jumlahKolomTerisi++;
             }
             $jumlahTotalKolom++;
         }
 
-        // Hitung untuk tabel kedua
-        foreach ($data2->toArray() as $key => $value) {
-            if ($value !== null) {
-                $jumlahKolomTerisi++;
+        if($data2 == !null){
+            // Hitung untuk tabel kedua
+            foreach ($data2?->toArray() as $key => $value) {
+                if ($value !== null) {
+                    $jumlahKolomTerisi++;
+                }
+                $jumlahTotalKolom++;
             }
-            $jumlahTotalKolom++;
         }
 
 
@@ -163,7 +165,7 @@ class UserController extends Controller
     {
         $ldate = date('Y_m_d');
         $ltime = date('H_i_s');
-        $data_candidate = str_replace(' ', '-', Auth::user()->name);;
+        $data_candidate = str_replace(' ', '-', Auth::user()->name);
         $nama_candidate = $data_candidate[0];
 
         $candidate = User::where('id', '=', Auth::user()->id);

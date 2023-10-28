@@ -51,16 +51,36 @@
                 </div>
                 <form action="{{ route('jobs.apply') }}" method="POST">
                     <div class="row d-flex align-items-center">
-                        @if ($check)
-                            <div class="col-auto">
-                                <button class="btn btn-lg btn-light" disabled>Already Apply</button>
-                            </div>
-                        @elseif (Auth::user())
-                            @if (Auth::user()->role == 2)
-                                <div class="col-auto">
 
-                                    <button class="btn btn-lg btn-light" disabled>You Cannot Apply</button>
+                        @php
+                        $expired_date = \Carbon\Carbon::parse($data->expired_date);
+                        @endphp
+
+
+                        @if ($expired_date->isPast())
+                            <div class="col-auto">
+                                <button class="btn btn-lg btn-light" disabled>Jobs Expired</button>
+                            </div>
+                        @else
+                            @if ($check)
+                                <div class="col-auto">
+                                    <button class="btn btn-lg btn-light" disabled>Already Apply</button>
                                 </div>
+                            @elseif (Auth::user())
+                                @if (Auth::user()->role == 2)
+                                    <div class="col-auto">
+
+                                        <button class="btn btn-lg btn-light" disabled>You Cannot Apply</button>
+                                    </div>
+                                @else
+                                    @csrf
+                                    <input type="hidden" name="job_id" value="{{ $data->id }}">
+                                    <input type="hidden" name="employer_id" value="{{ $data->user->id }}">
+                                    <div class="col-auto">
+
+                                        <button type="submit" class="btn btn-lg btn-primary">Apply JOB</button>
+                                    </div>
+                                @endif
                             @else
                                 @csrf
                                 <input type="hidden" name="job_id" value="{{ $data->id }}">
@@ -70,14 +90,6 @@
                                     <button type="submit" class="btn btn-lg btn-primary">Apply JOB</button>
                                 </div>
                             @endif
-                        @else
-                            @csrf
-                            <input type="hidden" name="job_id" value="{{ $data->id }}">
-                            <input type="hidden" name="employer_id" value="{{ $data->user->id }}">
-                            <div class="col-auto">
-
-                                <button type="submit" class="btn btn-lg btn-primary">Apply JOB</button>
-                            </div>
                         @endif
                         @if ($check_saved)
                             <div id="response" class="col-2">
@@ -148,6 +160,12 @@
                         {!! $data->info_tunjangan !!}
                     </div>
                 </div>
+                <div class="mb-8">
+                    <h3 class="mb-4">Level Karir</h3>
+                    <div class="text-gray-700 d-block fw-semibold fs-4 ">
+                        {!! $data->careers->name !!}
+                    </div>
+                </div>
                 <div class=5">
                     <h3 class="mb-4">Catatan</h3>
                     <div class="text-gray-700 d-block fw-semibold fs-4 ">
@@ -157,22 +175,22 @@
                 <h3>Share This Post : </h3>
                 <div class="d-flex flex-columns mt-5">
                     <div class="mr-4">
-                        <a href="http://www.facebook.com/sharer.php?s=100&amp;u="
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->full() }}"
                             class="btn hover-elevate-up border parent-hover rounded-pill text-white"
                             style="background-color: #1967D2;"><i class="far fa-brands fa-facebook-f text-white"></i>
                             Facebook</a>
                     </div>
                     <div class="mr-4">
-                        <a href="http://www.facebook.com/sharer.php?s=100&amp;u="
-                            class="btn hover-elevate-up border parent-hover rounded-pill text-white"
-                            style="background-color: #FF3A67;"><i class="far fa-brands fa-instagram text-white"></i>
-                            Instagram</a>
-                    </div>
-                    <div class="mr-4">
-                        <a href="http://www.facebook.com/sharer.php?s=100&amp;u="
+                        <a href="https://twitter.com/share?url={{ url()->full() }}"
                             class="btn hover-elevate-up border parent-hover rounded-pill text-white"
                             style="background-color: #000000;"><i class="far fa-brands fa-twitter text-white"></i>
                             Twitter</a>
+                    </div>
+                    <div class="mr-4">
+                        <a href="https://www.linkedin.com/shareArticle?url={{ url()->full() }}"
+                            class="btn hover-elevate-up border parent-hover rounded-pill text-white"
+                            style="background-color: #196fd8;"><i class="far fa-brands fa-linkedin text-white"></i>
+                            Linkedin</a>
                     </div>
                 </div>
                 <hr>

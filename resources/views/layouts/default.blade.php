@@ -107,6 +107,10 @@
 </script>
 <!--end::Global Javascript Bundle-->
 
+@if (!Auth::user())
+    @include('auth.ajax')
+@endif
+
 </body>
 
 </html>

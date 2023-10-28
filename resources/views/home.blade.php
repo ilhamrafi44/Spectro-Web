@@ -15,8 +15,8 @@
             <!--end::Title-->
 
             <!--begin::Content-->
-            <span>@if ($check_complete < 80)
-                Presentase kelengkapan data anda adalah {{ $check_complete }}%, Silahkan lengkapi data lebih dari 80% agar bisa melamar pekerjaan
+            <span>@if ($check_complete < 85)
+                Presentase kelengkapan data anda adalah {{ $check_complete }}%, Silahkan lengkapi data lebih dari 85% agar bisa melamar pekerjaan
             @endif</span>
             <!--end::Content-->
         </div>

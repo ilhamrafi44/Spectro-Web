@@ -68,8 +68,8 @@
                                         @endif
 
                                     </div>
-                                    <div class="col-6 ">
-                                        <div class="btn btn-warning w-100 col-12"><i class="fa-solid fa-comments"></i>Chat </div>
+                                    <div class="col-6 h-100">
+                                        <a  href="{{ route('conversations.create', ['target' => $data->id]) }}" class="btn btn-warning w-100"><i class="fa-solid fa-comments"></i>Chat </a>
                                     </div>
 
                                 </div>

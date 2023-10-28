@@ -16,12 +16,12 @@
                         100+ Pekerjaan
                     </p>
                 </div>
-                @if (!Auth::user())
+                {{-- @if (!Auth::user())
                     <div class="column align-self-start">
                         <a href="{{ route('login') }}" class="btn m-1 btn-lg btn-spectro">Masuk</a>
                         <a href="{{ route('register') }}" class="btn m-1 btn-lg btn-light">Daftar</a>
                     </div>
-                @endif
+                @endif --}}
             </div>
         </div>
         <div class="col-md-6 d-flex align-items-center">
@@ -39,9 +39,10 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="required form-label">Jobs Category</label>
+                            <label for="exampleFormControlInput1" class=" form-label">Jobs Category</label>
                             <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
                                 name="category_id">
+                                <option value="">Semua Kategori</option>
                                 @foreach ($category as $item_c)
                                     <option value="{{ $item_c->id }}">{{ $item_c->name }}</option>
                                 @endforeach
@@ -51,9 +52,11 @@
                     </div>
                     <div class="col-md-3">
                         <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="required form-label">Jobs Industry</label>
+                            <label for="exampleFormControlInput1" class=" form-label">Jobs Industry</label>
                             <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
                                 name="industry_id">
+                                <option value="">Semua Industri</option>
+
                                 @foreach ($industry as $item_i)
                                     <option value="{{ $item_i->id }}">{{ $item_i->name }}</option>
                                 @endforeach
@@ -63,9 +66,11 @@
                     </div>
                     <div class="col-md-3">
                         <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="required form-label">Jobs Location</label>
+                            <label for="exampleFormControlInput1" class=" form-label">Jobs Location</label>
                             <select class="form-select form-select-solid" aria-label="Select example" data-control="select2"
                                 name="location_id">
+                                <option value="">Semua Lokasi</option>
+
                                 @foreach ($location as $locationss)
                                     <option value="{{ $locationss->location_id }}">{{ $locationss->location_id }}</option>
                                 @endforeach
@@ -85,8 +90,8 @@
     <div class="row bg-white my-17">
         <div class="container p-5 my-17">
             <h1>Explore Category</h1>
-            <div class="row d-flex">
-                @foreach ($category as $item_c)
+            <div class="row d-flex mb-5">
+                @foreach ($show_category as $item_c)
                     <a href="{{ route('job.index', ['category_id' => $item_c]) }}"
                         class="card col-md-4 col-12 border m-3 hover-elevate-up parent-hover">
                         <div class="card-body">
@@ -107,13 +112,15 @@
                     {{-- <a href="#" class="btn btn-light bg-white border m-2 btn-lg fs-1 p-10 col-md-4 col-5"><i class="fas fa-solid fa-briefcase fs-1 me-2"></i>  {{ $item_c->name }} <br> Total Lowongan : 9</a> --}}
                 @endforeach
             </div>
+            <a href="{{ route('job.index') }}" class="text-spectro fs-3 mt-5">Lihat Semua...</a>
+
         </div>
     </div>
 
     <div class="row bg-white my-10">
         <div class="container p-5 my-10">
             <h1>Explore Jobs</h1>
-            <div class="row d-flex mt-10">
+            <div class="row d-flex mt-10 mb-5">
                 @foreach ($data_job as $jobs)
                     <div class="col-md-4">
 
@@ -153,7 +160,9 @@
                         </a>
                     </div>
                 @endforeach
+
             </div>
+            <a href="{{ route('job.index') }}" class="text-spectro fs-3 mt-5">Lihat Semua...</a>
         </div>
     </div>
     <div class="row bg-white my-10">

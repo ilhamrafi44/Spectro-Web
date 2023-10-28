@@ -8172,10 +8172,9 @@ fieldset:disabled .btn {
 
 .border-primary {
     --bs-border-opacity: 1;
-    border-color: rgba(
-        var(--bs-primary-rgb),
-        var(--bs-border-opacity)
-    ) !important;
+    border-color:
+        var(--bs-primary)
+     !important;
 }
 
 .border-secondary {
@@ -12217,6 +12216,10 @@ fieldset:disabled .btn {
 
 .bg-spectro {
     background-color: var(--bs-spectro) !important;
+}
+
+.bg-spectro-shade {
+    background-color: var(--bs-spectro-shade) !important;
 }
 
 .bg-secondary {
@@ -36904,10 +36907,16 @@ h6,
     border-color: var(--bs-primary);
     background-color: var(--bs-primary);
 }
+
 .btn.btn-spectro {
     color: white;
     border-color: var(--bs-spectro);
     background-color: var(--bs-spectro);
+}
+.btn.btn-spectro-shade {
+    color: white;
+    border-color: var(--bs-spectro-shade);
+    background-color: var(--bs-spectro-shade);
 }
 .btn.btn-primary i,
 .btn.btn-primary .svg-icon {
@@ -37101,6 +37110,11 @@ h6,
     border-color: var(--bs-primary);
     background-color: transparent;
 }
+
+.btn.btn-outline-primary {
+    color: white;
+    border-color: var(--bs-spectro);
+}
 .btn.btn-outline.btn-outline-primary i,
 .btn.btn-outline.btn-outline-primary .svg-icon {
     color: var(--bs-primary);
@@ -37116,9 +37130,9 @@ h6,
 .btn.btn-outline.btn-outline-primary.active,
 .btn.btn-outline.btn-outline-primary.show,
 .show > .btn.btn-outline.btn-outline-primary {
-    color: var(--bs-primary-active);
+    color: var(--bs-white);
     border-color: var(--bs-primary);
-    background-color: var(--bs-primary-light) !important;
+    background-color: var(--bs-spectro) !important;
 }
 .btn-check:checked + .btn.btn-outline.btn-outline-primary i,
 .btn-check:checked + .btn.btn-outline.btn-outline-primary .svg-icon,

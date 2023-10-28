@@ -105,6 +105,9 @@
         toastr.warning("{{ session('warning') }}");
     @endif
 </script>
+@if (!Auth::user())
+    @include('auth.ajax')
+@endif
 <!--end::Global Javascript Bundle-->
 
 </body>

@@ -28,7 +28,7 @@ class SavedJobsController extends Controller
 
         $request->flash();
 
-        $results = SavedJobs::where('user_id', Auth::user()->id)
+        $results = SavedJobs::with('employer')->where('user_id', Auth::user()->id)
             ->whereHas('jobs', function ($query) use ($request) {
                 if ($request->filled('category_id')) {
                     $query->where('category_id', $request->input('category_id'));

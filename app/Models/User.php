@@ -49,7 +49,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function employer_profile()
     {
-        return $this->belongsTo(EmployerProfile::class, 'user_id', 'id');
+        return $this->belongsTo(EmployerProfile::class, 'id', 'user_id');
+    }
+
+    public function employer_job()
+    {
+        return $this->hasMany(Jobs::class, 'user_id', 'id');
     }
 
     public function candidate_profile()

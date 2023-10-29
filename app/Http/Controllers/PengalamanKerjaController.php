@@ -12,7 +12,10 @@ class PengalamanKerjaController extends Controller
     {
         $add = PengalamanKerja::create([
             'user_id' => Auth::user()->id,
-            'tanggal' => $data->tanggal,
+            'bulan_awal' => $data->bulan_awal,
+            'bulan_akhir' => $data->bulan_akhir,
+            'tahun_awal' => $data->tahun_awal,
+            'tahun_akhir' => $data->tahun_akhir,
             'jabatan' => $data->jabatan,
             'nama_perusahaan' => $data->nama_perusahaan,
             'deskripsi' => $data->deskripsi
@@ -27,7 +30,10 @@ class PengalamanKerjaController extends Controller
     public function update(Request $data)
     {
         $update = PengalamanKerja::findOrFail($data->id);
-        $update->tanggal = $data->tanggal;
+        $update->bulan_awal = $data->bulan_awal;
+        $update->tahun_awal = $data->tahun_awal;
+        $update->bulan_akhir = $data->bulan_akhir;
+        $update->tahun_akhir = $data->tahun_akhir;
         $update->jabatan = $data->jabatan;
         $update->nama_perusahaan = $data->nama_perusahaan;
         $update->deskripsi = $data->deskripsi;

@@ -38,11 +38,11 @@
 
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-location-dot"></i> <b>Lokasi : </b></a>
-                                        {{ $profile->alamat ?? 'Tidak Ada' }}, {{ $profile->negara ?? 'Tidak Ada' }}
+                                        {{ $profile->kota ?? 'Tidak Ada' }}
                                     </div>
                                     <div class="col-md-6 fs-5 mb-5">
-                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Berdiri Sejak : </b></a>
-                                        {{ $profile->tahun_pendirian ?? 'Tidak Ada' }}
+                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Usia : </b></a>
+                                        {{ $profile->usia ?? 'Tidak Ada' }}
                                     </div>
                                     <div class="col-md-6 fs-5 mb-5">
                                         <a><i class="fa-solid fa-envelope"></i> <b>Email : </b></a>
@@ -87,6 +87,7 @@
             <div class="card mb-5">
                 <div class="card-body">
                     <h1 class="mb-5">Pengalaman Kerja</h1>
+
                     @forelse ($profile->pengalaman_kerja as $pengalaman_kerja)
                         <a href="{{ route('job.detail', ['id' => $pengalaman_kerja->id]) }}"
                             class="card hover-elevate-up border parent-hover mb-5">
@@ -96,7 +97,7 @@
 
                                 </div>
                                 <div class="col-auto mb-5">
-                                    <i class="fas fa-regular fa-clock fs-3"></i> {{ $pengalaman_kerja->tanggal }}
+                                    <i class="fas fa-regular fa-clock fs-3"></i> {{ $pengalaman_kerja->bulan_awal . ' ' . $pengalaman_kerja->tahun_awal . ' - ' . $pengalaman_kerja->bulan_akhir . ' ' . $pengalaman_kerja->tahun_akhir }}
                                 </div>
                                 <hr>
                                 <div class="fs-4">

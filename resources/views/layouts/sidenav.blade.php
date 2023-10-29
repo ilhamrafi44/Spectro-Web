@@ -214,6 +214,15 @@
                         <div class="menu-item menu-lg me-0 me-lg-2">
 
                             <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('candidate.list') }}">
+                                <span class="menu-title">Cari Candidate</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+
+                            <!--begin:Menu link-->
                             <a class="menu-link" href="{{ route('employer.ssw.index') }}">
                                 <span class="menu-title">SSW Flow</span>
                                 <span class="menu-arrow d-lg-none"></span>
@@ -246,7 +255,15 @@
                             </a>
 
                         </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
 
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('employer.list') }}">
+                                <span class="menu-title">Cari Employer</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+
+                        </div>
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                             data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                             <span class="menu-link">
@@ -273,6 +290,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="menu-item menu-lg me-0 me-lg-2">
                             <!--begin:Menu link-->
                             <a class="menu-link" href="{{ route('ssw.index') }}">

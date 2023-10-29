@@ -183,10 +183,10 @@ class ApplicationController extends Controller
             return redirect()->back()->with('error', 'User tidak ditemukan');
         }
 
-        // if($check_complete < 85)
-        // {
-        //     return redirect()->back()->with('error', 'Data profile dibawah 85%, silahkan lengkapi terlebih dahulu.');
-        // }
+        if($check_complete < 85)
+        {
+            return redirect()->back()->with('error', 'Data profile dibawah 85%, silahkan lengkapi terlebih dahulu.');
+        }
 
         $jobs = Jobs::findOrFail($request->job_id);
 
@@ -212,6 +212,13 @@ class ApplicationController extends Controller
                 'to_id' => Auth::user()->id,
                 'subject' => "Berhasil menambahkan lamaran",
                 'message' => "Berhasil melamar pada pekerjaan $jobs->name.",
+            ]);
+
+            PrivateNotification::create([
+                'from_id' => Auth::user()->id,
+                'to_id' => $request->employer_id,
+                'subject' => "Ada pelamar baru.",
+                'message' => Auth::user()->name."Telah melamar pada pekerjaan. $jobs->name.",
             ]);
 
             Mail::to($data0->email)->send(new ApplyMail($apply));

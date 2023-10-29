@@ -10,7 +10,6 @@ class KaryawanController extends Controller
 {
     public function karyawan_add(Request $data)
     {
-
         $add = Karyawan::create([
             'user_id' => Auth::user()->id,
             'nama' => $data->nama,

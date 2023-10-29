@@ -131,18 +131,9 @@
                                         <select class="form-select form-select-solid" aria-label="Select example"
                                             data-control="select2" name="pendidikan_terakhir">
                                             <option value="">Pilih pendidikan terakhir</option>
-                                            <option value="1" @if (isset($profile) && $profile->pendidikan_terakhir == 1) selected @endif>
-                                                Sekolah Menengah Atas / Sekolah Menengah Kejuruan</option>
-                                            <option value="2" @if (isset($profile) && $profile->pendidikan_terakhir == 2) selected @endif>Gelar
-                                                Ahli Madya</option>
-                                            <option value="3" @if (isset($profile) && $profile->pendidikan_terakhir == 3) selected @endif>Gelar
-                                                Sarjana</option>
-                                            <option value="4" @if (isset($profile) && $profile->pendidikan_terakhir == 4) selected @endif>
-                                                Gelar
-                                                Master</option>
-                                            <option value="5" @if (isset($profile) && $profile->pendidikan_terakhir == 5) selected @endif>
-                                                Gelar
-                                                Doktor</option>
+                                            @foreach ($experience as $item_e)
+                                                <option value="{{ $item_e->id }}">{{ $item_e->name }}</option>
+                                            @endforeach
                                         </select>
 
                                     </div>
@@ -325,7 +316,8 @@
                                     @foreach ($profile->pengalaman_kerja as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->tanggal }}</td>
+                                            <td>{{ $item->bulan_awal . ' ' . $item->tahun_awal . ' ~ ' . $item->bulan_akhir . ' ' . $item->tahun_akhir }}
+                                            </td>
                                             <td>{{ $item->nama_perusahaan }}</td>
                                             <td>{{ $item->jabatan }}</td>
                                             <td>{{ $item->deskripsi }}</td>
@@ -350,40 +342,144 @@
                                                             name="id">
                                                         <div class="modal-header">
                                                             <h3 class="modal-title">Update Pengalaman</h3>
-
-                                                            <!--begin::Close-->
                                                             <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
                                                                 data-bs-dismiss="modal" aria-label="Close">
                                                                 <i class="ki-duotone ki-cross fs-1"><span
                                                                         class="path1"></span><span
                                                                         class="path2"></span></i>
                                                             </div>
-                                                            <!--end::Close-->
                                                         </div>
-
                                                         <div class="modal-body">
                                                             <div class="row d-flex">
                                                                 <div class="col-md-12">
                                                                     <div class="mb-5">
                                                                         <label for="exampleFormControlInput1"
-                                                                            class="required form-label">Periode</label>
-                                                                        <input name="tanggal" type="text"
-                                                                            class="form-control form-control-solid"
-                                                                            value="{{ $item->tanggal }}" />
+                                                                            class="required form-label">Waktu Mulai</label>
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                Bulan
+                                                                                @php
+                                                                                    $selectedMonthAwal = $item->bulan_awal;
+                                                                                    $monthsx = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                                                                                @endphp
+
+                                                                                <select
+                                                                                    class="form-select form-select-solid"
+                                                                                    aria-label="Select example"
+                                                                                    data-control="select2"
+                                                                                    name="bulan_awal">
+                                                                                    <option>Pilih</option>
+                                                                                    @foreach ($monthsx as $month)
+                                                                                        @if ($month === $selectedMonthAwal)
+                                                                                            <option
+                                                                                                value="{{ $month }}"
+                                                                                                selected>
+                                                                                                {{ $month }}
+                                                                                            </option>
+                                                                                        @else
+                                                                                            <option
+                                                                                                value="{{ $month }}">
+                                                                                                {{ $month }}
+                                                                                            </option>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                Tahun
+                                                                                @php
+                                                                                    $startYear = date('Y');
+                                                                                    $endYear = 1990;
+                                                                                    $years = range($startYear, $endYear);
+                                                                                    $selectedYearAwal = $item->tahun_awal;
+                                                                                @endphp
+                                                                                <select
+                                                                                    class="form-select form-select-solid"
+                                                                                    aria-label="Select example"
+                                                                                    data-control="select2"
+                                                                                    name="tahun_awal">
+                                                                                    <option>Pilih</option>
+                                                                                    @for ($i = $startYear; $i >= $endYear; $i--)
+                                                                                        <option
+                                                                                            value="{{ $i }}"
+                                                                                            {{ $i == $selectedYearAwal ? 'selected' : '' }}>
+                                                                                            {{ $i }}</option>
+                                                                                    @endfor
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-5">
+                                                                        <label for="exampleFormControlInput1"
+                                                                            class="required form-label">Waktu
+                                                                            Selesai</label>
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                Bulan
+                                                                                @php
+                                                                                    $selectedMonthAkhir = $item->bulan_akhir;
+                                                                                    $monthsg = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                                                                                @endphp
+
+                                                                                <select
+                                                                                    class="form-select form-select-solid"
+                                                                                    aria-label="Select example"
+                                                                                    data-control="select2"
+                                                                                    name="bulan_akhir">
+                                                                                    <option>Pilih</option>
+                                                                                    @foreach ($monthsg as $month)
+                                                                                        @if ($month === $selectedMonthAkhir)
+                                                                                            <option
+                                                                                                value="{{ $month }}"
+                                                                                                selected>
+                                                                                                {{ $month }}
+                                                                                            </option>
+                                                                                        @else
+                                                                                            <option
+                                                                                                value="{{ $month }}">
+                                                                                                {{ $month }}
+                                                                                            </option>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                Tahun
+                                                                                @php
+                                                                                    $startYear = date('Y');
+                                                                                    $endYear = 1990;
+                                                                                    $years = range($startYear, $endYear);
+                                                                                    $selectedYearAkhir = $item->tahun_akhir;
+                                                                                @endphp
+                                                                                <select
+                                                                                    class="form-select form-select-solid"
+                                                                                    aria-label="Select example"
+                                                                                    data-control="select2"
+                                                                                    name="tahun_akhir">
+                                                                                    <option>Pilih</option>
+                                                                                    @for ($i = $startYear; $i >= $endYear; $i--)
+                                                                                        <option
+                                                                                            value="{{ $i }}"
+                                                                                            {{ $i == $selectedYearAkhir ? 'selected' : '' }}>
+                                                                                            {{ $i }}</option>
+                                                                                    @endfor
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="mb-5">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="required form-label">Perusahaan</label>
                                                                         <input name="nama_perusahaan" type="text"
                                                                             class="form-control form-control-solid"
-                                                                            value="{{ $item->jabatan }}" />
+                                                                            value="{{ $item->nama_perusahaan }}" />
                                                                     </div>
                                                                     <div class="mb-5">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="required form-label">Jabatan</label>
                                                                         <input name="jabatan" type="text"
                                                                             class="form-control form-control-solid"
-                                                                            value="{{ $item->pengalaman }}" />
+                                                                            value="{{ $item->jabatan }}" />
                                                                     </div>
                                                                     <div class="mb-5">
                                                                         <label for="exampleFormControlInput1"
@@ -414,7 +510,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="w-bolder mb-5">Media Sosial </h4>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#kt_modal_1">
                             Tambah +
                         </button>
                         <div class="table-responsive mt-5">
@@ -437,18 +534,21 @@
                                                     class="btn btn-icon btn-spectro btn-sm"><i
                                                         class="far fa-solid fa-trash text-white"></i></a>
                                                 <button type="button" class="btn btn-sm btn-icon btn-warning"
-                                                    data-bs-toggle="modal" data-bs-target="#kt_modal_update{{ $loop->iteration }}"><i
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#kt_modal_update{{ $loop->iteration }}"><i
                                                         class="far fa-solid fa-pen text-white"></i></button>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" tabindex="-1" id="kt_modal_update{{ $loop->iteration }}">
+                                        <div class="modal fade" tabindex="-1"
+                                            id="kt_modal_update{{ $loop->iteration }}">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <form action="{{ route('user.sosmed.update') }}" method="POST">
                                                         @csrf
 
-                                                        <input type="hidden" value="{{ $item->id }}" name="id">
+                                                        <input type="hidden" value="{{ $item->id }}"
+                                                            name="id">
 
                                                         <div class="modal-header">
                                                             <h3 class="modal-title">Update Social Media</h3>
@@ -457,7 +557,8 @@
                                                             <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
                                                                 data-bs-dismiss="modal" aria-label="Close">
                                                                 <i class="ki-duotone ki-cross fs-1"><span
-                                                                        class="path1"></span><span class="path2"></span></i>
+                                                                        class="path1"></span><span
+                                                                        class="path2"></span></i>
                                                             </div>
                                                             <!--end::Close-->
                                                         </div>
@@ -472,8 +573,9 @@
                                                                         <label for="exampleFormControlInput1"
                                                                             class="required form-label">Jenis</label>
                                                                         <select class="form-select form-select-solid"
-                                                                            aria-label="Select example" data-control="select2"
-                                                                            name="jenis" id="select2">
+                                                                            aria-label="Select example"
+                                                                            data-control="select2" name="jenis"
+                                                                            id="select2">
                                                                             <option value="{{ $item->jenis }}" selected>
                                                                                 {{ $item->jenis }}</option>
                                                                             <option value="Instagram">Instagram</option>
@@ -503,7 +605,8 @@
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light"
                                                                 data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                                            <button type="submit" class="btn btn-primary">Save
+                                                                changes</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -594,8 +697,68 @@
 
                     <div class="modal-body">
                         <div class="mb-5">
-                            <label for="exampleFormControlInput1" class="required form-label">Periode</label>
-                            <input name="tanggal" type="text" class="form-control form-control-solid" />
+                            <label for="exampleFormControlInput1" class="required form-label">Waktu Mulai</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Bulan
+                                    <select class="form-select form-select-solid" aria-label="Select example"
+                                        data-control="select2" name="bulan_awal">
+                                        <option>Pilih</option>
+                                        @php
+                                            $months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                                        @endphp
+
+                                        @foreach ($months as $month)
+                                            <option value="{{ $month }}">{{ $month }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    Tahun
+                                    @php
+                                        $startYear = date('Y');
+                                        $endYear = 1990;
+                                        $years = range($startYear, $endYear);
+                                    @endphp
+                                    <select class="form-select form-select-solid" aria-label="Select example"
+                                        data-control="select2" name="tahun_awal">
+                                        <option>Pilih</option>
+                                        @for ($i = $startYear; $i >= $endYear; $i--)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label for="exampleFormControlInput1" class="required form-label">Waktu Selesai</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Bulan
+                                    <select class="form-select form-select-solid" aria-label="Select example"
+                                        data-control="select2" name="bulan_akhir">
+                                        <option>Pilih</option>
+                                        @foreach ($months as $month)
+                                            <option value="{{ $month }}">{{ $month }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    Tahun
+                                    @php
+                                        $startYear = date('Y');
+                                        $endYear = 1990;
+                                        $years = range($startYear, $endYear);
+                                    @endphp
+                                    <select class="form-select form-select-solid" aria-label="Select example"
+                                        data-control="select2" name="tahun_akhir">
+                                        <option>Pilih</option>
+                                        @for ($i = $startYear; $i >= $endYear; $i--)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-5">
                             <label for="exampleFormControlInput1" class="required form-label">Perusahaan</label>
@@ -610,8 +773,6 @@
                             <textarea name="deskripsi" class="form-control form-control-solid" id="" cols="30" rows="10"></textarea>
 
                         </div>
-
-
                     </div>
 
                     <div class="modal-footer">

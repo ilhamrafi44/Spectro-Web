@@ -31,6 +31,16 @@ class Jobs extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function views()
+    {
+        return $this->hasMany(JobViews::class, 'job_id', 'id');
+    }
+
+    public function apply()
+    {
+        return $this->hasMany(JobViews::class, 'job_id', 'id');
+    }
+
     public function job_types()
     {
         return $this->belongsTo(JobsType::class, 'job_type', 'id');

@@ -2,17 +2,17 @@
 
 @section('content')
     <div class="container">
-        <h1>Cari Kerja</h1>
+        <h1>Cari Employer</h1>
         <hr>
     </div>
     <div class="container p-5">
         <div class="row d-flex mb-10 justify-content-between">
             <div class="col-md-3 border rounded-2">
                 <div class="p-5">
-                    <form action="{{ route('job.index') }}" method="get">
+                    <form method="get">
                         @csrf
                         <div class="mb-5">
-                            <label for="" class="fs-4 fw-semibold mb-3">Cari Bedasarkan Kata Kunci</label>
+                            <label for="" class="fs-4 fw-semibold mb-3">Cari Bedasarkan Nama</label>
                             <div class="input-group flex-nowrap">
                                 <span class="input-group-text bg-white" id="addon-wrapping"><i
                                         class="fas fa-solid fa-magnifying-glass fs-3"></i></span>
@@ -25,40 +25,10 @@
                                 <span class="input-group-text bg-white" id="addon-wrapping"><i
                                         class="fas fa-solid fa-briefcase fs-3"></i></span>
                                 <select class="form-select" aria-label="Select example" data-control="select2"
-                                    name="category_id">
-                                    <option value="" selected>Pilih Kategori</option>
-                                    @foreach ($category as $item_c)
+                                    name="industry">
+                                    <option value="" selected>Pilih Kualifikasi</option>
+                                    @foreach ($industry as $item_c)
                                         <option value="{{ $item_c->id }}">{{ $item_c->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-5">
-                            <label for="" class="fs-4 fw-semibold mb-3">Cari Bedasarkan Industry</label>
-                            <div class="input-group flex-nowrap">
-                                <span class="input-group-text bg-white" id="addon-wrapping"><i
-                                        class="fas fa-solid fa-briefcase fs-3"></i></span>
-                                <select class="form-select" aria-label="Select example" data-control="select2"
-                                    name="industry_id">
-                                    <option value="" selected>Pilih Industry</option>
-
-                                    @foreach ($industry as $industry)
-                                        <option value="{{ $industry->id }}">{{ $industry->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-5">
-                            <label for="" class="fs-4 fw-semibold mb-3">Cari Bedasarkan Lokasi</label>
-                            <div class="input-group flex-nowrap">
-                                <span class="input-group-text bg-white" id="addon-wrapping"><i
-                                        class="fas fa-solid fa-location-dot fs-3"></i></span>
-                                <select class="form-select" aria-label="Select example" data-control="select2"
-                                    name="location_id">
-                                    <option value="" selected>Pilih Lokasi</option>
-
-                                    @foreach ($location as $loc)
-                                        <option value="{{ $loc->location_id }}">{{ $loc->location_id }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -97,23 +67,23 @@
                 <div class="px-5">
                     <div class="row d-flex justify-content-between align-items-center mb-5">
                         <div class="col-auto">
-                            <h3>Total Pekerjaan : {{ $data->count() }}</h3>
+                            <h3>Total Employer : {{ $data->count() }}</h3>
                         </div>
                     </div>
 
                     <div class="row">
-                        @foreach ($data as $jobs)
-                            <a href="{{ route('job.detail', ['id' => $jobs->id]) }}"
+                        @foreach ($data as $employer)
+                            <a href="{{ route('detai.employer', ['id' => $employer->id]) }}"
                                 class="card hover-elevate-up border parent-hover mb-6">
                                 <div class="card-body">
                                     <div class="d-flex row">
                                         <div class="col-md-2">
                                             <div class="symbol symbol-100px symbol-lg-100px symbol-fixed mb-5">
-                                                @if ($jobs->user->file_profile_id == null)
-                                                    <img src="/assets/media/employer-avatar.jpg" alt=""
+                                                @if ($employer->file_profile_id == null)
+                                                    <img src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" alt=""
                                                         height="300px">
                                                 @else
-                                                    <img src="/storage/file/images/profile/{{ $jobs->user->file_profile_id }}"
+                                                    <img src="/storage/file/images/profile/{{ $employer->file_profile_id }}"
                                                         alt="" height="300px">
                                                 @endif
                                             </div>
@@ -121,7 +91,7 @@
                                         <div class="col-md-10">
 
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <h3> {{ $jobs->name }} </h3>
+                                                <h3> {{ $employer->name }} </h3>
                                                 <button class="btn btn-sm btn-light m-1 btn-icon col-4 "><i
                                                         class="fas fa-regular fa-bookmark"></i></button>
                                             </div>
@@ -129,27 +99,17 @@
                                             <div class="row d-flex mt-7">
                                                 <div class="col-auto mb-5">
                                                     <i class="fas fa-solid fa-briefcase fs-3"></i>
-                                                    {{ $jobs->category->name }}
+                                                    Total Pekerjaan : {{ $employer->employer_job->count() ?? 'Tidak Ada' }}
                                                 </div>
                                                 <div class="col-auto mb-5">
                                                     <i class="fas fa-solid fa-location-dot fs-3"></i>
-                                                    {{ $jobs->location_id }}
+                                                    Alamat : {{ $employer->employer_profile->negara ?? 'Tidak Ada'}}, {{ $employer->employer_profile->alamat ?? 'Tidak Ada'}}
                                                 </div>
                                                 <div class="col-auto mb-5">
                                                     <i class="fas fa-regular fa-clock fs-3"></i>
-                                                    {{ \Carbon\Carbon::parse($jobs->created_at)->toFormattedDateString() }}
+                                                    Tahun Pendirian : {{ $employer->employer_profile->tahun_pendirian ?? 'Tidak Ada'}} Tahun
                                                 </div>
-                                                <div class="col-auto mb-5">
-                                                    <i class="fas fa-solid fa-money-bill-wave fs-3"></i>
-                                                    @if ($jobs->mata_gaji == 1)
-                                                        ¥
-                                                    @elseif ($jobs->mata_gaji == 2)
-                                                        USD
-                                                    @else
-                                                        Rp
-                                                    @endif {{ number_format($jobs->salary) }}
-                                                    / {{ $jobs->salary_type }}
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

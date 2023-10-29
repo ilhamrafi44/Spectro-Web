@@ -2,16 +2,15 @@
 
 @section('content')
     <div class="row d-flex">
-
         @foreach ($data as $item)
             <div class="col-md-6 mb-5">
                 <div class="card border-1">
                     <div class="card-header">
                         <h3 class="card-title">{{ $item->name }}</h3>
                         <div class="card-toolbar">
-                            <button type="button" class="btn btn-sm m-1 btn-light">
+                            <a href="{{ route('job.detail', ['id' => $item->id]) }}" class="btn btn-sm m-1 btn-light">
                                 Open
-                            </button>
+                            </a>
                             <button type="button" class="btn btn-sm m-1 btn-warning">
                                 Edit
                             </button>
@@ -40,11 +39,11 @@
 
                                     </div>
                                     <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-envelope"></i> <b>Total Pelamar : </b></a>
+                                        <a><i class="fa-solid fa-envelope"></i> <b>Total Pelamar : {{ $item->apply->count() }}</b></a>
 
                                     </div>
                                     <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-bookmark"></i> <b>Total Disimpan: </b></a>
+                                        <a><i class="fa-solid fa-bookmark"></i> <b>Total Dilihat: {{ $item->views->count() }}</b></a>
 
                                     </div>
                                     {{-- <div class="col-6 h-100">

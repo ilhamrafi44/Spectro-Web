@@ -8,7 +8,8 @@
 /***/ (() => {
 
 "use strict";
-
+console.log('%c%s',
+        'color: white; background: #b22222; font-size: 24px;','This is Spectro.id!');
 
 //
 // Dropzone Initialization

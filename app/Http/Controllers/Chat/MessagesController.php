@@ -20,6 +20,15 @@ class MessagesController extends Controller
         return view('messages.index', compact('conversation', 'messages','page_name'));
     }
 
+    public function admin($conversation_id)
+    {
+        $conversation = Conversations::where('id', $conversation_id)
+        ->first();
+        $messages = Messages::where('conversation_id', $conversation_id)->get();
+        $page_name = 'Chat';
+        return view('messages.admin', compact('conversation', 'messages','page_name'));
+    }
+
     public function store(Request $request, $conversation_id)
     {
         $conversation = Conversations::findOrFail($conversation_id);

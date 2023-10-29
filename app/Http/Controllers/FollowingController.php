@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Following;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,6 +76,12 @@ class FollowingController extends Controller
 
             if ($request->employer_id == Auth::user()->id) {
                 return response()->json(['status' => 'error', 'data' => 'Tidak Bisa Memfollow Diri Sendiri.']);
+            }
+
+            $data = User::findOrFail($request->employer_id);
+
+            if ($data->role == Auth::user()->role) {
+                return response()->json(['status' => 'error', 'data' => 'Tidak Bisa Memfollow Sesama Candidate/Employer.']);
             }
 
             $data = Following::firstOrCreate([

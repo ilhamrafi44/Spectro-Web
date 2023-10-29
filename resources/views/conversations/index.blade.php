@@ -2,6 +2,37 @@
 
 @section('content')
     <div class="container p-5">
+        <div class="col-12">
+            <form>
+                <div class="row d-flex">
+                    @csrf
+                    <div class="col-3">
+                        <div class="mb-5 ">
+                            <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control"
+                                placeholder="Cari Nama..">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-5 ">
+                            <select class="form-select" aria-label="Select example" data-control="select2" name="direction">
+                                <option value="asc">Terlama</option>
+                                <option value="desc">Terbaru</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="mb-5 ">
+                            <select class="form-select" aria-label="Select example" data-control="select2" name="per_page">
+                                <option value="10">10 Data Per Halaman</option>
+                                <option value="50">50 Data Per Halaman</option>
+                                <option value="100">100 Data Per Halaman</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-spectro col-3 mb-5" type="submit">Cari</button>
+                </div>
+            </form>
+        </div>
         <div class="d-flex row">
             @foreach ($conversation as $item)
                 @if ($item->user1_id === Auth::user()->id)
@@ -127,6 +158,12 @@
                     </div>
                 @endif
             @endforeach
+            @if ($conversation->count() > 0)
+                <!-- Tampilkan link pagination -->
+                {{ $conversation->appends(request()->except('page'))->links() }}
+            @else
+                @include('layouts.data404')
+            @endif
         </div>
     </div>
 @endsection

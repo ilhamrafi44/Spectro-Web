@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applications;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Following;
 use App\Models\ProfileViews;
 use Illuminate\Http\Request;
 use App\Models\CandidateProfile;
+use App\Models\JobsExperience;
+use App\Models\JobsIndustry;
+use App\Models\PrivateNotification;
+use App\Models\Rating;
+use App\Models\SavedJobs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,7 +39,7 @@ class UserController extends Controller
             $jumlahTotalKolom++;
         }
 
-        if($data2 == !null){
+        if ($data2 == !null) {
             // Hitung untuk tabel kedua
             foreach ($data2?->toArray() as $key => $value) {
                 if ($value !== null) {
@@ -75,10 +81,101 @@ class UserController extends Controller
             $data[] = ['date' => $date_list[$i], 'total_data' => $data_hasil];
         }
 
+        $total_comments = number_format(Rating::where('user_id', Auth::user()->id)->get()->count());
+        $total_views = number_format(ProfileViews::where('user_id', Auth::user()->id)->get()->count());
+        $total_saved = number_format(SavedJobs::where('user_id', Auth::user()->id)->get()->count());
+        $total_apply = number_format(Applications::where('candidate_id', Auth::user()->id)->get()->count());
+        $notifications = PrivateNotification::where('to_id', Auth::user()->id)->orderby('created_at', 'desc')->get();
+
         return view('home', [
             'page_name' => $page_name,
             'check_complete' => $check_complete,
-            'chart' => $data
+            'chart' => $data,
+            'total_comments' => $total_comments,
+            'total_views' => $total_views,
+            'total_saved' => $total_saved,
+            'total_apply' => $total_apply,
+            'notifications' => $notifications
+        ]);
+    }
+
+    public function candidate(Request $request)
+    {
+
+        $order = 'desc';
+        if ($request->filled('direction')) {
+            $order = $request->input('direction');
+        }
+        $perPage = 10; // Jumlah item per halaman, dapat disesuaikan sesuai kebutuhan Anda
+        if ($request->filled('per_page')) {
+            $perPage = $request->input('per_page');
+        }
+        // Simpan data pencarian dalam sesi
+        $request->flash();
+
+        $results = User::where('role', 1)
+            ->where(function($query) use ($request) {
+                if ($request->filled('name')) {
+                    $query->where('name', 'like', '%' . $request->input('name') . '%');
+                }
+            })
+            ->whereHas('candidate_profile', function ($query) use ($request) {
+                if ($request->filled('usia')) {
+                    $query->where('usia', '>', $request->input('usia'));
+                }
+
+                if ($request->filled('tinggi_badan')) {
+                    $query->where('tinggi_badan', '>', $request->input('tinggi_badan'));
+                }
+
+                if ($request->filled('pendidikan_terakhir')) {
+                    $query->where('pendidikan_terakhir', $request->input('pendidikan_terakhir'));
+                }
+            })
+            ->orderBy('created_at', $request->input('orderby', $order))
+            ->paginate($perPage)
+            ->appends($request->all());
+
+        return view('candidate.index', [
+            'page_name' => 'List Candidate',
+            'data' => $results,
+            'experience' => JobsExperience::all()
+        ]);
+    }
+
+    public function employer(Request $request)
+    {
+
+        $order = 'desc';
+        if ($request->filled('direction')) {
+            $order = $request->input('direction');
+        }
+        $perPage = 10; // Jumlah item per halaman, dapat disesuaikan sesuai kebutuhan Anda
+        if ($request->filled('per_page')) {
+            $perPage = $request->input('per_page');
+        }
+        // Simpan data pencarian dalam sesi
+        $request->flash();
+
+        $results = User::where('role', 2)
+            ->where(function($query) use ($request) {
+                if ($request->filled('name')) {
+                    $query->where('name', 'like', '%' . $request->input('name') . '%');
+                }
+            })
+            ->whereHas('employer_profile', function ($query) use ($request) {
+                if ($request->filled('industry')) {
+                    $query->where('kategori_perusahaan', $request->input('industry'));
+                }
+            })
+            ->orderBy('created_at', $request->input('orderby', $order))
+            ->paginate($perPage)
+            ->appends($request->all());
+
+        return view('employer.index', [
+            'page_name' => 'List Employer',
+            'data' => $results,
+            'industry' => JobsIndustry::all()
         ]);
     }
 
@@ -112,11 +209,13 @@ class UserController extends Controller
     {
         $page_name = "My Profile";
         $data = User::findOrFail(Auth::user()->id);
+        $experience = JobsExperience::all();
         $profile = CandidateProfile::with('pengalaman_kerja', 'social_media')->where('user_id', Auth::user()->id)->first();
         return view('user.profile', [
             'page_name' => $page_name,
             'data' => $data,
-            'profile' => $profile
+            'profile' => $profile,
+            'experience' => $experience
         ]);
     }
 
@@ -127,7 +226,7 @@ class UserController extends Controller
 
     public function hapus_akun(Request $request)
     {
-        if($request->yakin == 'ya') {
+        if ($request->yakin == 'ya') {
             User::findOrFail(Auth::user()->id)->delete();
             return redirect('/');
         }

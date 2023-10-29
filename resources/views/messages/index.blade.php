@@ -46,11 +46,11 @@
                 <div id="messages" class="mb-4">
                     @foreach ($messages as $message)
                         <div
-                            class="card mb-3 col-8 {{ $message->user_id === auth()->id() ? '-primary  ms-auto' : '-white' }} card-body p-3">
+                            class="card mb-3 col-8 bg{{ $message->user_id === auth()->id() ? '-gray-600 text-white ms-auto' : '-white' }} card-body p-3">
                             <div class="card-text">
                                 {{ $message->content }}</div>
                             <small
-                                class="text-muted text-end">{{ \Carbon\Carbon::parse($message->created_at)->diffForHumans() }}</small>
+                                class="{{ $message->user_id === auth()->id() ? 'text-gray-300' : 'text-muted' }} text-end">{{ \Carbon\Carbon::parse($message->created_at)->diffForHumans() }}</small>
                         </div>
                     @endforeach
                 </div>
@@ -59,8 +59,9 @@
         <div class="bg-white p-3">
 
             <div class="input-group mb-3">
-                <input type="text" id="messageInput" class="form-control" placeholder="Type your message here"
-                    aria-label="Type your message here" aria-describedby="sendBtn">
+                <input type="text" id="messageInput" onkeydown="handleKeyDown(event)" class="form-control"
+                    placeholder="Type your message here" aria-label="Type your message here" aria-describedby="sendBtn">
+
                 <button class="btn btn-primary" type="button" id="sendBtn">Kirim</button>
             </div>
         </div>
@@ -73,8 +74,14 @@
             var cardBody = $('#cardBody');
             cardBody.scrollTop(cardBody[0].scrollHeight);
         });
+        function handleKeyDown(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault(); // Mencegah perilaku default dari tombol "Enter"
+                document.getElementById('sendBtn').click(); // Memanggil fungsi yang diinginkan di sini
+            }
+        }
 
-        Pusher.logToConsole = true;
+
         var conversationId = '{{ $conversation->id }}'; // Replace with the correct conversation ID
         var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
             cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
@@ -83,12 +90,12 @@
 
         var channel = pusher.subscribe('conversation.' + conversationId);
         channel.bind('my-event', function(data) {
-            console.log(data);
             appendMessage(data.message);
         });
 
         $('#sendBtn').click(function() {
             var message = $('#messageInput').val();
+            $('#messageInput').val('');
             $.ajax({
                 method: 'POST',
                 url: '/conversations/' + conversationId + '/messages',
@@ -100,8 +107,7 @@
                     _token: "{{ csrf_token() }}",
                 },
                 success: function() {
-                    $('#messageInput').val(
-                        ''); // Mengatur nilai input ke string kosong setelah berhasil mengirim
+                // Halo
                 }
             });
 
@@ -112,9 +118,9 @@
             var messageTime = "{{ \Carbon\Carbon::parse($message->created_at ?? '')->diffForHumans() }}";
             var newMessage = `
 
-            <div class="card-body card mb-3 col-8 ${message.user_id === {{ auth()->id() }} ? ' ms-auto' : '-white'} p-3">
+            <div class="card-body card mb-3 col-8 bg${message.user_id === {{ auth()->id() }} ? '-gray-600 text-white ms-auto' : '-white'} p-3">
                 <div class="card-text">${message.content}</div>
-                <small class="text-muted text-end">${messageTime}</small>
+                <small class="${message.user_id === {{ auth()->id() }} ? 'text-gray-300' : 'text-muted'} text-end">${messageTime}</small>
             </div>`;
             messageContainer.append(newMessage);
             playNotificationSound();

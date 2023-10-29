@@ -102,18 +102,8 @@
                             <div class="col-md-12">
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Foto
-                                        Profile</label><br>
+                                        Profile / Logo</label><br>
                                     <input name="foto_profile" type="file" class="form-control form-control-solid"
-                                        placeholder="" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-5">
-                                    @csrf
-                                    <label for="exampleFormControlInput1" class="required form-label">Logo
-                                        Perusahaan</label><br>
-
-                                    <input name="logo_perusahaan" type="file" class="form-control form-control-solid"
                                         placeholder="" />
                                 </div>
                             </div>
@@ -179,10 +169,10 @@
                                     <select class="form-select form-select-solid" aria-label="Select example"
                                         data-control="select2" name="kategori_perusahaan">
                                         <option>Pilih</option>
-                                        <option value="{{ $profile->kategori_perusahaan }}" selected>
-                                            {{ $profile->kategori_perusahaan }}</option>
-                                        <option value="1">Food Manufacture</option>
-                                        <option value="2">Agriculture</option>
+                                        @foreach ($industry as $item_i)
+                                            <option value="{{ $item_i->id }}">{{ $item_i->name }}</option>
+                                        @endforeach
+
                                     </select>
                                 </div>
                             </div>
@@ -212,8 +202,8 @@
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Alamat</label>
                                     <input name="alamat" type="text" class="form-control form-control-solid"
-                                        placeholder="DKI Jakarta, Jakarta Selatan, Pondok Indah No.1" value="{{ $profile->alamat }}"
-                                        form="form_profile" />
+                                        placeholder="DKI Jakarta, Jakarta Selatan, Pondok Indah No.1"
+                                        value="{{ $profile->alamat }}" form="form_profile" />
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-spectro" form="form_profile">Simpan / Update</button>
@@ -252,7 +242,8 @@
                                             class="btn btn-icon btn-spectro btn-sm"><i
                                                 class="far fa-solid fa-trash text-white"></i></a>
                                         <button type="button" class="btn btn-sm btn-icon btn-warning"
-                                            data-bs-toggle="modal" data-bs-target="#kt_modal_update{{ $loop->iteration }}"><i
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#kt_modal_update{{ $loop->iteration }}"><i
                                                 class="far fa-solid fa-pen text-white"></i></button>
                                     </td>
                                 </tr>
@@ -408,12 +399,14 @@
                                             class="btn btn-icon btn-spectro btn-sm"><i
                                                 class="far fa-solid fa-trash text-white"></i></a>
                                         <button type="button" class="btn btn-sm btn-icon btn-warning"
-                                            data-bs-toggle="modal" data-bs-target="#kt_modal_karyawan_update{{ $loop->iteration }}"><i
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#kt_modal_karyawan_update{{ $loop->iteration }}"><i
                                                 class="far fa-solid fa-pen text-white"></i></button>
                                     </td>
                                 </tr>
 
-                                <div class="modal fade" tabindex="-1" id="kt_modal_karyawan_update{{ $loop->iteration }}">
+                                <div class="modal fade" tabindex="-1"
+                                    id="kt_modal_karyawan_update{{ $loop->iteration }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <form action="{{ route('employer.karyawan.update') }}" method="POST">

@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('pengalaman_kerjas', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->nullable();
-            $table->string('tanggal')->nullable();
+            $table->string('bulan_awal')->nullable();
+            $table->string('bulan_akhir')->nullable();
+            $table->string('tahun_awal')->nullable();
+            $table->string('tahun_akhir')->nullable();
             $table->string('jabatan')->nullable();
             $table->string('nama_perusahaan')->nullable();
             $table->string('deskripsi')->nullable();

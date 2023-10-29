@@ -121,6 +121,11 @@ Route::prefix('job')->group(function () {
     Route::get('/detail/{id}', [JobsController::class, 'detail'])->name('job.detail');
 });
 
+Route::prefix('list')->group(function () {
+    Route::get('/candidate', [UserController::class, 'candidate'])->name('candidate.list');
+    Route::get('/employer', [UserController::class, 'employer'])->name('employer.list');
+});
+
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/conversations', [ConversationsController::class, 'index'])->name('conversations.index');
@@ -144,6 +149,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::prefix('admin')->group(function () {
             Route::get('/home', [AdminController::class, 'index'])->name('admin_home');
             Route::get('/contact_us', [ContactUsController::class, 'index'])->name('admin.contact.index');
+
+            Route::get('/conversations', [ConversationsController::class, 'admin'])->name('conversations.admin');
+            Route::get('/conversations/{conversation_id}/messages', [MessagesController::class, 'admin'])->name('messages.admin');
+
+
 
             // user
             Route::get('/users', [UserControler::class, 'index'])->name('admin.list.user');

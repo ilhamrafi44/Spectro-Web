@@ -32,7 +32,7 @@
                             <div class="card-body">
                                 <div class="row d-flex flex-columns align-items-center">
                                     <div class="col-auto">
-                                        <div class="symbol symbol-100px symbol-lg-100px symbol-fixed shadow mb-5">
+                                        <div class="symbol symbol-100px symbol-lg-100px symbol-fixed border mb-5">
                                             @if ($item->following->file_profile_id == null)
                                                 <img src="/assets/media/employer-avatar.jpg" alt="" height="100px">
                                             @else

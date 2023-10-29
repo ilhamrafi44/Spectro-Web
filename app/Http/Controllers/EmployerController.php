@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Rating;
+use App\Models\Following;
 use App\Models\SocialMedia;
 use App\Helper\ImageManager;
+use App\Models\Applications;
+use App\Models\JobsIndustry;
 use App\Models\ProfileViews;
 use Illuminate\Http\Request;
 use App\Models\EmployerProfile;
-use App\Models\Following;
+use App\Models\PrivateNotification;
 use Illuminate\Support\Facades\Auth;
 
 class EmployerController extends Controller
@@ -38,9 +42,19 @@ class EmployerController extends Controller
             $data[] = ['date' => $date_list[$i], 'total_data' => $data_hasil];
         }
 
+        $total_comments = number_format(Rating::where('user_id', Auth::user()->id)->get()->count());
+        $total_views = number_format(ProfileViews::where('user_id', Auth::user()->id)->get()->count());
+        $total_apply = number_format(Applications::where('employer_id', Auth::user()->id)->get()->count());
+        $notifications = PrivateNotification::where('to_id', Auth::user()->id)->orderby('created_at', 'desc')->get();
+
         return view('employer.home', [
             "page_name" => "Home",
-            'chart' => $data
+            'chart' => $data,
+            'total_comments' => $total_comments,
+            'total_views' => $total_views,
+            'total_apply' => $total_apply,
+            'notifications' => $notifications,
+            'applys' => Applications::where('employer_id', Auth::user()->id)->limit(5)->get()
         ]);
     }
 
@@ -51,7 +65,8 @@ class EmployerController extends Controller
         return view('employer.profile', [
             "page_name" => "My Profile",
             "data" => $data,
-            "profile" => $profile
+            "profile" => $profile,
+            'industry' => JobsIndustry::all()
         ]);
     }
 

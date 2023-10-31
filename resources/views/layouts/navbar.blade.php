@@ -104,11 +104,6 @@
                                                         data-bs-toggle="tab"
                                                         href="#kt_topbar_notifications_1">Private</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
-                                                        data-bs-toggle="tab"
-                                                        href="#kt_topbar_notifications_3">Public</a>
-                                                </li>
                                             </ul>
                                             <!--end::Tabs-->
                                         </div>

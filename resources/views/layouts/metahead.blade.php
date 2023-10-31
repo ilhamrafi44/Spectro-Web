@@ -4,7 +4,7 @@
 
 <head>
     <base href="../" />
-    <title>{{ \App\Models\Website::first()->deskripsi_website }}
+    <title>{{ \App\Models\Website::first()->nama_website }}
         @if (Auth::check())
             |
             {{ Auth::user()->role == '3' ? 'Admin' : '' }}

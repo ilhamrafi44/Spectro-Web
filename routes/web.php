@@ -181,9 +181,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/jobs/update/{id}', [JobsController::class, 'Adminupdate'])->name('admin.jobs.update');
             Route::post('/jobs/action/update', [JobsController::class, 'Adminupdates'])->name('admin.jobs.update.post');
 
-            Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('admin.jobs.category');
-            Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('admin.jobs.category.add');
-            Route::post('/jobs/category/update', [JobsCategoryController::class, 'update'])->name('admin.jobs.category.update');
+            Route::resource('jobs/category', JobsCategoryController::class, [
+                'names' => [
+                    'index' => 'admin.jobs.category',
+                    'store' => 'admin.jobs.category.add',
+                    'update' => 'admin.jobs.category.update',
+                ],
+            ]);
+
             Route::get('/jobs/category/{id}', [JobsCategoryController::class, 'destroy'])->name('admin.jobs.category.delete');
 
             Route::get('/jobs/industry', [JobsIndustryController::class, 'index'])->name('admin.jobs.industry');
@@ -216,7 +221,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/app/approves/{id}', [ApplicationController::class, 'approves'])->name('jobs.approve');
 
             Route::get('ssw-flow', [SswFlowMasterController::class, 'admin'])->name('admin.ssw.index');
-
         });
     });
 

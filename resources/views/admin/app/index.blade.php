@@ -2,57 +2,68 @@
 
 @section('content')
     <div class="row">
+        <div class=" text-white">
+            <form>
+                <div class="row d-flex align-items-center">
+                    @csrf
+                    <div class="col-md-2">
+                        <div class="mb-5 ">
+                            <input type="text" name="name" value="{{ request()->get('name') }}"
+                                class="form-control" placeholder="Keyword..">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="mb-5">
+                            <select class="form-select" aria-label="Select example" data-control="select2"
+                                name="employer_id">
+                                <option value="">Cari Bedasarkan Employer</option>
+                                @foreach ($employer as $emp)
+                                    <option value="{{ $emp->id }}">{{ $emp->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-5 ">
+                            <select class="form-select" aria-label="Select example" data-control="select2"
+                                name="job_id">
+                                <option value="">Cari Bedasarkan Job</option>
+                                @foreach ($data_job as $itemz)
+                                    <option value="{{ $itemz->id }}">{{ $itemz->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-5 ">
+                            <select class="form-select" aria-label="Select example" data-control="select2"
+                                name="direction">
+                                <option value="asc">Terlama</option>
+                                <option value="desc">Terbaru</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-5 ">
+                            <select class="form-select" aria-label="Select example" data-control="select2"
+                                name="per_page">
+                                <option value="10">10 Data Per Halaman</option>
+                                <option value="50">50 Data Per Halaman</option>
+                                <option value="100">100 Data Per Halaman</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-spectro col-md-2 mb-5" type="submit">Cari</button>
+                </div>
+            </form>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="col-md-12">
                     <div class="row d-flex justify-content-between align-items-center">
-                        <div class="col-auto">
+                        <div class="col-auto mb-5   ">
                             <h3>Total Pelamar : {{ $data->count() }}</h3>
-                        </div>
-                        <div class="col-auto">
-                            <form>
-                                <div class="row d-flex">
-                                    @csrf
-                                    <div class="col-auto">
-                                        <div class="mb-5 ">
-                                            <input type="text" name="name" value="{{ request()->get('name') }}"
-                                                class="form-control" placeholder="Cari Nama Kandidat..">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="mb-5 ">
-                                            <select class="form-select" aria-label="Select example" data-control="select2"
-                                                name="job_id">
-                                                <option value="">Cari Bedasarkan Job</option>
-                                                @foreach ($data_job as $itemz)
-                                                    <option value="{{ $itemz->id }}">{{ $itemz->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="mb-5 ">
-                                            <select class="form-select" aria-label="Select example" data-control="select2"
-                                                name="direction">
-                                                <option value="asc">Terlama</option>
-                                                <option value="desc">Terbaru</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="mb-5 ">
-                                            <select class="form-select" aria-label="Select example" data-control="select2"
-                                                name="per_page">
-                                                <option value="10">10 Data Per Halaman</option>
-                                                <option value="50">50 Data Per Halaman</option>
-                                                <option value="100">100 Data Per Halaman</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-spectro col-auto mb-5" type="submit">Cari</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
 

@@ -1,17 +1,13 @@
 @extends('layouts.default')
 
 @section('content')
-    <!--begin::Content-->
-    <!--begin::Faq main-->
-    <form action="{{ route('employer.jobs.add') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.jobs.add') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-md-12 mb-10">
-                <!--begin::Accordion-->
-                <!--end::Accordion-->
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="w-bolder mb-5">Create Job </h4>
+                        <h4 class="w-bolder mb-5">Create Job</h4>
                         <div class="row d-flex">
                             <div class="col-md-12">
                                 <div class="mb-5">
@@ -32,7 +28,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                            <input type="hidden" name="user_id" value={{ $user_id }}}}">
                             <div class="col-md-12">
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-labe l">URL Video
@@ -73,8 +69,6 @@
                                     </select>
                                 </div>
                             </div>
-
-
                             <div class="col-md-6">
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">PIC 1</label>
@@ -100,8 +94,6 @@
                                     </select>
                                 </div>
                             </div>
-
-
                             <div class="col-md-12">
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Deskripsi
@@ -109,7 +101,6 @@
                                     <textarea class="form-control form-control-solid" placeholder="" rows="5" name="deskripsi" id="deskripsi" />  </textarea>
                                 </div>
                             </div>
-
                             <div class="col-md-6">
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-labe l">Jumlah

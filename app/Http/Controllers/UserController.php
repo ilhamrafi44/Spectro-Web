@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Applications;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Rating;
 use App\Models\Following;
+use App\Models\SavedJobs;
+use App\Exports\UsersExport;
+use App\Models\Applications;
+use App\Models\JobsIndustry;
 use App\Models\ProfileViews;
 use Illuminate\Http\Request;
-use App\Models\CandidateProfile;
 use App\Models\JobsExperience;
-use App\Models\JobsIndustry;
+use App\Models\CandidateProfile;
 use App\Models\PrivateNotification;
-use App\Models\Rating;
-use App\Models\SavedJobs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -219,9 +221,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function settings()
+    public function export()
     {
-        return view('user.profile');
+        return Excel::download(new UsersExport, 'spectro_users.xlsx');
     }
 
     public function hapus_akun(Request $request)

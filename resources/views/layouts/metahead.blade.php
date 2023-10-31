@@ -4,7 +4,7 @@
 
 <head>
     <base href="../" />
-    <title>Spectro
+    <title>{{ \App\Models\Website::first()->deskripsi_website }}
         @if (Auth::check())
             |
             {{ Auth::user()->role == '3' ? 'Admin' : '' }}
@@ -14,14 +14,14 @@
         @endif
     </title>
     <meta charset="utf-8" />
-    <meta name="description" content="Spectro.id" />
-    <meta name="keywords" content="spectro" />
+    <meta name="description" content="{{ \App\Models\Website::first()->deskripsi_website }}" />
+    <meta name="keywords" content="{{ \App\Models\Website::first()->tags_website }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Spectro.id" />
+    <meta property="og:title" content="{{ \App\Models\Website::first()->nama_website }}" />
     <meta property="og:url" content="https://spectro.id" />
-    <meta property="og:site_name" content="Spectro.id" />
+    <meta property="og:site_name" content="{{ \App\Models\Website::first()->nama_website }}" />
     <link rel="shortcut icon" href="{{ asset('assets/media/spectro-small.png') }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />

@@ -56,23 +56,17 @@
               <!--end::Page title-->
 
               <!--begin::Actions-->
-              {{-- <div class="d-flex align-items-center gap-3 gap-lg-5">
+              @if (isset($rute_export))
+              <div class="d-flex align-items-center gap-3 gap-lg-5">
                   <!--begin::Secondary button-->
                   <div class="m-0">
-                      <a href="#" class="btn btn-flex btn-sm btn-color-gray-700 bg-body fw-bold px-4"
-                          data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">
-                          New Project
-                      </a>
-                  </div>
-                  <!--end::Secondary button-->
-
-                  <!--begin::Primary button-->
-                  <a href="#" class="btn btn-flex btn-center btn-dark btn-sm px-4" data-bs-toggle="modal"
-                      data-bs-target="#kt_modal_invite_friends">
-                      Reports
-                  </a>
-                  <!--end::Primary button-->
-              </div> --}}
+                      <a href="{{ route($rute_export) }}" class="btn btn-flex btn-sm bg-success text-white bg-body fw-bold px-4">
+                        Export Data
+                    </a>
+                </div>
+                <!--end::Primary button-->
+            </div>
+            @endif
               <!--end::Actions-->
           </div>
           <!--end::Toolbar wrapper-->

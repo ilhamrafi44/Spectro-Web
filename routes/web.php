@@ -30,9 +30,11 @@ use App\Http\Controllers\UserResumeController;
 use App\Http\Controllers\LoginControllerAjax;
 use App\Http\Controllers\Chat\MessagesController;
 use App\Http\Controllers\RegisterControllerAjax;
+use App\Http\Controllers\WebsiteController;
 use App\Models\Jobs;
 use App\Models\JobsCategory;
 use App\Models\JobsIndustry;
+use App\Models\Website;
 use Yajra\DataTables\Services\DataTable;
 
 /*
@@ -68,13 +70,15 @@ Route::post('/verify/ajaxs', [LoginControllerAjax::class, 'sendEmailVerification
 
 Route::get('/about', function () {
     return view('page.about', [
-        'page_name' => "About Us"
+        'page_name' => "About Us",
+        'data' => Website::first()
     ]);
 })->name('page.about');
 
 Route::get('/contact_us', function () {
     return view('page.contact', [
-        'page_name' => "About Us"
+        'page_name' => "About Us",
+        'data' => Website::first()
     ]);
 })->name('page.contact');
 
@@ -142,17 +146,24 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/account/delete', [UserController::class, 'hapus_akun'])->name('hapus.akun');
 
-
+    // download & delete
+    Route::get('ssw-flow/download/{id}/{name}', [SswFlowMasterController::class, 'download'])->name('ssw_download');
+    Route::get('ssw-flow/delete/{id}/{name}', [SswFlowMasterController::class, 'destroy'])->name('ssw_delete');
 
     //role admin
     Route::middleware(['admin'])->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('/home', [AdminController::class, 'index'])->name('admin_home');
             Route::get('/contact_us', [ContactUsController::class, 'index'])->name('admin.contact.index');
+            Route::get('/web', [WebsiteController::class, 'index'])->name('admin.web');
+            Route::post('/web/update', [WebsiteController::class, 'update'])->name('admin.web.update');
 
             Route::get('/conversations', [ConversationsController::class, 'admin'])->name('conversations.admin');
             Route::get('/conversations/{conversation_id}/messages', [MessagesController::class, 'admin'])->name('messages.admin');
 
+            // Export
+            Route::get('/users/export/', [UserController::class, 'export'])->name('user.export');
+            Route::get('/jobs/export/', [JobsController::class, 'export'])->name('jobs.export');
 
 
             // user
@@ -161,6 +172,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::post('/users/add', [UserControler::class, 'store'])->name('admin.add.users');
             Route::post('/users/update', [UserControler::class, 'update'])->name('admin.users.update');
             Route::get('/users/delete/{id}', [UserControler::class, 'delete'])->name('admin.users.delete');
+
+            Route::get('/jobs', [JobsController::class, 'admin'])->name('admin.jobs');
+            Route::get('/jobs/add', [JobsController::class, 'ShowEmployer'])->name('admin.jobs.add');
+            Route::get('/jobs/add/detail', [JobsController::class, 'AdminAdd'])->name('admin.jobs.index.add');
+            Route::post('/jobs/add', [JobsController::class, 'store'])->name('admin.jobs.add');
+
+            Route::get('/jobs/update/{id}', [JobsController::class, 'Adminupdate'])->name('admin.jobs.update');
+            Route::post('/jobs/action/update', [JobsController::class, 'Adminupdates'])->name('admin.jobs.update.post');
 
             Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('admin.jobs.category');
             Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('admin.jobs.category.add');
@@ -195,6 +214,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/app', [ApplicationController::class, 'admin'])->name('admin.app');
             Route::get('/app/rejects/{id}', [ApplicationController::class, 'rejects'])->name('jobs.reject');
             Route::get('/app/approves/{id}', [ApplicationController::class, 'approves'])->name('jobs.approve');
+
+            Route::get('ssw-flow', [SswFlowMasterController::class, 'admin'])->name('admin.ssw.index');
+
         });
     });
 
@@ -222,6 +244,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/jobs/add', [JobsController::class, 'add'])->name('employer.jobs.add');
             Route::post('/jobs/add', [JobsController::class, 'store'])->name('employer.jobs.add');
 
+            Route::get('/jobs/update/{id}', [JobsController::class, 'update'])->name('employer.jobs.update');
+            Route::post('/jobs/action/update', [JobsController::class, 'updates'])->name('employer.jobs.update.post');
+
             //app controller
             Route::get('/app', [ApplicationController::class, 'employer'])->name('employer.app');
             Route::get('/app/rejects/{id}', [ApplicationController::class, 'rejects'])->name('jobs.reject');
@@ -231,8 +256,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/following/destroy/{id}', [FollowingController::class, 'destroy'])->name('following.saved.destroy');
 
             Route::get('ssw-flow', [SswFlowMasterController::class, 'employer_index'])->name('employer.ssw.index');
-            Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'employer_detail'])->name('employer.ssw.detail');
-            Route::get('ssw-flow/acc/{id}', [SswFlowMasterController::class, 'acc'])->name('ssw.acc');
+            Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'detail'])->name('employer.ssw.detail');
         });
     });
 
@@ -271,8 +295,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('ssw-flow', [SswFlowMasterController::class, 'index'])->name('ssw.index');
             Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'detail'])->name('ssw.detail');
-            Route::post('ssw-flow/post', [SswFlowMasterController::class, 'store'])->name('ssw.store');
-            Route::get('ssw-flow/delete', [SswFlowMasterController::class, 'destroy'])->name('ssw.delete');
+            Route::post('ssw-flow/post', [SswFlowMasterController::class, 'fileSsw'])->name('ssw.file');
+            Route::post('ssw-flow/check', [SswFlowMasterController::class, 'checkSsw'])->name('ssw.check');
         });
     });
 });

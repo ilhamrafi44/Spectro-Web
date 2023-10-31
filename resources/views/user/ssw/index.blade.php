@@ -22,7 +22,7 @@
                                                 <div class="card-body">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h3> {{ $jobs->jobs->name }} ({{ $jobs->employer->name }}) </h3>
-                                                        <div class="d-flex">
+                                                        {{-- <div class="d-flex">
                                                             @if ($jobs->level == 1)
                                                                 <div class="badge badge-info fs-6 m-1">Screening Dokumen
                                                                 </div>
@@ -44,7 +44,7 @@
                                                             @elseif ($jobs->level == 7)
                                                                 <div class="badge badge-info fs-6 m-1">Pengajuan VISA</div>
                                                             @endif
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                     <hr>
                                                     <div class="row d-flex mt-7">
@@ -73,7 +73,7 @@
                                                             / {{ $jobs->jobs->salary_type }}
                                                         </div>
                                                         <div class="col-auto mb-5">
-                                                            | Dilamar :
+                                                            | Diapprove :
                                                             {{ \Carbon\Carbon::parse($jobs->created_at)->toFormattedDateString() }}
                                                         </div>
                                                         <div class="col-auto mb-5 ms-auto">

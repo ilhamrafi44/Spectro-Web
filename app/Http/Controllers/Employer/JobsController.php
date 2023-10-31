@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers\Employer;
 
-use App\Http\Controllers\Controller;
-use App\Models\Applications;
 use App\Models\Jobs;
-use App\Models\JobsCareerLevel;
-use App\Models\JobsCategory;
-use App\Models\JobsExperience;
-use App\Models\JobsIndustry;
+use App\Models\User;
 use App\Models\JobsPic;
-use App\Models\JobsQualification;
 use App\Models\JobsType;
 use App\Models\JobViews;
 use App\Models\Karyawan;
 use App\Models\SavedJobs;
+use App\Exports\JobsExport;
+use App\Models\Applications;
+use App\Models\JobsCategory;
+use App\Models\JobsIndustry;
 use Illuminate\Http\Request;
+use App\Models\JobsExperience;
+use App\Models\JobsCareerLevel;
+use App\Models\JobsQualification;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JobsController extends Controller
 {
@@ -76,12 +79,81 @@ class JobsController extends Controller
         ]);
     }
 
-    public function myjob()
+
+    public function myjob(Request $request)
     {
+        $query = Jobs::query();
+
+        $queryParams = $request->query();
+
+        $query->where('user_id', Auth::user()->id);
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        $orderBy = 'created_at';
+        $direction = 'asc'; // Default direction
+
+        if ($request->filled('direction') && in_array($request->input('direction'), ['asc', 'desc'])) {
+            $direction = $request->input('direction');
+        }
+
+        $query->orderBy($orderBy, $direction);
+
+        $perPage = 10;
+
+        if ($request->has('per_page')) {
+            $perPage = $request->input('per_page');
+        }
+
+        $results = $query->paginate($perPage)->appends($queryParams);
+
         $data = Jobs::where('user_id', Auth::user()->id)->get();
         return view('employer.job', [
             "page_name" => "Job List Saya",
-            "data" => $data
+            "data" => $results
+        ]);
+    }
+
+    public function admin(Request $request)
+    {
+        $query = Jobs::query();
+
+        $queryParams = $request->query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->filled('employer')) {
+            $query->where('user_id', $request->input('employer'));
+        }
+
+        $orderBy = 'created_at';
+        $direction = 'asc'; // Default direction
+
+        if ($request->filled('direction') && in_array($request->input('direction'), ['asc', 'desc'])) {
+            $direction = $request->input('direction');
+        }
+
+        $query->orderBy($orderBy, $direction);
+
+        $perPage = 10;
+
+        if ($request->has('per_page')) {
+            $perPage = $request->input('per_page');
+        }
+
+        $results = $query->paginate($perPage)->appends($queryParams);
+
+        $data = Jobs::where('user_id', Auth::user()->id)->get();
+        $employer = User::where('role', 2)->get();
+        return view('admin.job', [
+            "page_name" => "Job List Semua",
+            "data" => $results,
+            'employer' => $employer,
+            'rute_export' => 'jobs.export'
         ]);
     }
 
@@ -129,7 +201,7 @@ class JobsController extends Controller
         $location = Jobs::distinct()->get(['location_id']);
         $karyawan = Karyawan::where('user_id', Auth::user()->id)->get();
         return view('employer.jobs.add', [
-            "page_name" => "Job List",
+            "page_name" => "Job Create",
             "category" => $category,
             "industry" => $industry,
             'karyawan' => $karyawan,
@@ -141,11 +213,44 @@ class JobsController extends Controller
         ]);
     }
 
+    public function ShowEmployer()
+    {
+        $data = User::where('role', 2)->get();
+        return view('admin.employer', [
+            'page_name' =>  'Pilih Employer',
+            'data' => $data
+        ]);
+    }
+
+    public function AdminAdd(Request $request)
+    {
+        $category = JobsCategory::all();
+        $industry = JobsIndustry::all();
+        $type = JobsType::all();
+        $qualification = JobsQualification::all();
+        $career = JobsCareerLevel::all();
+        $experience = JobsExperience::all();
+        $location = Jobs::distinct()->get(['location_id']);
+        $karyawan = Karyawan::where('user_id', $request->id)->get();
+        return view('admin.jobs.add', [
+            "page_name" => "Job Create",
+            "category" => $category,
+            "industry" => $industry,
+            'karyawan' => $karyawan,
+            'type' => $type,
+            'qualification' => $qualification,
+            'career' => $career,
+            'experience' => $experience,
+            'location_available' => $location,
+            'user_id' => $request->id
+        ]);
+    }
+
     function store(Request $request)
     {
         $job = Jobs::create([
             'name' => $request->name,
-            'user_id' => Auth::user()->id,
+            'user_id' => $request->user_id,
             'link' => $request->link,
             'category_id' => $request->category_id,
             'industry_id' => $request->industry_id,
@@ -187,5 +292,171 @@ class JobsController extends Controller
             return redirect()->back()->with('message', 'Job Berhasil Ditambah');
         }
         return redirect()->back()->with('error', 'Job Gagal Ditambah');
+    }
+
+    public function update($id)
+    {
+        $data = Jobs::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        $karyawan = Karyawan::where('user_id', Auth::user()->id)->get();
+        $category = JobsCategory::all();
+        $industry = JobsIndustry::all();
+        $type = JobsType::all();
+        $qualification = JobsQualification::all();
+        $career = JobsCareerLevel::all();
+        $experience = JobsExperience::all();
+        $location = Jobs::distinct()->get(['location_id']);
+        $karyawan = Karyawan::where('user_id', Auth::user()->id)->get();
+        return view('employer.jobs.update', [
+            'page_name' => "Update Lowongan",
+            'data' => $data,
+            'karyawan' => $karyawan,
+            'category' => $category,
+            'industry' => $industry,
+            'type' => $type,
+            'qualification' => $qualification,
+            'career' => $career,
+            'experience' => $experience,
+            'location_available' => $location
+        ]);
+    }
+
+    public function updates(Request $request)
+    {
+        $id = $request->id;
+        $job = Jobs::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $job->name = $request->name;
+        $job->user_id = Auth::user()->id;
+        $job->link = $request->link;
+        $job->category_id = $request->category_id;
+        $job->industry_id = $request->industry_id;
+        $job->location_id = $request->location_id;
+        $job->deskripsi = $request->deskripsi;
+        $job->jumlah_kandidat = $request->jumlah_kandidat;
+        $job->kualifikasi = $request->kualifikasi;
+        $job->career_level = $request->career_level;
+        $job->job_type = $request->job_type;
+        $job->experience = $request->experience;
+        $job->jenis_kelamin = $request->jenis_kelamin;
+        $job->hari_libur = $request->hari_libur;
+        $job->waktu_istirahat = $request->waktu_istirahat;
+        $job->waktu_kerja = $request->waktu_kerja;
+        $job->catatan = $request->catatan;
+        $job->salary = $request->salary;
+        $job->salary_type = $request->salary_type;
+        $job->info_gaji = $request->info_gaji;
+        $job->total_tunjangan = $request->total_tunjangan;
+        $job->info_tunjangan = $request->info_tunjangan;
+        $job->expired_date = $request->expired_date;
+        $job->mata_gaji = $request->mata_gaji;
+        $job->mata_tunjangan = $request->mata_tunjangan;
+        $job->update();
+
+        $pic1 = JobsPic::where('job_id', $id)->first();
+        $pic1->pic_id = $request->pic_1;
+        $pic1->update();
+
+        if ($request->pic_2 > 0) {
+            $pic2 = JobsPic::where('job_id', $id)->where('id', '<>', $pic1->id)->first();
+            if ($pic2) {
+                $pic2->pic_id = $request->pic_2;
+                $pic2->update();
+            } else {
+                JobsPic::create([
+                    'job_id' => $id,
+                    'pic_id' => $request->pic_2
+                ]);
+            }
+        }
+        return redirect()->back()->with('message', 'Data Berhasil Di Ubah');
+    }
+
+    public function Adminupdate($id)
+    {
+        $data = Jobs::where('id', $id)->first();
+        $karyawan = Karyawan::where('user_id', $data->user->id)->get();
+        $category = JobsCategory::all();
+        $industry = JobsIndustry::all();
+        $type = JobsType::all();
+        $qualification = JobsQualification::all();
+        $career = JobsCareerLevel::all();
+        $experience = JobsExperience::all();
+        $location = Jobs::distinct()->get(['location_id']);
+        return view('employer.jobs.update', [
+            'page_name' => "Update Lowongan",
+            'data' => $data,
+            'karyawan' => $karyawan,
+            'category' => $category,
+            'industry' => $industry,
+            'type' => $type,
+            'qualification' => $qualification,
+            'career' => $career,
+            'experience' => $experience,
+            'location_available' => $location
+        ]);
+    }
+
+    public function Adminupdates(Request $request)
+    {
+        $id = $request->id;
+        $job = Jobs::where('id', $id)->first();
+        $job->name = $request->name;
+        $job->user_id = Auth::user()->id;
+        $job->link = $request->link;
+        $job->category_id = $request->category_id;
+        $job->industry_id = $request->industry_id;
+        $job->location_id = $request->location_id;
+        $job->deskripsi = $request->deskripsi;
+        $job->jumlah_kandidat = $request->jumlah_kandidat;
+        $job->kualifikasi = $request->kualifikasi;
+        $job->career_level = $request->career_level;
+        $job->job_type = $request->job_type;
+        $job->experience = $request->experience;
+        $job->jenis_kelamin = $request->jenis_kelamin;
+        $job->hari_libur = $request->hari_libur;
+        $job->waktu_istirahat = $request->waktu_istirahat;
+        $job->waktu_kerja = $request->waktu_kerja;
+        $job->catatan = $request->catatan;
+        $job->salary = $request->salary;
+        $job->salary_type = $request->salary_type;
+        $job->info_gaji = $request->info_gaji;
+        $job->total_tunjangan = $request->total_tunjangan;
+        $job->info_tunjangan = $request->info_tunjangan;
+        $job->expired_date = $request->expired_date;
+        $job->mata_gaji = $request->mata_gaji;
+        $job->mata_tunjangan = $request->mata_tunjangan;
+        $job->update();
+
+        $pic1 = JobsPic::where('job_id', $id)->first();
+        $pic1->pic_id = $request->pic_1;
+        $pic1->update();
+
+        if ($request->pic_2 > 0) {
+            $pic2 = JobsPic::where('job_id', $id)->where('id', '<>', $pic1->id)->first();
+            if ($pic2) {
+                $pic2->pic_id = $request->pic_2;
+                $pic2->update();
+            } else {
+                JobsPic::create([
+                    'job_id' => $id,
+                    'pic_id' => $request->pic_2
+                ]);
+            }
+        }
+        return redirect()->back()->with('message', 'Data Berhasil Di Ubah');
+    }
+
+    public function destroy($id)
+    {
+        $job = Jobs::where('id', $id)->where('user_id', Auth::user()->id)->delete();
+        if($job)
+        {
+            return redirect()->back()->with('message', 'Data Berhasil Dihapus');
+        }
+        return redirect()->back()->with('error', 'Data Gagal Dihapus');
+    }
+
+    public function export()
+    {
+        return Excel::download(new JobsExport, 'jobs.xlsx');
     }
 }

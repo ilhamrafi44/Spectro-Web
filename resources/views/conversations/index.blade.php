@@ -6,13 +6,13 @@
             <form>
                 <div class="row d-flex">
                     @csrf
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="mb-5 ">
                             <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control"
                                 placeholder="Cari Nama..">
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="mb-5 ">
                             <select class="form-select" aria-label="Select example" data-control="select2" name="direction">
                                 <option value="asc">Terlama</option>
@@ -20,7 +20,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3">
                         <div class="mb-5 ">
                             <select class="form-select" aria-label="Select example" data-control="select2" name="per_page">
                                 <option value="10">10 Data Per Halaman</option>
@@ -29,7 +29,7 @@
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-spectro col-3 mb-5" type="submit">Cari</button>
+                    <button class="btn btn-spectro col-md-3 mb-10" type="submit">Cari</button>
                 </div>
             </form>
         </div>

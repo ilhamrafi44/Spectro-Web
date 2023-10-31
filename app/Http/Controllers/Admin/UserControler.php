@@ -77,8 +77,9 @@ class UserControler extends Controller
         $results = $query->paginate($perPage)->appends($queryParams);
 
         return view('admin.users.index', [
-            "page_name" => "User List",
-            "data" => $results
+            "page_name" => "User Listss",
+            "rute_export" => "user.export",
+            "data" => $results,
         ]);
     }
 

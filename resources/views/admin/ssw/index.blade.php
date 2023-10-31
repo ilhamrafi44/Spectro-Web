@@ -9,7 +9,38 @@
                         <div class="row d-flex justify-content-between">
                             <div class="col-md-12">
                                 <div class="p-5">
-
+                                    <form>
+                                        <div class="row d-flex">
+                                            @csrf
+                                            <div class="col-md-3">
+                                                <div class="mb-5 ">
+                                                    <input type="text" name="name"
+                                                        value="{{ request()->get('name') }}" class="form-control"
+                                                        placeholder="Cari Nama..">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mb-5 ">
+                                                    <select class="form-select" aria-label="Select example"
+                                                        data-control="select2" name="direction">
+                                                        <option value="asc">Terlama</option>
+                                                        <option value="desc">Terbaru</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mb-5 ">
+                                                    <select class="form-select" aria-label="Select example"
+                                                        data-control="select2" name="per_page">
+                                                        <option value="10">10 Data Per Halaman</option>
+                                                        <option value="50">50 Data Per Halaman</option>
+                                                        <option value="100">100 Data Per Halaman</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-spectro col-md-3 mb-10" type="submit">Cari</button>
+                                        </div>
+                                    </form>
                                     <div class="row d-flex justify-content-between align-items-center">
                                         <div class="col-auto mb-5">
                                             <h3>Total Pekerjaan Diterima : {{ $data->count() }}</h3>
@@ -21,7 +52,8 @@
                                             <div class="card hover-elevate-up border parent-hover mb-6">
                                                 <div class="card-body">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h3> {{ $jobs->candidate->name }} ({{ $jobs->jobs->name }}) </h3>
+                                                        <h3> {{ $jobs->candidate->name }} ({{ $jobs->employer->name }} -
+                                                            {{ $jobs->jobs->name }}) </h3>
                                                         {{-- <div class="d-flex">
                                                             @if ($jobs->level == 1)
                                                                 <div class="badge badge-info fs-6 m-1">Screening Dokumen

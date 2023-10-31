@@ -1,5 +1,11 @@
 @extends('layouts.default')
 
+@section('heads')
+<a href="{{ route('user.export') }}" class="btn btn-flex btn-sm bg-success text-white bg-body fw-bold px-4">
+    Export Data
+</a>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12 mb-5">
@@ -46,7 +52,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <button class="btn btn-spectro col-md-2 mb-2" type="submit">Cari</button>
+                            <button class="btn btn-spectro col-md-2 mb-5" type="submit">Cari</button>
                         </div>
                     </form>
                     <div class="table-responsive">

@@ -128,16 +128,21 @@ class ApplicationController extends Controller
                 if ($request->filled('job_id')) {
                     $query->where('id', $request->input('job_id'));
                 }
+                if ($request->filled('employer_id')) {
+                    $query->where('user_id', $request->input('employer_id'));
+                }
             })
             ->orderBy('created_at', $request->input('orderby', $order))
             ->paginate($perPage)
             ->appends($request->all());
 
         $data_job = Jobs::all();
+        $data_employer = User::where('role', 2)->get();
         return view('admin.app.index', [
             "page_name" => "Semua Pelamar",
             'data_job' => $data_job,
-            "data" => $results
+            "data" => $results,
+            'employer' => $data_employer
         ]);
     }
 
@@ -183,10 +188,10 @@ class ApplicationController extends Controller
             return redirect()->back()->with('error', 'User tidak ditemukan');
         }
 
-        if($check_complete < 85)
-        {
-            return redirect()->back()->with('error', 'Data profile dibawah 85%, silahkan lengkapi terlebih dahulu.');
-        }
+        // if($check_complete < 85)
+        // {
+        //     return redirect()->back()->with('error', 'Data profile dibawah 85%, silahkan lengkapi terlebih dahulu.');
+        // }
 
         $jobs = Jobs::findOrFail($request->job_id);
 
@@ -264,8 +269,7 @@ class ApplicationController extends Controller
             SswFlowMaster::create([
                 'job_id' => $apply->job_id,
                 'employer_id' => $apply->employer_id,
-                'candidate_id' => $apply->employer_id,
-                'level' => 1
+                'candidate_id' => $apply->candidate_id,
             ]);
 
             Mail::to($apply->candidate->email)->send(new Approve($apply));

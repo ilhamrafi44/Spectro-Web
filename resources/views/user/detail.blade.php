@@ -89,7 +89,7 @@
                     <h1 class="mb-5">Pengalaman Kerja</h1>
 
                     @forelse ($profile->pengalaman_kerja as $pengalaman_kerja)
-                        <a href="{{ route('job.detail', ['id' => $pengalaman_kerja->id]) }}"
+                        <a
                             class="card hover-elevate-up border parent-hover mb-5">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">

@@ -15,13 +15,13 @@
                 <!--begin:Menu item-->
 
                 @if (Auth::user())
-                <div class="menu-item menu-lg me-0 me-lg-2">
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="{{ route('home') }}">
-                        <span class="menu-title">Dashboard</span>
-                        <span class="menu-arrow d-lg-none"></span>
-                    </a>
-                </div>
+                    <div class="menu-item menu-lg me-0 me-lg-2">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('home') }}">
+                            <span class="menu-title">Dashboard</span>
+                            <span class="menu-arrow d-lg-none"></span>
+                        </a>
+                    </div>
                     @if (Auth::user()->role == '3')
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                             data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
@@ -29,7 +29,8 @@
                                 <span class="menu-title">User</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </span>
-                            <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
+                            <div
+                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{ route('admin.list.user') }}">
                                         <span class="menu-bullet">
@@ -46,7 +47,7 @@
                                         <span class="menu-title">Create User</span>
                                     </a>
                                 </div>
-                            {{--
+                                {{--
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
                                     <a class="menu-link active" href="../dist/pages/faq.html">
@@ -69,7 +70,7 @@
                             <div
                                 class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
                                 <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
+                                    <a class="menu-link" href="{{ route('admin.jobs') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -77,7 +78,7 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="../dist/pages/about.html">
+                                    <a class="menu-link" href="{{ route('admin.jobs.add') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
@@ -152,15 +153,26 @@
                             </a>
                         </div>
                         <div class="menu-item menu-lg me-0 me-lg-2">
+                            <a class="menu-link" href="{{ route('admin.ssw.index') }}">
+                                <span class="menu-title">Ssw Flow</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <a class="menu-link" href="{{ route('conversations.admin') }}">
+                                <span class="menu-title">Chat Monitoring</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
                             <a class="menu-link" href="{{ route('admin.contact.index') }}">
                                 <span class="menu-title">List Contact</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </a>
                         </div>
-                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                            data-kt-menu-placement="bottom-start" class="menu-item menu-lg me-0 me-lg-2">
-                            <a class="menu-link" href="../dist/pages/about.html">
-                                <span class="menu-title">Report</span>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <a class="menu-link" href="{{ route('admin.web') }}">
+                                <span class="menu-title">Website</span>
                                 <span class="menu-arrow d-lg-none"></span>
                             </a>
                         </div>
@@ -265,7 +277,8 @@
 
                         </div>
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                            data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                            data-kt-menu-placement="bottom-start"
+                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                             <span class="menu-link">
                                 <span class="menu-title">Tersimpan</span>
                                 <span class="menu-arrow d-lg-none"></span>
@@ -301,13 +314,13 @@
                         </div>
                     @endif
                 @else
-                <div class="menu-item menu-lg me-0 me-lg-2">
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="{{ route('home') }}">
-                        <span class="menu-title">Home</span>
-                        <span class="menu-arrow d-lg-none"></span>
-                    </a>
-                </div>
+                    <div class="menu-item menu-lg me-0 me-lg-2">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('home') }}">
+                            <span class="menu-title">Home</span>
+                            <span class="menu-arrow d-lg-none"></span>
+                        </a>
+                    </div>
                     <div class="menu-item menu-lg me-0 me-lg-2">
 
                         <!--begin:Menu link-->
@@ -360,30 +373,30 @@
         </div>
         <!--end::Menu wrapper-->
         <!--begin::Search-->
-        <style>
-            a.glink img {
-                width: 20px !important;
-                height: 20px !important;
-            }
-            .gt_container-unisv1>a.glink>span {
-                margin-right: 7px !important;
-                font-size: 15px !important;
-                color: var(--bs-spectro) !important;
-            }
-        </style>
-
-        <div class="d-flex align-items-center w-100 w-lg-225px pt-5 pt-lg-0">
-            <div class="w-100 position-relative mb-5 mb-lg-0">
-                <div class="gtranslate_wrapper fs-6 btn border border-primary text-center p-2 rounded-4"></div>
+        <div class="d-flex w-100 w-lg-225px pt-5 pt-lg-0">
+            <div class="w-100 position-relative mb-5 mb-lg-0 mt-md-4">
+                <div class="gtranslate_wrapper" style="position: relative;
+                z-index: 0;"></div>
                 <script>
                     window.gtranslateSettings = {
                         "default_language": "id",
-                        "languages": ["en", "ja", "id"],
+                        "detect_browser_language": true,
+                        "languages": ["en", "id", "ja"],
                         "wrapper_selector": ".gtranslate_wrapper",
-                        "flag_style": "3d"
+                        "flag_size": 24,
+                        "switcher_horizontal_position": "inline",
+                        "switcher_text_color": "#f7f7f7",
+                        "switcher_arrow_color": "#f2f2f2",
+                        "switcher_border_color": "#b22222",
+                        "switcher_background_color": "#b22222",
+                        "switcher_background_shadow_color": "#b22222",
+                        "switcher_background_hover_color": "#ee4747",
+                        "dropdown_text_color": "#eaeaea",
+                        "dropdown_hover_color": "#b22222",
+                        "dropdown_background_color": "#ee4747"
                     }
                 </script>
-                <script src="https://cdn.gtranslate.net/widgets/latest/popup.js"  defer></script>
+                <script src="https://cdn.gtranslate.net/widgets/latest/dwf.js" defer></script>
             </div>
         </div>
         <!--end::Search-->

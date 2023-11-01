@@ -29,11 +29,15 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserResumeController;
 use App\Http\Controllers\LoginControllerAjax;
 use App\Http\Controllers\Chat\MessagesController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\RegisterControllerAjax;
+use App\Http\Controllers\TestimonialsController;
 use App\Http\Controllers\WebsiteController;
+use App\Models\Client;
 use App\Models\Jobs;
 use App\Models\JobsCategory;
 use App\Models\JobsIndustry;
+use App\Models\Testimonials;
 use App\Models\Website;
 use Yajra\DataTables\Services\DataTable;
 
@@ -60,7 +64,9 @@ Route::get('/', function () {
         'industry' => $industry,
         'location' => $location,
         'data_job' => $job,
-        'show_category' => $show_category
+        'show_category' => $show_category,
+        'testimonials' => Testimonials::all(),
+        'client' => Client::all()
     ]);
 });
 
@@ -116,9 +122,6 @@ Route::post('save-following', [FollowingController::class, 'store'])->name('foll
 Route::post('delete-following', [FollowingController::class, 'delete'])->name('following.delete');
 
 Auth::routes(['verify' => true]);
-
-// private chat
-
 // Job Route
 Route::prefix('job')->group(function () {
     Route::get('/', [JobsController::class, 'index'])->name('job.index');
@@ -158,6 +161,17 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/web', [WebsiteController::class, 'index'])->name('admin.web');
             Route::post('/web/update', [WebsiteController::class, 'update'])->name('admin.web.update');
 
+            // update landing
+            Route::get('/web/testimonial', [TestimonialsController::class, 'index'])->name('admin.web.testimonial');
+            Route::post('/web/testimonial', [TestimonialsController::class, 'store'])->name('admin.web.testimonial.add');
+            Route::post('/web/testimonial/update', [TestimonialsController::class, 'update'])->name('admin.web.testimonial.update');
+            Route::get('/web/testimonial/{id}', [TestimonialsController::class, 'destroy'])->name('admin.web.testimonial.delete');
+
+            Route::get('/web/client', [ClientController::class, 'index'])->name('admin.web.client');
+            Route::post('/web/client', [ClientController::class, 'store'])->name('admin.web.client.add');
+            Route::post('/web/client/update', [ClientController::class, 'update'])->name('admin.web.client.update');
+            Route::get('/web/client/{id}', [ClientController::class, 'destroy'])->name('admin.web.client.delete');
+
             Route::get('/conversations', [ConversationsController::class, 'admin'])->name('conversations.admin');
             Route::get('/conversations/{conversation_id}/messages', [MessagesController::class, 'admin'])->name('messages.admin');
 
@@ -181,14 +195,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/jobs/update/{id}', [JobsController::class, 'Adminupdate'])->name('admin.jobs.update');
             Route::post('/jobs/action/update', [JobsController::class, 'Adminupdates'])->name('admin.jobs.update.post');
 
-            Route::resource('jobs/category', JobsCategoryController::class, [
-                'names' => [
-                    'index' => 'admin.jobs.category',
-                    'store' => 'admin.jobs.category.add',
-                    'update' => 'admin.jobs.category.update',
-                ],
-            ]);
-
+            Route::get('/jobs/category', [JobsCategoryController::class, 'index'])->name('admin.jobs.category');
+            Route::post('/jobs/category', [JobsCategoryController::class, 'store'])->name('admin.jobs.category.add');
+            Route::post('/jobs/category/update', [JobsCategoryController::class, 'update'])->name('admin.jobs.category.update');
             Route::get('/jobs/category/{id}', [JobsCategoryController::class, 'destroy'])->name('admin.jobs.category.delete');
 
             Route::get('/jobs/industry', [JobsIndustryController::class, 'index'])->name('admin.jobs.industry');
@@ -221,6 +230,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/app/approves/{id}', [ApplicationController::class, 'approves'])->name('jobs.approve');
 
             Route::get('ssw-flow', [SswFlowMasterController::class, 'admin'])->name('admin.ssw.index');
+
         });
     });
 

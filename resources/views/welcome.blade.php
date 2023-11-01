@@ -121,9 +121,8 @@
         <div class="container p-5 my-10">
             <h1>Explore Jobs</h1>
             <div class="row d-flex mt-10 mb-5">
-                @foreach ($data_job as $jobs)
+                @forelse ($data_job as $jobs)
                     <div class="col-md-4">
-
                         <a href="{{ route('job.detail', ['id' => $jobs->id]) }}"
                             class="card hover-elevate-up border parent-hover">
                             <div class="card-body">
@@ -159,7 +158,9 @@
                             </div>
                         </a>
                     </div>
-                @endforeach
+                @empty
+                    @include('layouts.data404')
+                @endforelse
 
             </div>
             <a href="{{ route('job.index') }}" class="text-spectro fs-3 mt-5">Lihat Semua...</a>
@@ -169,29 +170,47 @@
         <div class="container p-5 my-10">
             <h1 class="mb-17">Our Client</h1>
             <div class="row d-flex justify-content-center">
-                <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/cariilmu.png" class="img-fluid"
-                        style="height: 50px;" alt="">
-                </div>
-                <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/ids.png" class="img-fluid" style="height: 50px;"
-                        alt="">
-                </div>
-                <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/edufund.jpeg" class="img-fluid"
-                        style="height: 50px;" alt="">
-                </div>
-                <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/personix.jpeg" class="img-fluid"
-                        style="height: 50px;" alt="">
-                </div>
-                <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/univ-siber.png" class="img-fluid"
-                        style="height: 50px;" alt="">
-                </div>
-                <div class="col-md-2 mx-5 my-10 col-auto">
-                    <img src="https://spectro.id/wp-content/uploads/2023/07/karirmu.png" class="img-fluid"
-                        style="height: 50px;" alt="">
+                @forelse ($client as $cl)
+                    <div class="col-md-2 mx-5 my-10 col-auto">
+                        <img src="/storage/file/images/testimonial/{{ $cl->picture }}" class="img-fluid"
+                            style="height: 50px;" alt="">
+                    </div>
+                @empty
+                    @include('layouts.data404')
+                @endforelse
+            </div>
+        </div>
+    </div>
+    <div class="row bg-white my-10">
+        <div class="container p-5 my-10">
+            <h1 class="mb-17">Our Testimonial</h1>
+            <div class="owl-carousel owl-theme owl-loaded loop">
+                <div class="owl-stage-outer">
+                    <div class="owl-stage">
+                        @foreach ($testimonials as $testimoni)
+                            <div class="owl-item">
+                                <div class="card border m-2">
+                                    <div class="card-body text-center">
+                                        <div class="text-center">
+                                            <div class="symbol symbol-75px symbol-circle">
+                                                <img alt="Logo"
+                                                    src="/storage/file/images/testimonial/{{ $testimoni->picture }}" />
+                                            </div>
+                                            <figure>
+                                                <blockquote class="blockquote">
+                                                    <p>“{{ $testimoni->message }}”</p>
+                                                </blockquote>
+                                                <figcaption class="blockquote-footer">
+                                                    {{ $testimoni->nama }} <cite
+                                                        title="Source Title">({{ $testimoni->dari }})</cite>
+                                                </figcaption>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 
 @include('layouts.navbar')
 @include('layouts.sidenav')
+@stack('page_blog_styles')
 
 <div class="app-wrapper  flex-column flex-row-fluid " id="kt_app_wrapper">
     <!--begin::Wrapper container-->
@@ -69,7 +70,7 @@
 <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
 {{-- <script src="{{ asset('assets/js/custom/custom.js') }}"></script> --}}
-
+@stack('page_blog_scripts')
 @stack('scripts')
 
 <script>

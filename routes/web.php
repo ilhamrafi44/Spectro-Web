@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserControler;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Application\ApplicationController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\Chat\ConversationsController;
 use App\Http\Controllers\Employer\JobsCareerLevelController;
@@ -91,8 +92,8 @@ Route::get('/contact_us', function () {
 Route::post('/contact-store', [ContactUsController::class, 'store'])->name('contact.store');
 
 Route::prefix('blog')->group(function () {
-    Route::get('/', [JobsController::class, 'index'])->name('blog.index');
-    Route::get('/detail/{id}', [JobsController::class, 'detail'])->name('job.detail');
+    Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/detail/{id}', [BlogController::class, 'detail'])->name('job.detail');
 });
 
 Route::get('/register/candidate', function () {
@@ -156,6 +157,19 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     //role admin
     Route::middleware(['admin'])->group(function () {
         Route::prefix('admin')->group(function () {
+            Route::prefix('blog')->group(function () {
+                Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+                Route::post('/', [BlogController::class, 'index'])->name('blog.index.filter');
+                Route::get('/detail/{id}', [BlogController::class, 'detail'])->name('job.detail');
+
+                Route::post('/store', [BlogController::class, 'store'])->name('blog.store');
+                Route::post('/store/tags', [BlogController::class, 'store_tags'])->name('blog.store.tags');
+                Route::post('/store/categories', [BlogController::class, 'store_category'])->name('blog.store.category');
+
+                // Route::delete('/delete', [BlogController::class, 'store'])->name('blog.store');
+                // Route::delete('/delete/tags', [BlogController::class, 'store_tags'])->name('blog.store.tags');
+                // Route::delete('/delete/categories', [BlogController::class, 'store_category'])->name('blog.store.category');
+            });
             Route::get('/home', [AdminController::class, 'index'])->name('admin_home');
             Route::get('/contact_us', [ContactUsController::class, 'index'])->name('admin.contact.index');
             Route::get('/web', [WebsiteController::class, 'index'])->name('admin.web');

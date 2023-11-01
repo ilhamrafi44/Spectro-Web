@@ -448,8 +448,7 @@ class JobsController extends Controller
     public function destroy($id)
     {
         $job = Jobs::where('id', $id)->where('user_id', Auth::user()->id)->delete();
-        if($job)
-        {
+        if ($job) {
             return redirect()->back()->with('message', 'Data Berhasil Dihapus');
         }
         return redirect()->back()->with('error', 'Data Gagal Dihapus');

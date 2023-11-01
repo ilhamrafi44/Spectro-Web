@@ -203,6 +203,13 @@
                                     </a>
                                 </div>
                             </div>
+
+                        </div>
+                        <div class="menu-item menu-lg me-0 me-lg-2">
+                            <a class="menu-link" href="{{ route('blog.index') }}">
+                                <span class="menu-title">Blog</span>
+                                <span class="menu-arrow d-lg-none"></span>
+                            </a>
                         </div>
                     @endif
                     @if (Auth::user()->role == '2')

@@ -119,79 +119,17 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-spectro col-md-12" data-bs-toggle="modal"
-                        data-bs-target="#createCategoryModal">
+                    <a class="btn btn-spectro col-md-12" href="{{ route('category.index') }}">
                         <i class="fa fa-plus" aria-hidden="true"></i> Tambah Kategori
-                    </button>
-                    <div class="modal fade" id="createCategoryModal" tabindex="-1"
-                        aria-labelledby="createPostModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="createPostModalLabel">Buat Kategori</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <form method="POST" action="{{ route('blog.store.category') }}" id="createCategoryForm">
-                                    <div class="modal-body">
-
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Nama</label>
-                                            <input type="text" name="name" class="form-control" id="name"
-                                                placeholder="Nama Kategori...">
-                                        </div>
-                                        <!-- Other input fields as needed for your blog post creation -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Buat
-                                            Kategori</button>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
-
                 <div class="col-md-2">
-                    <button class="btn btn-spectro col-md-12" data-bs-toggle="modal" data-bs-target="#createTagsModal">
+                    <a class="btn btn-spectro col-md-12" href="{{ route('tags.index') }}">
                         <i class="fa fa-plus" aria-hidden="true"></i> Tambah Tags
-                    </button>
-                    <div class="modal fade" id="createTagsModal" tabindex="-1" aria-labelledby="createPostModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="createPostModalLabel">Buat Tag</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <form method="POST" action="{{ route('blog.store.tags') }}" id="createTagsForm">
-
-                                    <div class="modal-body">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label">Nama</label>
-                                            <input type="text" name="name" class="form-control" id="name"
-                                                placeholder="Nama Tags...">
-                                        </div>
-                                        <!-- Other input fields as needed for your blog post creation -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Buat
-                                            Tags</button>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
+
+
             </div>
 
         </div>

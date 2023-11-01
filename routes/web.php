@@ -161,15 +161,20 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::get('/', [BlogController::class, 'index'])->name('blog.index');
                 Route::post('/', [BlogController::class, 'index'])->name('blog.index.filter');
                 Route::get('/detail/{id}', [BlogController::class, 'detail'])->name('job.detail');
-
                 Route::post('/store', [BlogController::class, 'store'])->name('blog.store');
-                Route::post('/store/tags', [BlogController::class, 'store_tags'])->name('blog.store.tags');
-                Route::post('/store/categories', [BlogController::class, 'store_category'])->name('blog.store.category');
-
-                // Route::delete('/delete', [BlogController::class, 'store'])->name('blog.store');
-                // Route::delete('/delete/tags', [BlogController::class, 'store_tags'])->name('blog.store.tags');
-                // Route::delete('/delete/categories', [BlogController::class, 'store_category'])->name('blog.store.category');
+                // Route::delete('/{BlogPost}', [BlogController::class, 'store'])->name('blog.store');
+                Route::prefix('tags')->group(function () {
+                    Route::get('/', [BlogController::class, 'index_tags'])->name('tags.index');
+                    Route::post('/store', [BlogController::class, 'store_tags'])->name('blog.store.tags');
+                    Route::delete('/{Tags}', [BlogController::class, 'destroy_tags'])->name('blog.destroy.tags');
+                });
+                Route::prefix('category')->group(function () {
+                    Route::get('/', [BlogController::class, 'index_category'])->name('category.index');
+                    Route::post('/store', [BlogController::class, 'store_category'])->name('blog.store.category');
+                    Route::delete('/{BlogCategory}', [BlogController::class, 'destroy_category'])->name('blog.destroy.category');
+                });
             });
+
             Route::get('/home', [AdminController::class, 'index'])->name('admin_home');
             Route::get('/contact_us', [ContactUsController::class, 'index'])->name('admin.contact.index');
             Route::get('/web', [WebsiteController::class, 'index'])->name('admin.web');

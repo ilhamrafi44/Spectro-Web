@@ -38,6 +38,32 @@ class BlogController extends Controller
         ]);
     }
 
+    public function index_category(Request $request)
+    {
+        $query = BlogCategory::query();
+        // Pagination
+        $perPage = $request->input('per_page', 10);
+        $results = $query->paginate($perPage);
+
+        return view('blog.categories', [
+            'results' => $results,
+            'page_name' => 'Master Blog Categories',
+        ]);
+    }
+
+    public function index_tags(Request $request)
+    {
+        $query = Tags::query();
+        // Pagination
+        $perPage = $request->input('per_page', 10);
+        $results = $query->paginate($perPage);
+
+        return view('blog.tags', [
+            'results' => $results,
+            'page_name' => 'Master Blog Tags',
+        ]);
+    }
+
     public function store(Request $request)
     {
         // Validate the request data
@@ -106,5 +132,24 @@ class BlogController extends Controller
         $blogPost->increment('views'); // Increment view count
 
         return view('blog.show', compact('blogPost'));
+    }
+
+    public function destroy_category(BlogCategory $BlogCategory)
+    {
+        try {
+            $BlogCategory->delete();
+            return redirect()->back()->with('message', 'Berhasil Menghapus Category');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal Menghapus Category');
+        }
+    }
+    public function destroy_tags(Tags $Tags)
+    {
+        try {
+            $Tags->delete();
+            return redirect()->back()->with('message', 'Berhasil Menghapus Tags');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal Menghapus Tags');
+        }
     }
 }

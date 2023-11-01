@@ -15,7 +15,7 @@
         </style>
     @endpush
     <div class="row d-flex">
-        <div class="col-12">
+        <div class="col-12 mb-3">
             <form method="POST" action="{{ route('blog.index.filter') }}">
                 @csrf
                 <div class="row d-flex">
@@ -63,9 +63,10 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <form method="POST" action="{{ route('blog.store') }}" id="createBlogForm">
-                                        @csrf
+                                <form method="POST" action="{{ route('blog.store') }}" id="createBlogForm"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-body">
                                         <div class="mb-3">
                                             <label for="title" class="form-label">Judul</label>
                                             <input type="text" name="title" class="form-control" id="title"
@@ -104,14 +105,15 @@
                                             </div>
                                         </div>
                                         <!-- Other input fields as needed for your blog post creation -->
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="createPostButton">Buat
-                                        Blog</button>
-                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Buat
+                                            Blog</button>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -130,9 +132,9 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <form method="POST" action="{{ route('blog.store.category') }}"
-                                        id="createCategoryForm">
+                                <form method="POST" action="{{ route('blog.store.category') }}" id="createCategoryForm">
+                                    <div class="modal-body">
+
                                         @csrf
                                         <div class="mb-3">
                                             <label for="name" class="form-label">Nama</label>
@@ -140,14 +142,15 @@
                                                 placeholder="Nama Kategori...">
                                         </div>
                                         <!-- Other input fields as needed for your blog post creation -->
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="createPostButton">Buat
-                                        Kategori</button>
-                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Buat
+                                            Kategori</button>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -166,8 +169,9 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <form method="POST" action="{{ route('blog.store.tags') }}" id="createTagsForm">
+                                <form method="POST" action="{{ route('blog.store.tags') }}" id="createTagsForm">
+
+                                    <div class="modal-body">
                                         @csrf
                                         <div class="mb-3">
                                             <label for="name" class="form-label">Nama</label>
@@ -175,14 +179,15 @@
                                                 placeholder="Nama Tags...">
                                         </div>
                                         <!-- Other input fields as needed for your blog post creation -->
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="createPostButton">Buat
-                                        Tags</button>
-                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Buat
+                                            Tags</button>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -273,29 +278,42 @@
                         reader.readAsDataURL(fileInput.files[0]);
                     }
                 });
-
-
-                $('#createBlogForm').submit(function(e) {
-                    e.preventDefault();
-                    const formData = new FormData(this);
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('blog.store') }}",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        success: function(data) {
-                            console.log(data);
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-                });
             });
+        </script>
+        <script>
+            // Get a reference to the form and its inputs
+            // const createBlogForm = document.getElementById('createBlogForm');
+            // const titleInput = document.getElementById('title');
+            // const contentInput = document.getElementById('content');
+            // const categoryIdInput = document.getElementById('category_id');
+            // const tagsInput = document.getElementById('tags');
+            // const imageInput = document.getElementById('image');
+
+            // Event listener for form submission
+            // createBlogForm.addEventListener('submit', function(e) {
+            //     e.preventDefault(); // Prevent the default form submission
+
+            //     // Create a FormData object to serialize the form data
+            //     const formData = new FormData(createBlogForm);
+            //     console.log('Form data:', formData);
+
+            //     // Send the form data to the server using fetch
+            //     fetch("{{ route('blog.store') }}", {
+            //             method: 'POST',
+            //             body: formData,
+            //             headers: {
+            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //             }
+            //         })
+            //         .then(response => response.json()) // Parse the response as JSON
+            //         .then(data => {
+            //             console.log('Response:', response);
+            //             return response.json(); // Parse the response as JSON
+            //         })
+            //         .catch(error => {
+            //             console.error(error);
+            //         });
+            // });
         </script>
     @endpush
 @endsection

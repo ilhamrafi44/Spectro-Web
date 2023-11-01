@@ -9,7 +9,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class BlogPost extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
     protected $guarded = [];
 
     public function getExcerptAttribute()

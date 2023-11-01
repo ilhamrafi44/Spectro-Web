@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('image')->nullable();
             $table->unsignedBigInteger('category_id');
+            $table->unsignedInteger('views')->default(0);
             $table->foreign('category_id')->references('id')->on('blog_categories')->onDelete('cascade');
             $table->timestamps();
         });

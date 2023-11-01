@@ -163,9 +163,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::post('/store/tags', [BlogController::class, 'store_tags'])->name('blog.store.tags');
                 Route::post('/store/categories', [BlogController::class, 'store_category'])->name('blog.store.category');
 
-                Route::delete('/delete', [BlogController::class, 'store'])->name('blog.store');
-                Route::delete('/delete/tags', [BlogController::class, 'store_tags'])->name('blog.store.tags');
-                Route::delete('/delete/categories', [BlogController::class, 'store_category'])->name('blog.store.category');
+                // Route::delete('/delete', [BlogController::class, 'store'])->name('blog.store');
+                // Route::delete('/delete/tags', [BlogController::class, 'store_tags'])->name('blog.store.tags');
+                // Route::delete('/delete/categories', [BlogController::class, 'store_category'])->name('blog.store.category');
             });
             Route::get('/home', [AdminController::class, 'index'])->name('admin_home');
             Route::get('/contact_us', [ContactUsController::class, 'index'])->name('admin.contact.index');

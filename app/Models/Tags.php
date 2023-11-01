@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobsPic extends Model
+class Tags extends Model
 {
     use HasFactory;
-
-    protected $guarded = [];
-
-    public function karyawan()
+    public function posts()
     {
-        return $this->belongsTo(Karyawan::class, 'pic_id', 'id');
+        return $this->belongsToMany(BlogPost::class);
     }
 }

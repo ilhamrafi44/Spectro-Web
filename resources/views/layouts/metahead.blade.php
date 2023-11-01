@@ -4,7 +4,13 @@
 
 <head>
     <base href="../" />
-    <title>{{ \App\Models\Website::first()->nama_website }}
+    <title>@php
+        $website = \App\Models\Website::first();
+        $nama_website = $website ? $website->nama_website : '';
+        $deskripsi_website = $website ? $website->deskripsi_website : '';
+        $tags_website = $website ? $website->tags_website : '';
+    @endphp
+        {{ $nama_website }}
         @if (Auth::check())
             |
             {{ Auth::user()->role == '3' ? 'Admin' : '' }}
@@ -14,14 +20,14 @@
         @endif
     </title>
     <meta charset="utf-8" />
-    <meta name="description" content="{{ \App\Models\Website::first()->deskripsi_website }}" />
-    <meta name="keywords" content="{{ \App\Models\Website::first()->tags_website }}" />
+    <meta name="description" content="{{ $deskripsi_website }}" />
+    <meta name="keywords" content="{{ $tags_website }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="{{ \App\Models\Website::first()->nama_website }}" />
+    <meta property="og:title" content="{{ $nama_website }}" />
     <meta property="og:url" content="https://spectro.id" />
-    <meta property="og:site_name" content="{{ \App\Models\Website::first()->nama_website }}" />
+    <meta property="og:site_name" content="{{ $nama_website }}" />
     <link rel="shortcut icon" href="{{ asset('assets/media/spectro-small.png') }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -30,10 +36,12 @@
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
+        type="text/css" />
     <script src="/assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <!--end::Global Stylesheets Bundle-->
 

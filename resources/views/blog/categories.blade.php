@@ -40,8 +40,8 @@
                             <button type="submit" class="btn btn-sm rounded-pill border m-1 btn-spectro">
                                 Delete
                             </button>
+                        </form>
                     </div>
-                    </form>
 
                 </div>
                 <div class="card-footer">

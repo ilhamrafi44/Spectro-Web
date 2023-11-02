@@ -10,6 +10,48 @@ use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
+
+    public function index_user(Request $request)
+    {
+        $tags = Tags::all();
+        $categories = BlogCategory::all();
+        $query = BlogPost::query();
+
+        // Filter by title
+        if ($request->filled('title')) {
+            $query->where('title', 'like', '%' . $request->input('title') . '%');
+        }
+
+        // Sorting
+        $orderBy = 'created_at';
+        $direction = in_array($request->input('direction'), ['asc', 'desc']) ? $request->input('direction') : 'asc';
+        $query->orderBy($orderBy, $direction);
+
+        // Pagination
+        $perPage = $request->input('per_page', 10);
+        $results = $query->paginate($perPage);
+
+        return view('blog.index_user', [
+            'results' => $results,
+            'page_name' => 'Blog',
+            'tags' => $tags,
+            'categories' => $categories
+        ]);
+    }
+
+    public function detail($slug)
+    {
+        $tags = Tags::all();
+        $categories = BlogCategory::all();
+        $blogPost = BlogPost::with('user', 'category', 'tags')->where('slug', $slug)->first();
+
+        return view('blog.detail', [
+            'blogPost' => $blogPost,
+            'page_name' => 'Blog Detail',
+            'tags' => $tags,
+            'categories' => $categories
+        ]);
+    }
     public function index(Request $request)
     {
         $tags = Tags::all();
@@ -72,7 +114,7 @@ class BlogController extends Controller
             'content' => 'required|string',
             'tags' => 'array',
             'tags.*' => 'exists:tags,id',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the image validation rules
+            'image' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
 
         try {
@@ -81,7 +123,7 @@ class BlogController extends Controller
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $imagePath = 'uploads/'; // Adjust the storage path as needed
+                $imagePath = 'public/uploads';
                 $image->storeAs($imagePath, $imageName);
             }
 
@@ -91,7 +133,7 @@ class BlogController extends Controller
             $post->category_id = $request->input('category_id');
             $post->content = $request->input('content');
             $post->views = 0;
-            $post->image = $imagePath; // Save the image path to the database
+            $post->image = 'uploads/' . $imageName;
             $save = $post->save();
 
             // Attach tags to the blog post
@@ -132,6 +174,16 @@ class BlogController extends Controller
         $blogPost->increment('views'); // Increment view count
 
         return view('blog.show', compact('blogPost'));
+    }
+
+    public function destroy(BlogPost $BlogPost)
+    {
+        try {
+            $BlogPost->delete();
+            return redirect()->back()->with('message', 'Berhasil Menghapus Blog');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal Menghapus Blog');
+        }
     }
 
     public function destroy_category(BlogCategory $BlogCategory)

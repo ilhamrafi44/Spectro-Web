@@ -162,10 +162,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::post('/', [BlogController::class, 'index'])->name('blog.index.filter');
                 // Route::get('/{id}', [BlogController::class, 'detail'])->name('job.detail');
                 Route::post('/store', [BlogController::class, 'store'])->name('blog.store');
-<<<<<<< HEAD
-=======
                 Route::delete('/{BlogPost}', [BlogController::class, 'destroy'])->name('blog.destroy');
->>>>>>> e9eba90182fdd100eecfbe43d3e9645162f04481
                 Route::prefix('tags')->group(function () {
                     Route::get('/', [BlogController::class, 'index_tags'])->name('tags.index');
                     Route::post('/store', [BlogController::class, 'store_tags'])->name('blog.store.tags');

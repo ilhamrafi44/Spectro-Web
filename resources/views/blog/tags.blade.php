@@ -44,7 +44,6 @@
                 <div class="card-footer">
                     <span class="text-muted"> Total Post : 10</span>
                 </div>
-
             </div>
         </div>
     @endforeach

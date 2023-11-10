@@ -8,8 +8,10 @@
     <!--begin::Wrapper container-->
     <div class="app-container container-xxl d-flex flex-row flex-column-fluid ">
         <!--begin::Main-->
+
         <div class="app-main flex-column flex-row-fluid " id="kt_app_main">
             <!--begin::Content wrapper-->
+
             <div class="d-flex flex-column flex-column-fluid">
 
                 @include('layouts.headbar')

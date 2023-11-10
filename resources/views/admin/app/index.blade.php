@@ -12,7 +12,6 @@
                                 class="form-control" placeholder="Keyword..">
                         </div>
                     </div>
-
                     <div class="col-md-2">
                         <div class="mb-5">
                             <select class="form-select" aria-label="Select example" data-control="select2"
@@ -47,6 +46,18 @@
                     <div class="col-md-2">
                         <div class="mb-5 ">
                             <select class="form-select" aria-label="Select example" data-control="select2"
+                                name="status">
+                                <option value="">Status</option>
+                                <option value="1">Pending</option>
+                                <option value="2">Approved</option>
+                                <option value="3">Rejected</option>
+                                <option value="4">Canceled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-5">
+                            <select class="form-select" aria-label="Select example" data-control="select2"
                                 name="per_page">
                                 <option value="10">10 Data Per Halaman</option>
                                 <option value="50">50 Data Per Halaman</option>
@@ -54,7 +65,11 @@
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-spectro col-md-2 mb-5" type="submit">Cari</button>
+                    <div class="col-md-2">
+                        <div class="mb-5">
+                            <button class="btn btn-spectro" type="submit">Cari</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -66,7 +81,6 @@
                             <h3>Total Pelamar : {{ $data->count() }}</h3>
                         </div>
                     </div>
-
                     <div class="row">
                         @foreach ($data as $jobs)
                             <div class="card hover-elevate-up border parent-hover mb-5">

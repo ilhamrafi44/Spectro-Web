@@ -121,17 +121,20 @@ class ApplicationController extends Controller
         $request->flash();
 
         $results = Applications::whereHas('candidate', function ($query) use ($request) {
-                if ($request->filled('name')) {
-                    $query->where('name', 'like', '%' . $request->input('name') . '%');
-                }
-            })->whereHas('jobs', function ($query) use ($request) {
-                if ($request->filled('job_id')) {
-                    $query->where('id', $request->input('job_id'));
-                }
-                if ($request->filled('employer_id')) {
-                    $query->where('user_id', $request->input('employer_id'));
-                }
-            })
+            if ($request->filled('name')) {
+                $query->where('name', 'like', '%' . $request->input('name') . '%');
+            }
+            if ($request->filled('status')) {
+                $query->where('status', $request->input('status'));
+            }
+        })->whereHas('jobs', function ($query) use ($request) {
+            if ($request->filled('job_id')) {
+                $query->where('id', $request->input('job_id'));
+            }
+            if ($request->filled('employer_id')) {
+                $query->where('user_id', $request->input('employer_id'));
+            }
+        })
             ->orderBy('created_at', $request->input('orderby', $order))
             ->paginate($perPage)
             ->appends($request->all());
@@ -223,7 +226,7 @@ class ApplicationController extends Controller
                 'from_id' => Auth::user()->id,
                 'to_id' => $request->employer_id,
                 'subject' => "Ada pelamar baru.",
-                'message' => Auth::user()->name."Telah melamar pada pekerjaan. $jobs->name.",
+                'message' => Auth::user()->name . "Telah melamar pada pekerjaan. $jobs->name.",
             ]);
 
             Mail::to($data0->email)->send(new ApplyMail($apply));

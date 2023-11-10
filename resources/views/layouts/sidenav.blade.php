@@ -408,7 +408,7 @@
         </div>
         <!--end::Menu wrapper-->
         <!--begin::Search-->
-        <div class="d-flex w-100 w-lg-225px pt-5 pt-lg-0">
+        {{-- <div class="d-flex w-100 w-lg-225px pt-5 pt-lg-0">
             <div class="w-100 position-relative mb-5 mb-lg-0 mt-md-4">
                 <div class="gtranslate_wrapper" style="position: relative;
                 z-index: 0;"></div>
@@ -433,7 +433,7 @@
                 </script>
                 <script src="https://cdn.gtranslate.net/widgets/latest/dwf.js" defer></script>
             </div>
-        </div>
+        </div> --}}
         <!--end::Search-->
     </div>
     <!--end::Header secondary container-->

@@ -24,11 +24,14 @@
     <meta name="description" content="{{ $deskripsi_website }}" />
     <meta name="keywords" content="{{ $tags_website }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{ $nama_website }}" />
     <meta property="og:url" content="https://spectro.id" />
     <meta property="og:site_name" content="{{ $nama_website }}" />
+    @yield('seo')
+
     <link rel="shortcut icon" href="{{ asset('assets/media/spectro-small.png') }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />

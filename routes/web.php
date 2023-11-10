@@ -92,8 +92,8 @@ Route::get('/contact_us', function () {
 Route::post('/contact-store', [ContactUsController::class, 'store'])->name('contact.store');
 
 Route::prefix('blog')->group(function () {
-    Route::get('/', [BlogController::class, 'index'])->name('blog.index');
-    Route::get('/detail/{id}', [BlogController::class, 'detail'])->name('job.detail');
+    Route::get('/', [BlogController::class, 'index_user'])->name('blog.index.user');
+    Route::get('/detail/{slug}', [BlogController::class, 'detail'])->name('blog.show');
 });
 
 Route::get('/register/candidate', function () {
@@ -160,8 +160,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::prefix('blog')->group(function () {
                 Route::get('/', [BlogController::class, 'index'])->name('blog.index');
                 Route::post('/', [BlogController::class, 'index'])->name('blog.index.filter');
-                Route::get('/detail/{id}', [BlogController::class, 'detail'])->name('job.detail');
+                // Route::get('/{id}', [BlogController::class, 'detail'])->name('job.detail');
                 Route::post('/store', [BlogController::class, 'store'])->name('blog.store');
+<<<<<<< HEAD
+=======
+                Route::delete('/{BlogPost}', [BlogController::class, 'destroy'])->name('blog.destroy');
+>>>>>>> e9eba90182fdd100eecfbe43d3e9645162f04481
                 Route::prefix('tags')->group(function () {
                     Route::get('/', [BlogController::class, 'index_tags'])->name('tags.index');
                     Route::post('/store', [BlogController::class, 'store_tags'])->name('blog.store.tags');
@@ -248,7 +252,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::get('/app/approves/{id}', [ApplicationController::class, 'approves'])->name('jobs.approve');
 
             Route::get('ssw-flow', [SswFlowMasterController::class, 'admin'])->name('admin.ssw.index');
-
         });
     });
 

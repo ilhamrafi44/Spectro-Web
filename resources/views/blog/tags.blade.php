@@ -19,39 +19,46 @@
                 </div>
             </form>
         </div>
-
     </div>
-    @foreach ($results as $post)
-        <div class="col-md-4 mb-5">
-            <div class="card border-1">
-                <div class="card-header">
-                    <h3 class="card-title">{{ $post->name }}</h3>
-                    <div class="card-toolbar">
-                        <a href="{{ route('admin.jobs.update', ['id' => $post->id]) }}"
-                            class="btn btn-sm rounded-pill border m-1 btn-warning">
-                            Edit
-                        </a>
-                        <form method="post" action="{{ route('blog.destroy.tags', $post) }}">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-sm rounded-pill border m-1 btn-spectro">
-                                Delete
-                            </button>
-                    </div>
-                    </form>
+    <div class="row">
 
+
+        @foreach ($results as $post)
+            <div class="col-md-4 mb-5">
+                <div class="card border-1">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ $post->name }}</h3>
+                        <div class="card-toolbar">
+                            <a href="{{ route('admin.jobs.update', ['id' => $post->id]) }}"
+                                class="btn btn-sm rounded-pill border m-1 btn-warning">
+                                Edit
+                            </a>
+                            <form method="post" action="{{ route('blog.destroy.tags', $post) }}">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-sm rounded-pill border m-1 btn-spectro">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="text-muted"> Total Post : 10</span>
+                    </div>
                 </div>
+<<<<<<< HEAD
                 <div class="card-footer">
                     <span class="text-muted"> Total Post : 10</span>
                 </div>
+=======
+>>>>>>> e9eba90182fdd100eecfbe43d3e9645162f04481
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
     @if ($results->count() > 0)
         <!-- Tampilkan link pagination -->
         {{ $results->links() }}
     @else
         @include('layouts.data404')
     @endif
-    </div>
 @endsection

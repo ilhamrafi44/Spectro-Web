@@ -147,9 +147,13 @@
                                 class="btn btn-sm rounded-pill border m-1 btn-warning">
                                 Edit
                             </a>
-                            <button type="button" class="btn btn-sm rounded-pill border m-1 btn-spectro">
-                                Delete
-                            </button>
+                            <form method="post" action="{{ route('blog.destroy', $post) }}">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-sm rounded-pill border m-1 btn-spectro">
+                                    Delete
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <div class="card-body">
@@ -157,24 +161,20 @@
                             <div class="col-md-12">
                                 <div class="row d-flex">
                                     <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-location-dot"></i> <b>Lokasi :
-                                                {{ $post->title }}</b></a>
+                                        <a><i class="fa-solid fa-bookmark"></i> <b>Category :
+                                                {{ $post->category->name }}</b></a>
                                     </div>
                                     <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Expired :
-                                                {{ $post->title }}</b></a>
+                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Dibuat pada :
+                                                {{ $post->created_at }}</b></a>
                                     </div>
                                     <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Created :
-                                                {{ $post->title }}</b></a>
+                                        <a><i class="fa-solid fa-calendar-days"></i> <b>Update Terakhir :
+                                                {{ $post->updated_at }}</b></a>
                                     </div>
                                     <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-envelope"></i> <b>Total Pelamar :
-                                                {{ $post->count() }}</b></a>
-                                    </div>
-                                    <div class="col-md-6 fs-7 mb-5">
-                                        <a><i class="fa-solid fa-bookmark"></i> <b>Total Dilihat:
-                                                {{ $post->count() }}</b></a>
+                                        <a><i class="fa-solid fa-eye"></i> <b>Total Dilihat:
+                                                {{ $post->views }}</b></a>
                                     </div>
                                 </div>
                             </div>

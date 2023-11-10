@@ -171,7 +171,8 @@
                             </a>
                         </div>
                         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                            data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                            data-kt-menu-placement="bottom-start"
+                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                             <span class="menu-link">
                                 <span class="menu-title">Konfigurasi</span>
                                 <span class="menu-arrow d-lg-none"></span>
@@ -377,7 +378,7 @@
                     <div class="menu-item menu-lg me-0 me-lg-2">
 
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('blog.index') }}">
+                        <a class="menu-link" href="{{ route('blog.index.user') }}">
                             <span class="menu-title">Blog</span>
                             <span class="menu-arrow d-lg-none"></span>
                         </a>

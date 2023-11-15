@@ -6,7 +6,7 @@
     <p style="color: #666;">Terima kasih atas minat Anda dalam menggunakan Spectro! Kami telah menerima lamaran kerja Anda untuk posisi berikut:<br><br>
 
         - Nama Pekerjaan: {{ $JobName }}<br>
-        - Nama Perusahaan: {{ $EmployerName }}<br>
+        - Nama Perusahaan: {{ $EmployerName }}<br><br>
 
         Kami akan meninjau lamaran Anda dengan seksama dan menghubungi Anda segera jika ada pertanyaan tambahan atau jika Anda lolos ke tahap selanjutnya dalam proses seleksi.<br><br>
 

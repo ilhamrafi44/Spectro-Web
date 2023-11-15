@@ -10,16 +10,15 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Approve extends Mailable
+class Approve extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-
     /**
      * Create a new message instance.
      */
     public function __construct(protected Applications $apply)
     {
-
+        $this->afterCommit();
     }
 
     /**

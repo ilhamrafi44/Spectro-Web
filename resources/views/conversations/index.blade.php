@@ -1,6 +1,14 @@
 @extends('layouts.default')
 
 @section('content')
+    <style>
+        /* Ganti ukuran iframe agar 100% tinggi dari offcanvas */
+        iframe {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
     <div class="container p-5">
         <div class="col-12">
             <form>
@@ -85,8 +93,10 @@
                                 <!--end::Info-->
 
                                 <!--begin::Link-->
-                                <a class="btn btn-sm btn-light-primary fw-bold col-12 mb-3"
-                                    onclick="window.open('{{ route('messages.index', ['conversation_id' => $item->id]) }}', '_blank', 'toolbar=yes,scrollbars=yes,resizable=yes,top=600,left=600,width=400,height=600'); return false;">
+
+                                <a class="btn btn-sm btn-light-primary fw-bold col-12 mb-3 open-chat"
+                                    data-bs-toggle="offcanvas" href="#chatOffcanvas" role="button"
+                                    aria-controls="chatOffcanvas" data-conversation-id="{{ $item->id }}">
                                     Kirim Pesan
                                 </a>
                                 <a href="{{ route('conversations.delete', ['id' => $item->id]) }}"
@@ -145,10 +155,13 @@
                                 <!--end::Info-->
 
                                 <!--begin::Link-->
-                                <a class="btn btn-sm btn-light-primary fw-bold col-12 mb-3"
-                                    onclick="window.open('{{ route('messages.index', ['conversation_id' => $item->id]) }}', '_blank', 'toolbar=yes,scrollbars=yes,resizable=yes,top=600,left=600,width=400,height=600'); return false;">
+
+                                <a class="btn btn-sm btn-light-primary fw-bold col-12 mb-3 open-chat"
+                                    data-bs-toggle="offcanvas" href="#chatOffcanvas" role="button"
+                                    aria-controls="chatOffcanvas" data-conversation-id="{{ $item->id }}">
                                     Kirim Pesan
                                 </a>
+
                                 <a href="{{ route('conversations.delete', ['id' => $item->id]) }}"
                                     class="btn btn-primary btn-sm col-12">Hapus Percakapan</a>
                                 <!--end::Link-->
@@ -166,4 +179,39 @@
             @endif
         </div>
     </div>
+    <!-- Modal untuk menampilkan percakapan -->
+    <div class="offcanvas offcanvas-end" style="width: 500px;" tabindex="-1" id="chatOffcanvas" data-bs-backdrop="static" aria-labelledby="chatOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="chatOffcanvasLabel">Percakapan</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" >
+            <!-- iframe untuk menampilkan percakapan -->
+            <iframe id="chatIframe" src="" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+    </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            // Mendengarkan pesan dari iframe untuk menutup offcanvas
+
+            // window.addEventListener('message', function(event) {
+            //     if (event.data === 'closeOffcanvas') {
+            //         const bsOffcanvas = new bootstrap.Offcanvas('#myOffcanvas')
+            //         console.log(bsOffcanvas);
+            //         bsOffcanvas.hide();
+            //     }
+            // });
+
+            $('.open-chat').on('click', function(event) {
+                event.preventDefault();
+
+                var conversationId = $(this).data('conversation-id');
+                var iframe = $('#chatIframe');
+                iframe.attr('src', '/conversations/' + conversationId + '/messages');
+            });
+        });
+    </script>
+@endpush

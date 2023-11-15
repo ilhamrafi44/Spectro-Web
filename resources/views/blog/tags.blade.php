@@ -20,17 +20,16 @@
             </form>
         </div>
     </div>
-    <div class="row">
-
-
+    <div class="row d-flex">
         @foreach ($results as $post)
             <div class="col-md-4 mb-5">
                 <div class="card border-1">
                     <div class="card-header">
                         <h3 class="card-title">{{ $post->name }}</h3>
                         <div class="card-toolbar">
-                            <a href="{{ route('admin.jobs.update', ['id' => $post->id]) }}"
-                                class="btn btn-sm rounded-pill border m-1 btn-warning">
+                            <a class="btn btn-sm rounded-pill border m-1 btn-warning" data-bs-toggle="collapse"
+                                href="#collapseExample{{ $post->id }}" role="button" aria-expanded="false"
+                                aria-controls="collapseExample{{ $post->id }}">
                                 Edit
                             </a>
                             <form method="post" action="{{ route('blog.destroy.tags', $post) }}">
@@ -42,16 +41,25 @@
                             </form>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <span class="text-muted"> Total Post : 10</span>
+                    <div class="collapse" id="collapseExample{{ $post->id }}">
+                        <div class="card-body border m-5">
+
+                            <form action="{{ route('blog.update.tags') }}" method="post">
+                                @csrf
+                                <div class="mb-5">
+                                    <label for="" class="form-label">Update Name</label>
+                                    <input type="hidden" value="{{ $post->id }}" name="id">
+                                    <input type="text" class="form-control" name="name"
+                                        value="{{ $post->name }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary"> Save</button>
+                            </form>
+                        </div>
+
                     </div>
+
                 </div>
-<<<<<<< HEAD
-                <div class="card-footer">
-                    <span class="text-muted"> Total Post : 10</span>
-                </div>
-=======
->>>>>>> e9eba90182fdd100eecfbe43d3e9645162f04481
+
             </div>
         @endforeach
     </div>

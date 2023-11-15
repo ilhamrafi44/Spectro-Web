@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Reject extends Mailable
+class Reject extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class Reject extends Mailable
      */
     public function __construct(protected Applications $apply)
     {
-
+        $this->afterCommit();
     }
 
     /**

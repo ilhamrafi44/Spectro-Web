@@ -38,38 +38,8 @@
             @endif
         </div>
         <div class="col-12 col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>A propos de l'auteur</h5>
-                    <hr />
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate amet ullam excepturi odio
-                        impedit
-                        saepe nemo repellendus, aut suscipit voluptas omnis quas quisquam accusamus illo laboriosam rerum,
-                        totam
-                        ea eaque.</p>
-                </div>
-            </div>
-            <br />
-            <div class="card">
-                <div class="card-body">
-                    <h5>Les formations</h5>
-                    <hr />
-                    <button type="button" class="btn btn-light">Payantes</button>
-                    <button type="button" class="btn btn-dark">Gratuites</button>
-                </div>
-            </div>
 
-            <br />
-            <div class="card">
-                <div class="card-body">
-                    <h5>Présentation</h5>
-                    <hr />
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://www.youtube.com/embed/ZEyAs3NWH4A" title="YouTube video"
-                            allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
+
 
 
 

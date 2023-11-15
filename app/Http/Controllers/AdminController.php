@@ -19,14 +19,20 @@ class AdminController extends Controller
         $this->middleware('admin');
     }
 
-    private function registrationChart()
+    private function registrationChart($startDate = null, $endDate = null)
     {
-        $monthlyRoleCounts = User::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, role, COUNT(*) as count')
-            ->whereIn('role', [1, 2]) // Filter peran 1 (Candidate) dan peran 2 (Employer)
+        $query = User::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, role, COUNT(*) as count')
+            ->whereIn('role', [1, 2])
             ->groupBy('year', 'month', 'role')
             ->orderBy('year', 'asc')
-            ->orderBy('month', 'asc')
-            ->get();
+            ->orderBy('month', 'asc');
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $monthlyRoleCounts = $query->get();
+
         $monthlyRoleData = [];
         foreach ($monthlyRoleCounts as $data) {
             $roleName = $data->role == 1 ? 'Candidate' : 'Employer';
@@ -60,6 +66,18 @@ class AdminController extends Controller
 
         return $topJobViews;
     }
+    private function getTopJobApp()
+    {
+        $topJobViews = DB::table('applications')
+            ->select('jobs.id', 'jobs.name', DB::raw('COUNT(applications.job_id) as total_app'))
+            ->join('jobs', 'jobs.id', '=', 'applications.job_id')
+            ->groupBy('jobs.id', 'jobs.name')
+            ->orderByDesc('total_app')
+            ->limit(10)
+            ->get();
+
+        return $topJobViews;
+    }
 
     private function getTopProfileViews()
     {
@@ -75,16 +93,23 @@ class AdminController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         $page_name = 'Dashboard';
         $job = Jobs::all()->count();
         $user = User::all()->count();
         $profile_views = ProfileViews::all()->count();
         $job_views = JobViews::all()->count();
-        $registrationChart = $this->registrationChart();
+        $startDate = @$request->start;
+        $endDate = @$request->end;
+        if ($startDate && $endDate) {
+            $registrationChart = $this->registrationChart($startDate, $endDate);
+        } else {
+            $registrationChart = $this->registrationChart();
+        }
         $top_job = $this->getTopJobViews();
         $top_profile = $this->getTopProfileViews();
+        $top_app = $this->getTopJobApp();
 
         $candidateCount = User::where('role', 1)->count();
         $employerCount = User::where('role', 2)->count();
@@ -105,7 +130,8 @@ class AdminController extends Controller
             'candidateCount' => $candidateCount,
             'employerCount' => $employerCount,
             'verifiedUserCount' => $verifiedUserCount,
-            'unverifiedUserCount' => $unverifiedUserCount
+            'unverifiedUserCount' => $unverifiedUserCount,
+            'topJobApp' => $top_app,
         ]);
     }
 }

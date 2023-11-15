@@ -5,8 +5,8 @@
     <h2 style="color: #333;">Halo {{ $JobName }}, <br><br></h2>
     <p style="color: #666;">Kami ingin memberitahu Anda bahwa ada lamaran kerja baru yang masuk untuk posisi {{ $JobName }}. Berikut detail lamaran tersebut:
 
-        - Nama Kandidat: {{ $UserName }}
-        - Email Kandidat: {{ $UserEmail }}
+        - Nama Kandidat: {{ $UserName }}<br>
+        - Email Kandidat: {{ $UserEmail }}<br><br>
 
         Mohon segera tinjau lamaran ini dan pertimbangkan kualifikasi serta pengalaman kandidat. Anda dapat menghubungi kandidat melalui alamat email yang tercantum di atas untuk mengatur wawancara atau tindak lanjut lebih lanjut. <br><br>
 

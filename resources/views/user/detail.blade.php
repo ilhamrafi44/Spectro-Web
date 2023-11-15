@@ -145,6 +145,10 @@
                                 </div>
                                 <hr>
                                 <p class="text-gray-800 fs-4">{{ $comments->comment }}</p>
+                                @if (Auth::user()->role == 3)
+                                <a href="{{ route('rating.destroy', ['id' => $comments->id]) }}" class="btn btn-primary">Hapus</a>
+
+                                @endif
                             </div>
                         </div>
                     @empty

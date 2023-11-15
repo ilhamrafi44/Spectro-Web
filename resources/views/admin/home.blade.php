@@ -3,10 +3,74 @@
 @section('content')
     <!-- 4-blocks row start -->
     <div class="row g-5 g-xl-10 mb-5 mb-xl-10 dashboard-header d-flex">
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 bg-primary text-white">
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+                    <!--begin::Heading-->
+                    <div class="fs-2hx fw-bold">{{ number_format($user) }}</div>
+                    <div class="fs-4 fw-semibold  mb-1">Total User</div>
+                    <!--end::Heading-->
+                </div>
+                <!--end::Card body-->
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 bg-primary text-white">
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+                    <!--begin::Heading-->
+                    <div class="fs-2hx fw-bold">{{ number_format($job) }}</div>
+                    <div class="fs-4 fw-semibold  mb-1">Total Pekerjaan</div>
+                    <!--end::Heading-->
+                </div>
+                <!--end::Card body-->
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 bg-primary text-white">
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+                    <!--begin::Heading-->
+                    <div class="fs-2hx fw-bold">{{ number_format($profile_views) }}</div>
+                    <div class="fs-4 fw-semibold  mb-1">Total Pengunjung Profile</div>
+                    <!--end::Heading-->
+                </div>
+                <!--end::Card body-->
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100 bg-primary text-white">
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+                    <!--begin::Heading-->
+                    <div class="fs-2hx fw-bold">{{ number_format($job_views) }}</div>
+                    <div class="fs-4 fw-semibold  mb-1">Total Pengunjung Pekerjaan</div>
+                    <!--end::Heading-->
+                </div>
+                <!--end::Card body-->
+            </div>
+        </div>
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
                     <h3>Registration User Chart</h3>
+                    <form action="">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label for="">Start Date</label>
+                                <input type="date" class="form-control" name="start">
+                            </div>
+                            <div class="col-md-5">
+                                <label for="">Start Date</label>
+                                <input type="date" class="form-control" name="end">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+                            </div>
+                        </div>
+                    </form>
                     <div id="chart"></div>
 
                 </div>
@@ -26,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 ">
+        <div class="col-md-4 ">
             <div class="card">
                 <div class="card-body">
                     <h3>10 Job Top Views</h3>
@@ -59,7 +123,40 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4 ">
+            <div class="card">
+                <div class="card-body">
+                    <h3>10 Job Top Apply</h3>
+
+                    <div class="table-responsive">
+                        <table class="table table-row-dashed table-row-gray-300 gy-7">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Job ID</th>
+                                    <th scope="col">Job Title</th>
+                                    <th scope="col">Total Apply</th>
+                                    <th scope="col">View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($topJobApp as $index => $sada)
+                                    <tr @if ($index === 0) class="table-warning" @endif>
+                                        <th scope="row">{{ $index + 1 }}</th>
+                                        <td>{{ $sada->id }}</td>
+                                        <td>{{ $sada->name }}</td>
+                                        <td>{{ $sada->total_app }}</td>
+                                        <td><a href="{{ route('job.detail', ['id' => $sada->id]) }}"><i
+                                                    class="fa fa-eye"></i></a></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h3>10 Profile Top Views</h3>
@@ -99,54 +196,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card h-100">
-                <!--begin::Card body-->
-                <div class="card-body p-9">
-                    <!--begin::Heading-->
-                    <div class="fs-2hx fw-bold">{{ number_format($user) }}</div>
-                    <div class="fs-4 fw-semibold text-gray-400 mb-7">Total User</div>
-                    <!--end::Heading-->
-                </div>
-                <!--end::Card body-->
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card h-100">
-                <!--begin::Card body-->
-                <div class="card-body p-9">
-                    <!--begin::Heading-->
-                    <div class="fs-2hx fw-bold">{{ number_format($job) }}</div>
-                    <div class="fs-4 fw-semibold text-gray-400 mb-7">Total Pekerjaan</div>
-                    <!--end::Heading-->
-                </div>
-                <!--end::Card body-->
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card h-100">
-                <!--begin::Card body-->
-                <div class="card-body p-9">
-                    <!--begin::Heading-->
-                    <div class="fs-2hx fw-bold">{{ number_format($profile_views) }}</div>
-                    <div class="fs-4 fw-semibold text-gray-400 mb-7">Total Pengunjung Profile</div>
-                    <!--end::Heading-->
-                </div>
-                <!--end::Card body-->
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card h-100">
-                <!--begin::Card body-->
-                <div class="card-body p-9">
-                    <!--begin::Heading-->
-                    <div class="fs-2hx fw-bold">{{ number_format($job_views) }}</div>
-                    <div class="fs-4 fw-semibold text-gray-400 mb-7">Total Pengunjung Pekerjaan</div>
-                    <!--end::Heading-->
-                </div>
-                <!--end::Card body-->
-            </div>
-        </div>
+
     </div>
     <!-- 4-blocks row end -->
     <!--begin::Row-->
@@ -154,19 +204,19 @@
 @endsection
 
 @push('scripts')
-<script>
-    var options = {
-        series: [{{ $verifiedUserCount }}, {{ $unverifiedUserCount }}],
-        labels: ['Verified', 'Unverified'],
-        chart: {
-            type: 'donut',
-        },
-        colors: ['#6993FF', '#FFC107'],
-    };
+    <script>
+        var options = {
+            series: [{{ $verifiedUserCount }}, {{ $unverifiedUserCount }}],
+            labels: ['Verified', 'Unverified'],
+            chart: {
+                type: 'donut',
+            },
+            colors: ['#6993FF', '#FFC107'],
+        };
 
-    var chart = new ApexCharts(document.querySelector("#chart_donuts"), options);
-    chart.render();
-</script>
+        var chart = new ApexCharts(document.querySelector("#chart_donuts"), options);
+        chart.render();
+    </script>
 
     <script>
         var options = {
@@ -185,7 +235,7 @@
     <script>
         var element = document.getElementById('chart');
 
-        var height = 470;
+        var height = 410;
         var labelColor = '#6C757D';
         var borderColor = '#E4E6EF';
         var baseColor = '#6993FF';

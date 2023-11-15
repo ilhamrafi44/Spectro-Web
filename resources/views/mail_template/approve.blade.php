@@ -7,7 +7,7 @@
     <p style="color: #666;">Kami ingin memberitahu Anda tentang hasil lamaran kerja Anda untuk posisi {{ $JobName }} di {{ $EmployerName }}. Berikut hasilnya:<br><br>
 
         - Status Lamaran: Diterima <br>
-        - Tanggal Pemberitahuan: {{ $Date }} <br>
+        - Tanggal Pemberitahuan: {{ $Date }} <br><br>
 
         Jika lamaran Anda diterima, kami akan menghubungi Anda lebih lanjut untuk langkah-langkah selanjutnya. Jika Anda tidak diterima, jangan berkecil hati, teruslah mencari peluang lain di Spectro dan tingkatkan keterampilan Anda. <br> <br>
 

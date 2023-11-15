@@ -35,11 +35,11 @@
                     </h3>
                 </div>
             @endif
-            <div class="card-toolbar">
-                <button onclick="window.close();" class="btn btn-sm btn-primary">
-                    Tutup
-                </button>
-            </div>
+            {{-- <div class="card-toolbar">
+                <button class="btn-close text-reset"
+                    id="closeIframeBtn"></button>
+
+            </div> --}}
         </div>
         <div class="card-body card-scroll bg-gray-300" id="cardBody">
             <div class="row">
@@ -70,10 +70,16 @@
 @push('scripts')
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
+        document.getElementById('closeIframeBtn').addEventListener('click', function() {
+            window.parent.postMessage('closeOffcanvas', '*');
+        });
+    </script>
+    <script>
         $(document).ready(function() {
             var cardBody = $('#cardBody');
             cardBody.scrollTop(cardBody[0].scrollHeight);
         });
+
         function handleKeyDown(event) {
             if (event.keyCode === 13) {
                 event.preventDefault(); // Mencegah perilaku default dari tombol "Enter"
@@ -107,7 +113,7 @@
                     _token: "{{ csrf_token() }}",
                 },
                 success: function() {
-                // Halo
+                    // Halo
                 }
             });
 

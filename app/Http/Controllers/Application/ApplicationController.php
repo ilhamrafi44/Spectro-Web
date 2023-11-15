@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Application;
 
 use Carbon\Carbon;
+use App\Mail\Reject;
 use App\Models\Jobs;
 use App\Models\User;
+use App\Mail\Approve;
 use App\Mail\ApplyMail;
 use App\Models\JobsType;
 use App\Mail\EmployerMail;
@@ -16,8 +18,6 @@ use App\Models\SswFlowMaster;
 use App\Models\JobsQualification;
 use App\Models\PrivateNotification;
 use App\Http\Controllers\Controller;
-use App\Mail\Approve;
-use App\Mail\Reject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -229,11 +229,11 @@ class ApplicationController extends Controller
                 'message' => Auth::user()->name . "Telah melamar pada pekerjaan. $jobs->name.",
             ]);
 
-            Mail::to($data0->email)->send(new ApplyMail($apply));
+            Mail::to($data0->email)->queue(new ApplyMail($apply));
 
             $employer = User::findOrFail($request->employer_id);
 
-            Mail::to($employer->email)->send(new EmployerMail($apply));
+            Mail::to($employer->email)->queue(new EmployerMail($apply));
 
             return redirect()->back()->with('message', 'Job Berhasil Dilamar');
         }
@@ -275,7 +275,7 @@ class ApplicationController extends Controller
                 'candidate_id' => $apply->candidate_id,
             ]);
 
-            Mail::to($apply->candidate->email)->send(new Approve($apply));
+            Mail::to($apply->candidate->email)->queue(new Approve($apply));
 
             return redirect()->back()->with('message', 'Job Berhasil di Approve');
         }
@@ -296,7 +296,7 @@ class ApplicationController extends Controller
                 'message' => "Anda telah ditolak pada pekerjaan $jobs->name.",
             ]);
 
-            Mail::to($apply->candidate->email)->send(new Reject($apply));
+            Mail::to($apply->candidate->email)->queue(new Reject($apply));
 
             return redirect()->back()->with('message', 'Job Berhasil Direject');
         }

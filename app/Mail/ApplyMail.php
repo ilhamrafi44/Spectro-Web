@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ApplyMail extends Mailable
+class ApplyMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class ApplyMail extends Mailable
      */
     public function __construct(protected Applications $apply)
     {
-
+        $this->afterCommit();
     }
 
     /**

@@ -158,10 +158,30 @@ class BlogController extends Controller
             return redirect()->back()->with('error', 'Gagal Membuat Tag');
         }
     }
+
+    public function update_tags(Request $request)
+    {
+        try {
+            Tags::findOrFail($request->id)->update(['name' => $request->name]);
+            return redirect()->back()->with('message', 'Berhasil Membuat Tag');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal Membuat Tag');
+        }
+    }
     public function store_category(Request $request)
     {
         try {
             BlogCategory::create(['name' => $request->name]);
+            return redirect()->back()->with('message', 'Berhasil Membuat Category');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal Membuat Category');
+        }
+    }
+
+    public function update_category(Request $request)
+    {
+        try {
+            BlogCategory::findOrFail($request->id)->update(['name' => $request->name]);
             return redirect()->back()->with('message', 'Berhasil Membuat Category');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal Membuat Category');

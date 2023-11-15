@@ -46,7 +46,7 @@
                     class="menu-link px-2 text-white">Contact Us</a>
             </li>
 
-            <li class="menu-item"><a href="{{ route('blog.index') }}" target="_blank"
+            <li class="menu-item"><a href="{{ route('blog.index.user') }}" target="_blank"
                     class="menu-link px-2 text-white">Blog</a></li>
         </ul>
         <!--end::Menu-->

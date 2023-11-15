@@ -145,6 +145,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 
     Route::post('/rating/add', [RatingController::class, 'store'])->name('rating.store');
+    Route::get('/rating/delete/{id}', [RatingController::class, 'destroy'])->name('rating.destroy');
 
     Route::get('/password/resetsss', [UserController::class, 'reset_index'])->name('reset.index');
     Route::post('/password/resetss', [UserController::class, 'reset_update'])->name('reset.update');
@@ -169,11 +170,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
                 Route::prefix('tags')->group(function () {
                     Route::get('/', [BlogController::class, 'index_tags'])->name('tags.index');
                     Route::post('/store', [BlogController::class, 'store_tags'])->name('blog.store.tags');
+                    Route::post('/update', [BlogController::class, 'update_tags'])->name('blog.update.tags');
                     Route::delete('/{Tags}', [BlogController::class, 'destroy_tags'])->name('blog.destroy.tags');
                 });
                 Route::prefix('category')->group(function () {
                     Route::get('/', [BlogController::class, 'index_category'])->name('category.index');
                     Route::post('/store', [BlogController::class, 'store_category'])->name('blog.store.category');
+                    Route::post('/update', [BlogController::class, 'update_category'])->name('blog.update.category');
                     Route::delete('/{BlogCategory}', [BlogController::class, 'destroy_category'])->name('blog.destroy.category');
                 });
             });

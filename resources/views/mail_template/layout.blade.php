@@ -9,7 +9,7 @@
   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f4f4;">
     <tr>
       <td align="center">
-        <img src="link-ke-logo.png" alt="Spectro.id Logo" style="max-width: 100px;">
+        <img src="{{ asset('assets/media/spectro.png') }}" alt="Spectro.id Logo" style="max-width: 100px;">
       </td>
     </tr>
   </table>

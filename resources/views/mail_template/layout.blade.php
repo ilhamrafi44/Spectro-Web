@@ -1,25 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <title>Spectro.id</title>
+  <meta charset="UTF-8">
+  <title>Email From Spectro.id</title>
 </head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
 
-<body class="bg-light">
-    <div class="container p-5">
-        <h3 class="text-muted text-center">Spectro.id</h3>
-        <div class="card mt-5">
-            <div class="card-body">
-                <p class="fw-normal fs-5">
-                    @yield('email')
-                </p>
-            </div>
-        </div>
-    </div>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f4f4;">
+    <tr>
+      <td align="center">
+        <img src="link-ke-logo.png" alt="Spectro.id Logo" style="max-width: 100px;">
+      </td>
+    </tr>
+  </table>
+
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-top: 20px;">
+    <tr>
+        @yield('email')
+    </tr>
+  </table>
+
+  <div style="text-align: center; margin-top: 20px; color: #999;">Spectro.id</div>
+
 </body>
-
 </html>
+
+

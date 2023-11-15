@@ -48,7 +48,7 @@
                     <a href="https://maps.app.goo.gl/WeKMC8nL5HQ2se3y7" target="_blank" class="fs-4 text-dark text-center">{!! $data->alamat !!}</a><div class="separator separator-content my-15">WhatsApp</div>
                     <a href="https://wa.me/{!! $data->nomor_hp !!}" target="_blank" class="fs-4 text-dark text-center">+{!! $data->nomor_hp !!}
                     </a><div class="separator separator-content my-15">Email</div>
-                    <a href="mailto:info@{{ $data->email }}" target="_blank" class="fs-4 text-dark text-center">{!! $data->nomor_hp !!}
+                    <a href="mailto:{{ $data->email }}" target="_blank" class="fs-4 text-dark text-center">{!! $data->email !!}
                     </a>
                 </div>
             </div>

@@ -1,46 +1,45 @@
 <?php
 
-use App\Http\Controllers\Admin\UserControler;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Application\ApplicationController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\ContactUsController;
-use App\Http\Controllers\Chat\ConversationsController;
-use App\Http\Controllers\Employer\JobsCareerLevelController;
-use App\Http\Controllers\Employer\JobsCategoryController;
-use App\Http\Controllers\Employer\JobsController;
-use App\Http\Controllers\Employer\JobsExperienceController;
-use App\Http\Controllers\Employer\JobsIndustryController;
-use App\Http\Controllers\Employer\JobsQualificationController;
-use App\Http\Controllers\Employer\JobsTypeController;
-use App\Http\Controllers\EmployerController;
-use App\Http\Controllers\FollowingController;
-use App\Http\Controllers\GhostController;
-use App\Http\Controllers\GoogleAuthController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\KaryawanController;
-use App\Http\Controllers\PengalamanKerjaController;
-use App\Http\Controllers\RatingController;
-use App\Http\Controllers\SavedJobsController;
-use App\Http\Controllers\SocialMediaController;
-use App\Http\Controllers\SswFlowMasterController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserResumeController;
-use App\Http\Controllers\LoginControllerAjax;
-use App\Http\Controllers\Chat\MessagesController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\RegisterControllerAjax;
-use App\Http\Controllers\TestimonialsController;
-use App\Http\Controllers\WebsiteController;
-use App\Models\Client;
 use App\Models\Jobs;
+use App\Models\Client;
+use App\Models\Website;
 use App\Models\JobsCategory;
 use App\Models\JobsIndustry;
 use App\Models\Testimonials;
-use App\Models\Website;
-use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GhostController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\Admin\UserControler;
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\FollowingController;
+use App\Http\Controllers\LoginControllerAjax;
+use App\Http\Controllers\SavedJobsController;
+use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\UserResumeController;
+use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\RegisterControllerAjax;
+use App\Http\Controllers\TestimonialsController;
+use App\Http\Controllers\Chat\MessagesController;
+use App\Http\Controllers\Employer\JobsController;
+use App\Http\Controllers\SswFlowMasterController;
+use App\Http\Controllers\PengalamanKerjaController;
+use App\Http\Controllers\Employer\JobsTypeController;
+use App\Http\Controllers\Chat\ConversationsController;
+use App\Http\Controllers\Employer\JobsCategoryController;
+use App\Http\Controllers\Employer\JobsIndustryController;
+use App\Http\Controllers\Application\ApplicationController;
+use App\Http\Controllers\Employer\JobsExperienceController;
+use App\Http\Controllers\Employer\JobsCareerLevelController;
+use App\Http\Controllers\Employer\JobsQualificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,6 +135,8 @@ Route::prefix('list')->group(function () {
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
+
+
     Route::get('/conversations', [ConversationsController::class, 'index'])->name('conversations.index');
     Route::get('/conversations/delete/{id}', [ConversationsController::class, 'delete'])->name('conversations.delete');
     Route::get('/conversations/create/{target}', [ConversationsController::class, 'create'])->name('conversations.create');
@@ -153,6 +154,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // download & delete
     Route::get('ssw-flow/download/{id}/{name}', [SswFlowMasterController::class, 'download'])->name('ssw_download');
     Route::get('ssw-flow/delete/{id}/{name}', [SswFlowMasterController::class, 'destroy'])->name('ssw_delete');
+    Route::post('ssw-flow/checks', [SswFlowMasterController::class, 'checkSsw'])->name('ssw.check');
+    Route::post('ssw-flow/post', [SswFlowMasterController::class, 'fileSsw'])->name('ssw.file');
 
     //role admin
     Route::middleware(['admin'])->group(function () {
@@ -327,8 +330,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('ssw-flow', [SswFlowMasterController::class, 'index'])->name('ssw.index');
             Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'detail'])->name('ssw.detail');
-            Route::post('ssw-flow/post', [SswFlowMasterController::class, 'fileSsw'])->name('ssw.file');
-            Route::post('ssw-flow/check', [SswFlowMasterController::class, 'checkSsw'])->name('ssw.check');
+
         });
     });
 });

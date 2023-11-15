@@ -12,24 +12,13 @@ class TestimonialsController extends Controller
 
         $query = Testimonials::query();
 
-        $queryParams = $request->query();
-
-        $query->when($request->filled('name'), function ($q) use ($request) {
-            return $q->where('nama', 'like', '%' . $request->input('name') . '%');
-        });
-
-        $direction = $request->input('direction', 'asc');
-
-        if (!in_array($direction, ['asc', 'desc'])) {
-            $direction = 'asc';
+        if ($request->filled('name')) {
+            $query->where('nama', 'like', '%' . $request->input('name') . '%');
         }
 
-        $query->orderBy('created_at', $direction);
+        $query->orderBy('created_at', in_array($request->input('direction', 'asc'), ['asc', 'desc']) ? $request->input('direction', 'asc') : 'asc');
 
-        $perPage = $request->filled('per_page') ? $request->input('per_page') : 10;
-
-        $results = $query->paginate($perPage)->appends($queryParams);
-
+        $results = $query->paginate($request->filled('per_page') ? $request->input('per_page') : 10)->appends($request->query());
 
         return view('admin.landing.testimonial', [
             "page_name" => "Testimonial List",

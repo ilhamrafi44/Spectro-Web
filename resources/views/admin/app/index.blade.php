@@ -87,7 +87,7 @@
                                 <div class="card-body">
                                     <div class="row d-flex">
                                         <div class="d-flex align-items-center">
-                                            <h3> {{ $jobs->candidate->name }} - {{ $jobs->jobs->name }}</h3>
+                                            <h3> {{ $jobs->candidate->name }} - {{ $jobs->jobs->name }} ({{ $jobs->employer->name }})</h3>
                                             <div class="d-flex ml-5">
                                                 @if ($jobs->status == 1)
                                                     <div class="badge badge-warning fs-6 m-1">Pending</div>
@@ -112,7 +112,11 @@
                                         </div>
                                         <div class="col-auto mb-3 ms-auto">
                                             <a href="{{ route('detai.candidate', ['id' => $jobs->candidate->id]) }}"
-                                                class="btn btn-light btn-sm rounded-pill m-1">Lihat Profile</a>
+                                                class="btn btn-light btn-sm rounded-pill m-1">Lihat Candidate</a>
+                                                <a href="{{ route('detai.employer', ['id' => $jobs->employer->id]) }}"
+                                                    class="btn btn-light btn-sm rounded-pill m-1">Lihat Employer</a>
+                                                    <a href="{{ route('job.detail', ['id' => $jobs->jobs->id]) }}"
+                                                        class="btn btn-light btn-sm rounded-pill m-1">Lihat Job</a>
                                             @if ($jobs->status == 1)
                                                 <a class="btn btn-sm fs-8 btn-primary rounded-pill m-1"
                                                     href="{{ route('jobs.reject', ['id' => $jobs->id]) }}">Reject</a>

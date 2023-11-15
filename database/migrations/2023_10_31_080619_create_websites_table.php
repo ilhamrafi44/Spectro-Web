@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('alamat')->nullable();
             $table->string('nomor_hp')->nullable();
             $table->string('nama_website')->nullable();
+            $table->string('email')->nullable();
             $table->text('deskripsi_website')->nullable();
             $table->string('tags_website')->nullable();
             $table->text('about_us')->nullable();

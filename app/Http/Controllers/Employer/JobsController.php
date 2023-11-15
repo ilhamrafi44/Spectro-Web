@@ -323,9 +323,12 @@ class JobsController extends Controller
     public function updates(Request $request)
     {
         $id = $request->id;
-        $job = Jobs::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        if(Auth::user()->role != 3) {
+            $job = Jobs::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        } else {
+            $job = Jobs::where('id', $id)->first();
+        }
         $job->name = $request->name;
-        $job->user_id = Auth::user()->id;
         $job->link = $request->link;
         $job->category_id = $request->category_id;
         $job->industry_id = $request->industry_id;

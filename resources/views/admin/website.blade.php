@@ -19,6 +19,11 @@
                                 class="form-control form-control-solid">
                         </div>
                         <div class="mb-5">
+                            <label for="">Email Support</label>
+                            <input type="email" name="email" value="{{ $data->email }}"
+                                class="form-control form-control-solid">
+                        </div>
+                        <div class="mb-5">
                             <label for="">Alamat Kantor</label>
                             <input type="text" name="alamat" value="{{ $data->alamat }}"
                                 class="form-control form-control-solid">

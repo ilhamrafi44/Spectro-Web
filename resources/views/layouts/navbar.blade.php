@@ -111,45 +111,6 @@
                                                         <span class="menu-title">Create User</span>
                                                     </a>
                                                 </div>
-                                                {{--
-                                <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link active" href="../dist/pages/faq.html">
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-                                        <span class="menu-title">Create</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
-                                --}}
-                                            </div>
-                                        </div>
-                                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                            data-kt-menu-placement="bottom-start"
-                                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-                                            <span class="menu-link">
-                                                <span class="menu-title">Jobs</span>
-                                                <span class="menu-arrow d-lg-none"></span>
-                                            </span>
-                                            <div
-                                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-                                                <div class="menu-item">
-                                                    <a class="menu-link" href="{{ route('admin.jobs') }}">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">List Job</span>
-                                                    </a>
-                                                </div>
-                                                <div class="menu-item">
-                                                    <a class="menu-link" href="{{ route('admin.jobs.add') }}">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Create Job</span>
-                                                    </a>
-                                                </div>
 
                                             </div>
                                         </div>
@@ -162,81 +123,147 @@
                                             </span>
                                             <div
                                                 class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
+                                                <div class="menu-item" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+                                                    <!--begin::Menu link-->
+                                                    <a href="#" class="menu-link py-3">
+                                                        <span class="menu-title">Jobs</span>
+                                                        <span class="menu-arrow"></span>
+                                                    </a>
+                                                    <!--end::Menu link-->
+
+                                                    <!--begin::Menu sub-->
+                                                    <div class="menu-sub menu-sub-dropdown p-3 w-200px">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item">
+                                                            <a class="menu-link" href="{{ route('admin.jobs') }}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                                <span class="menu-title">List Job</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item">
+                                                            <a class="menu-link" href="{{ route('admin.jobs.add') }}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                                <span class="menu-title">Create Job</span>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                        <!--end::Menu item-->
+                                                    </div>
+                                                    <!--end::Menu sub-->
+                                                </div>
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item" data-kt-menu-trigger="hover"
+                                                    data-kt-menu-placement="right-start">
+                                                    <!--begin::Menu link-->
+                                                    <a href="#" class="menu-link py-3">
+
+                                                        <span class="menu-title">Jobs Master</span>
+                                                        <span class="menu-arrow"></span>
+                                                    </a>
+                                                    <!--end::Menu link-->
+
+                                                    <!--begin::Menu sub-->
+                                                    <div class="menu-sub menu-sub-dropdown p-3 w-200px">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item">
+                                                            <a class="menu-link"
+                                                                href="{{ route('admin.jobs.category') }}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                                <span class="menu-title">Master Jobs Category</span>
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="menu-item">
+                                                            <a class="menu-link"
+                                                                href="{{ route('admin.jobs.industry') }}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                                <span class="menu-title">Master Jobs Industry</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item">
+                                                            <a class="menu-link"
+                                                                href="{{ route('admin.master.jobs.type') }}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                                <span class="menu-title">Master Jobs Type</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item">
+                                                            <a class="menu-link"
+                                                                href="{{ route('admin.master.jobs.experience') }}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                                <span class="menu-title">Master Jobs Experience</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item">
+                                                            <a class="menu-link"
+                                                                href="{{ route('admin.master.jobs.qualification') }}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                                <span class="menu-title">Master Jobs
+                                                                    Qualification</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="menu-item">
+                                                            <a class="menu-link"
+                                                                href="{{ route('admin.master.jobs.career') }}">
+                                                                <span class="menu-bullet">
+                                                                    <span class="bullet bullet-dot"></span>
+                                                                </span>
+                                                                <span class="menu-title">Master Jobs Career
+                                                                    Level</span>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                    </div>
+                                                    <!--end::Menu sub-->
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                            data-kt-menu-placement="bottom-start"
+                                            class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                                            <span class="menu-link">
+                                                <span class="menu-title">Applicant</span>
+                                                <span class="menu-arrow d-lg-none"></span>
+                                            </span>
+                                            <div
+                                                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
                                                 <div class="menu-item">
-                                                    <a class="menu-link" href="{{ route('admin.jobs.category') }}">
+                                                    <a class="menu-link" href="{{ route('admin.app') }}">
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">Master Jobs Category</span>
+                                                        <span class="menu-title">List Applicant</span>
                                                     </a>
                                                 </div>
                                                 <div class="menu-item">
-                                                    <a class="menu-link" href="{{ route('admin.jobs.industry') }}">
+                                                    <a class="menu-link" href="{{ route('admin.ssw.index') }}">
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">Master Jobs Industry</span>
+                                                        <span class="menu-title">List Ssw Flow</span>
                                                     </a>
                                                 </div>
-                                                <div class="menu-item">
-                                                    <a class="menu-link"
-                                                        href="{{ route('admin.master.jobs.type') }}">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Master Jobs Type</span>
-                                                    </a>
-                                                </div>
-                                                <div class="menu-item">
-                                                    <a class="menu-link"
-                                                        href="{{ route('admin.master.jobs.experience') }}">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Master Jobs Experience</span>
-                                                    </a>
-                                                </div>
-                                                <div class="menu-item">
-                                                    <a class="menu-link"
-                                                        href="{{ route('admin.master.jobs.qualification') }}">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Master Jobs Qualification</span>
-                                                    </a>
-                                                </div>
-                                                <div class="menu-item">
-                                                    <a class="menu-link"
-                                                        href="{{ route('admin.master.jobs.career') }}">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Master Jobs Career Level</span>
-                                                    </a>
-                                                </div>
+
                                             </div>
                                         </div>
                                         <div class="menu-item menu-lg me-0 me-lg-2">
-                                            <a class="menu-link" href="{{ route('admin.app') }}">
-                                                <span class="menu-title">Application</span>
-                                                <span class="menu-arrow d-lg-none"></span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item menu-lg me-0 me-lg-2">
-                                            <a class="menu-link" href="{{ route('admin.ssw.index') }}">
-                                                <span class="menu-title">Ssw Flow</span>
-                                                <span class="menu-arrow d-lg-none"></span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item menu-lg me-0 me-lg-2">
                                             <a class="menu-link" href="{{ route('conversations.admin') }}">
-                                                <span class="menu-title">Chat Monitoring</span>
-                                                <span class="menu-arrow d-lg-none"></span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item menu-lg me-0 me-lg-2">
-                                            <a class="menu-link" href="{{ route('admin.contact.index') }}">
-                                                <span class="menu-title">List Contact</span>
+                                                <span class="menu-title">Chat List</span>
                                                 <span class="menu-arrow d-lg-none"></span>
                                             </a>
                                         </div>
@@ -270,7 +297,15 @@
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">Client</span>
+                                                        <span class="menu-title">List Client</span>
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <a class="menu-link" href="{{ route('admin.contact.index') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
+                                                        </span>
+                                                        <span class="menu-title">List Contact Us</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -472,56 +507,15 @@
                                     </a>
 
                                 </div>
-                                {{-- <style>
-                                    .gtranslate_wrapper {
-                                      display: inline-block;
-                                      padding: 10px;
-                                      cursor: pointer;
-                                    }
-
-                                    .gtranslate_wrapper .gt__selected-language {
-                                      display: flex;
-                                      align-items: center;
-                                    }
-
-                                    .gtranslate_wrapper .gt__selected-language img {
-                                      margin-right: 5px;
-                                    }
-
-                                    .gtranslate_wrapper .gt__language {
-                                      display: none;
-                                      position: absolute;
-                                      top: 100%;
-                                      left: 0;
-                                      z-index: 1;
-                                      background-color: #fff;
-                                      border: 1px solid #b22222;
-                                      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-                                      padding: 5px;
-                                    }
-
-                                    .gtranslate_wrapper .gt__language-item {
-                                      padding: 5px;
-                                      color: #333;
-                                      text-decoration: none;
-                                      display: block;
-                                      white-space: nowrap;
-                                    }
-
-                                    .gtranslate_wrapper .gt__language-item:hover {
-                                      background-color: #b22222;
-                                      color: #fff;
-                                    }
-                                  </style> --}}
-                                  <style>
-                                    .gt_option{
+                                <style>
+                                    .gt_option {
                                         padding-top: 7px;
                                     }
-
-                                  </style>
-                                <div class="menu-item menu-lg me-0 me-lg-2 d-flex align-items-start mt-5">
+                                </style>
+                                <div class="menu-item menu-lg me-0 me-lg-2 d-flex align-items-start mt-3">
                                     <!--begin:Menu link-->
-                                        <div class="gtranslate_wrapper menu-link" style="position: relative;
+                                    <div class="gtranslate_wrapper menu-link"
+                                        style="position: relative;
                                         z-index: 0;">
                                         <script>
                                             window.gtranslateSettings = {

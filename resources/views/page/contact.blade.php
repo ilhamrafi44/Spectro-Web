@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row d-flex">
-        <div class="col-md-8">
+        <div class="col-md-8 mb-10">
             <div class="card border">
                 <div class="card-body">
                     <h1>Contact US</h1>
@@ -48,7 +48,7 @@
                     <a href="https://maps.app.goo.gl/WeKMC8nL5HQ2se3y7" target="_blank" class="fs-4 text-dark text-center">{!! $data->alamat !!}</a><div class="separator separator-content my-15">WhatsApp</div>
                     <a href="https://wa.me/{!! $data->nomor_hp !!}" target="_blank" class="fs-4 text-dark text-center">+{!! $data->nomor_hp !!}
                     </a><div class="separator separator-content my-15">Email</div>
-                    <a href="mailto:info@spectro.id" target="_blank" class="fs-4 text-dark text-center">info@spectro.id
+                    <a href="mailto:info@{{ $data->email }}" target="_blank" class="fs-4 text-dark text-center">{!! $data->nomor_hp !!}
                     </a>
                 </div>
             </div>

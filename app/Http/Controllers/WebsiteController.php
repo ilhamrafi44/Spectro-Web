@@ -25,6 +25,7 @@ class WebsiteController extends Controller
             'nomor_hp' => $request->input('nomor_hp'),
             'alamat' => $request->input('alamat'),
             'about_us' => $request->input('about_us'),
+            'email' => $request->input('email'),
             'tags_website' => $formattedTags,
             'terms' => $request->input('terms'),
         ]);

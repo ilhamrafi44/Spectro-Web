@@ -94,6 +94,7 @@ class SswFlowMasterController extends Controller
 
     public function checkSsw(Request $request)
     {
+        // dd('Halo');
         $data = SswFlowMaster::findOrFail($request->id);
 
         $data->update([

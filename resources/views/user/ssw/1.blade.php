@@ -1594,6 +1594,47 @@
                                             name="MencetakPasFoto" value="1"
                                             {{ $data->MencetakPasFoto ? 'checked' : '' }}></td>
                                 </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Tiket Pesawat Keberangkatan</td>
+                                    <td class="text-center"><input type="checkbox" id="TiketPesawatKeberangkatan"
+                                            name="TiketPesawatKeberangkatan" value="1"
+                                            {{ $data->TiketPesawatKeberangkatans ? 'checked' : '' }}></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>CoE</td>
+                                    <td class="text-center"><input type="checkbox" id="CoE" name="CoE"
+                                            value="1" {{ $data->CoEs ? 'checked' : '' }}></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>e-ID</td>
+                                    <td class="text-center"><input type="checkbox" id="eID"
+                                            name="eID" value="1"
+                                            {{ $data->eIDs ? 'checked' : '' }}></td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Kontrak Kerja</td>
+                                    <td class="text-center"><input type="checkbox" id="KontrakKerja"
+                                            name="KontrakKerja" value="1"
+                                            {{ $data->KontrakKerjas ? 'checked' : '' }}></td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Paspor</td>
+                                    <td class="text-center"><input type="checkbox" id="Paspor"
+                                            name="Paspor" value="1"
+                                            {{ $data->Pasports ? 'checked' : '' }}></td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td>Formulir Pengajuan Visa</td>
+                                    <td class="text-center"><input type="checkbox" id="FormulirPengajuanVisa"
+                                            name="FormulirPengajuanVisa" value="1"
+                                            {{ $data->FormulirPengajuanVisas ? 'checked' : '' }}></td>
+                                </tr>
                             </table>
 
                         </div>

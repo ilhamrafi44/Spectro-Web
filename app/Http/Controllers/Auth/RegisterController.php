@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\CandidateProfile;
-use App\Models\EmployerProfile;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Str;
+use App\Models\EmployerProfile;
+use App\Models\CandidateProfile;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -80,22 +81,27 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        // Modifikasi nomor telepon jika dimulai dengan '0' menjadi '62'
+        $nomorTelepon = $data['no_tlp'];
+        if (Str::startsWith($nomorTelepon, '0')) {
+            $nomorTelepon = '62' . substr($nomorTelepon, 1);
+        }
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'nomor_telepon' => $data['no_tlp'],
+            'nomor_telepon' => $nomorTelepon, // Menggunakan nomor telepon yang telah dimodifikasi
             'role' => $data['role'],
             'password' => Hash::make($data['password']),
         ]);
 
         if ($data['role'] == 1) {
             CandidateProfile::create([
-                'user_id' => User::orderBy('created_at', 'desc')->first()->id,
-
+                'user_id' => $user->id,
             ]);
         } else {
             EmployerProfile::create([
-                'user_id' => User::orderBy('created_at', 'desc')->first()->id,
+                'user_id' => $user->id,
             ]);
         }
 

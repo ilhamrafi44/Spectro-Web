@@ -12,6 +12,8 @@
             <div class="card">
                 <div class="card-body">
                     <h1>List Data User</h1>
+                    <a class="btn btn-success btn-sm m-1 mb-5" href="{{ route('candidate.export') }}">Export Candidate</a>
+                    <a class="btn btn-success btn-sm m-1 mb-5" href="{{ route('employer.export') }}">Export Employer</a>
                     <form>
                         <div class="row d-flex">
                             @csrf
@@ -147,11 +149,10 @@
                                                                         placeholder="Kosongkan jika tidak ingin diubah" value="" />
                                                                 </div>
                                                             </div>
-
                                                             @if ($item->role == 2)
                                                             <div class="col-md-12">
                                                                 <div class="mb-5">
-                                                                    <label for="exampleFormControlInput1"
+                                                                    <label for="flexCheckDefault1"
                                                                         class="required form-label">Can Make A JOB?</label>
                                                                     <input class="form-check-input" type="checkbox" value="1"
                                                                     id="flexCheckDefault1" name="can_create_job"
@@ -159,6 +160,7 @@
                                                                 </div>
                                                             </div>
                                                             @endif
+
                                                         </div>
                                                     </div>
 

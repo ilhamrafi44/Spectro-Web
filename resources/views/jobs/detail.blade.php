@@ -4,11 +4,16 @@
     <div class="row d-flex rounded-4 bg-secondary align-items-center mb-10">
         <div class="col-md-8 p-5">
             <div class="row d-flex">
-                <div class="col-md-3">
-                    <div class="symbol symbol-160px symbol-lg-160px symbol-fixed shadow mb-5">
-                        <img src="/assets/media/employer-avatar.jpg" alt="" height="300px">
+                <div class="col-md-3 d-flex align-items-center justify-content-center">
+                    <div class="mb-5">
+                        @if ($data->user->file_profile_id == null)
+                            <img src="/assets/media/employer-avatar.jpg" alt="" class="employer-image">
+                        @else
+                            <img src="/storage/file/images/profile/{{ $data->user->file_profile_id }}" alt="" class="employer-image">
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-md-9 d-flex align-items-center">
                     <div class="container">
 

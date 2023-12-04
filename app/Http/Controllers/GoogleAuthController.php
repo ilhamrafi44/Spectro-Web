@@ -18,11 +18,8 @@ class GoogleAuthController extends Controller
     public function callbackGoogle()
     {
         try {
-
             $google_user = Socialite::driver('google')->user();
-
-            $user = User::where('google_id', $google_user->getId())->first();
-
+            $user = User::where('google_id', $google_user->getId())->orWhere('email', $google_user->getEmail())->first();
             if (!$user) {
                 $new_user = User::create([
                     'name' => $google_user->getName(),
@@ -30,18 +27,18 @@ class GoogleAuthController extends Controller
                     'google_id' => $google_user->getId(),
                     'email_verified_at' => Carbon::now()->toDateTimeString()
                 ]);
-
                 Auth::login($new_user);
-
                 return redirect('/pre-home');
             } else {
-
-                Auth::login($user);
-
-                return redirect('/login');
+                if ($user->google_id === $google_user->getId() || $user->email === $google_user->getEmail()) {
+                    Auth::login($user);
+                    return redirect('/login');
+                } else {
+                    return redirect('/login')->with('error', 'An account with this email already exists but with a different Google account. Please login with the correct Google account or contact support.');
+                }
             }
         } catch (\Throwable $e) {
-            dd('Something Wrong' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi Kesalahan Sistem');
         }
     }
 }

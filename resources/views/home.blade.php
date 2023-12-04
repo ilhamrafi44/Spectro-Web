@@ -1,6 +1,7 @@
 @extends('layouts.polos')
 @section('content')
     <!--begin::Content--> <!--begin::Faq main-->
+    @if ($check_complete < 85)
     <!--begin::Alert-->
     <div class="alert alert-dismissible bg-light-primary d-flex flex-column flex-sm-row p-5 mb-10">
         <!--begin::Icon-->
@@ -8,104 +9,151 @@
                 class="path2"></span><span class="path3"></span></i>
         <!--end::Icon-->
 
-        <!--begin::Wrapper-->
-        <div class="d-flex flex-column pe-0 pe-sm-10">
-            <!--begin::Title-->
-            <h4 class="fw-semibold">Kelengkapan Data {{ $check_complete }}%</h4>
-            <!--end::Title-->
+            <!--begin::Wrapper-->
+            <div class="d-flex flex-column pe-0 pe-sm-10">
+                <!--begin::Title-->
+                <h4 class="fw-semibold">Kelengkapan Data {{ $check_complete }}%</h4>
+                <!--end::Title-->
 
-            <!--begin::Content-->
-            <span>
-                @if ($check_complete < 85)
-                    Presentase kelengkapan data anda adalah {{ $check_complete }}%, Silahkan lengkapi data lebih dari 85%
-                    agar bisa melamar pekerjaan
-                @endif
-            </span>
-            <!--end::Content-->
-        </div>
-        <!--end::Wrapper-->
+                <!--begin::Content-->
+                <span>
+                    @if ($check_complete < 85)
+                        Presentase kelengkapan data anda adalah {{ $check_complete }}%, Silahkan lengkapi data lebih dari
+                        85%
+                        agar bisa melamar pekerjaan
+                    @endif
+                </span>
+                <!--end::Content-->
+            </div>
+            <!--end::Wrapper-->
 
-        <!--begin::Close-->
-        <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto"
+            <!--begin::Close-->
+            <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto"
             data-bs-dismiss="alert">
             <i class="ki-duotone ki-cross fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
         </button>
         <!--end::Close-->
     </div>
+    @endif
     <!--end::Alert-->
     <div class="row">
-        <div class="col-md-3 mb-5">
-            <div class="card card-body p-5">
-                <div class="row d-flex">
-                    <div class="col-3">
-                        <i class="ki-duotone ki-briefcase fs-4x text-spectro">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                    <div class="col-9">
-                        <div class="fs-2 fw-bolder">
-                            {{ $total_apply }}
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3 mb-5">
+                    <div class="card card-body p-5">
+                        <div class="row d-flex">
+                            <div class="col-3">
+                                <i class="ki-duotone ki-briefcase fs-4x text-spectro">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </div>
+                            <div class="col-9">
+                                <div class="fs-2 fw-bolder">
+                                    {{ $total_apply }}
+                                </div>
+                                Total Pekerjaan dilamar
+                            </div>
                         </div>
-                        Total Pekerjaan dilamar
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-5">
-            <div class="card card-body p-5">
-                <div class="row d-flex">
-                    <div class="col-3">
-                        <i class="ki-duotone ki-eye fs-4x text-warning">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                            <span class="path3"></span>
-                        </i>
-                    </div>
-                    <div class="col-9">
-                        <div class="fs-2 fw-bolder">
-                            {{ $total_views }}
+                <div class="col-md-3 mb-5">
+                    <div class="card card-body p-5">
+                        <div class="row d-flex">
+                            <div class="col-3">
+                                <i class="ki-duotone ki-eye fs-4x text-warning">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </div>
+                            <div class="col-9">
+                                <div class="fs-2 fw-bolder">
+                                    {{ $total_views }}
+                                </div>
+                                Total Profile Views
+                            </div>
                         </div>
-                        Total Profile Views
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-5">
-            <div class="card card-body p-5">
-                <div class="row d-flex">
-                    <div class="col-3">
-                        <i class="ki-duotone ki-message-text-2 text-success fs-4x">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                            <span class="path3"></span>
-                        </i>
-                    </div>
-                    <div class="col-9">
-                        <div class="fs-2 fw-bolder">
-                            {{ $total_comments }}
+                <div class="col-md-3 mb-5">
+                    <div class="card card-body p-5">
+                        <div class="row d-flex">
+                            <div class="col-3">
+                                <i class="ki-duotone ki-message-text-2 text-success fs-4x">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </div>
+                            <div class="col-9">
+                                <div class="fs-2 fw-bolder">
+                                    {{ $total_comments }}
+                                </div>
+                                Total Review
+                            </div>
                         </div>
-                        Total Review
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-5">
-            <div class="card card-body p-5">
-                <div class="row d-flex">
-                    <div class="col-3">
-                        <i class="ki-duotone ki-bookmark-2 text-info fs-4x">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i>
-                    </div>
-                    <div class="col-9">
+                <div class="col-md-3 mb-5">
+                    <div class="card card-body p-5">
+                        <div class="row d-flex">
+                            <div class="col-3">
+                                <i class="ki-duotone ki-bookmark-2 text-info fs-4x">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </div>
+                            <div class="col-9">
 
-                        <div class="fs-2 fw-bolder">
-                            {{ $total_saved }}
+                                <div class="fs-2 fw-bolder">
+                                    {{ $total_saved }}
+                                </div>
+                                Total Pekerjaan Disimpan
+                            </div>
                         </div>
-                        Total Pekerjaan Disimpan
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-5">
+            <div class="card card-bordered">
+                <div class="card-body">
+                    <h3>Informasi Terbaru</h3>
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner mb-5">
+                            @forelse ($data_news as $key => $news)
+                                <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                                    <div class="card card-body p-5 border">
+                                        <div class="row d-flex">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <div class="fs-2 fw-bolder">
+                                                        {{ $news->title }}
+                                                    </div>
+                                                    <span
+                                                        class="text-muted">{{ \Carbon\Carbon::parse($news->update_at)->toFormattedDateString() }}</span>
+
+                                                </div>
+                                                {{ $news->message }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                @include('layouts.data404')
+                            @endforelse
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary text-white" type="button"
+                        data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <span class="">Sebelumnya</span>
+                    </button>
+                    <button class="btn btn-sm btn-primary text-white" type="button"
+                        data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <span class="">Selanjutnya</span>
+                    </button>
+
                 </div>
             </div>
         </div>

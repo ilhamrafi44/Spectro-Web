@@ -2,6 +2,30 @@
 
 @section('content')
     <div class="row">
+        @if (Auth::user()->role == 2 && Auth::user()->can_create_job ==null)
+        <div class="col-12 mb-5">
+            <!--begin::Alert-->
+            <div class="alert alert-danger d-flex align-items-center p-5">
+                <!--begin::Icon-->
+                <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span
+                        class="path2"></span></i>
+                <!--end::Icon-->
+
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-column">
+                    <!--begin::Title-->
+                    <h4 class="mb-1 text-dark">Halo {{ Auth::user()->name }}</h4>
+                    <!--end::Title-->
+
+                    <!--begin::Content-->
+                    <span>Anda belum diizinkan untuk membuat lapangan kerja, silahkan menghubungi admin untuk memverifikasi akun anda, terimakasih.</span>
+                    <!--end::Content-->
+                </div>
+                <!--end::Wrapper-->
+            </div>
+            <!--end::Alert-->
+        </div>
+        @endif
         <div class="col-md-3 mb-5">
             <div class="card card-body p-5">
                 <div class="row d-flex">
@@ -74,6 +98,47 @@
                         </div>
                         Total Pelamar
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-5">
+            <div class="card card-bordered">
+                <div class="card-body">
+                    <h3>Informasi Terbaru</h3>
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner mb-5">
+                            @forelse ($data_news as $key => $news)
+                                <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                                    <div class="card card-body p-5 border">
+                                        <div class="row d-flex">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <div class="fs-2 fw-bolder">
+                                                        {{ $news->title }}
+                                                    </div>
+                                                    <span
+                                                        class="badge badge-secondary">{{ \Carbon\Carbon::parse($news->update_at)->toFormattedDateString() }}</span>
+
+                                                </div>
+                                                {{ $news->message }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                @include('layouts.data404')
+                            @endforelse
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary text-white" type="button"
+                        data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <span class="">Sebelumnya</span>
+                    </button>
+                    <button class="btn btn-sm btn-primary text-white" type="button"
+                        data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <span class="">Selanjutnya</span>
+                    </button>
+
                 </div>
             </div>
         </div>

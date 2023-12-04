@@ -39,7 +39,10 @@ class MessagesController extends Controller
         $message->content = $request->input('message');
         $message->save();
 
-        event(new MessageSent($message, $conversation));
+        // event(new MessageSent($message, $conversation));
+        $event = new MessageSent($message, $conversation);
+        broadcast($event)->toOthers();
+
 
         return response()->json(['message' => $message]);
     }

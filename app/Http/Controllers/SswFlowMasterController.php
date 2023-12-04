@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\SswFlowMaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class SswFlowMasterController extends Controller
 {
@@ -74,14 +76,34 @@ class SswFlowMasterController extends Controller
 
     public function download(Request $request)
     {
-        $data = SswFlowMaster::where('id', $request->id)->first();
-        $nama = $data->{$request->name};
-        if ($data) {
-
-            return redirect('/storage/file/user/ssw/' . $nama);
+        try {
+            $data = SswFlowMaster::findOrFail($request->id);
+        } catch (ModelNotFoundException $e) {
+            return back()->with('error', 'Data tidak ditemukan.');
         }
-        return redirect()->back()->with('error', 'File & Deskripsi Gagal Dihapus');
+
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login untuk mengunduh file.');
+        }
+
+        if (Auth::user()->role !== 3) {
+            if ((Auth::user()->role == 2 && Auth::user()->id != $data->employer_id) ||
+                (Auth::user()->role == 1 && Auth::user()->id != $data->candidate_id)
+            ) {
+                return redirect()->back()->with('error', 'Anda tidak diizinkan.');
+            }
+        }
+
+        $nama = $data->{$request->name};
+        $filePath = public_path('storage/file/user/ssw/' . $nama);
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath, $nama);
+        } else {
+            return back()->with('error', 'File tidak ditemukan.');
+        }
     }
+
 
     public function detail(string $id)
     {
@@ -94,7 +116,6 @@ class SswFlowMasterController extends Controller
 
     public function checkSsw(Request $request)
     {
-        // dd('Halo');
         $data = SswFlowMaster::findOrFail($request->id);
 
         $data->update([
@@ -103,7 +124,14 @@ class SswFlowMasterController extends Controller
             'JizenGuidance' => $request->has('JizenGuidance'),
             'MCU' => $request->has('MCU'),
             'MencetakPasFoto' => $request->has('MencetakPasFoto'),
+            'TiketPesawatKeberangkatans' => $request->has('TiketPesawatKeberangkatan'),
+            'CoEs' => $request->has('CoE'),
+            'eIDs' => $request->has('eID'),
+            'KontrakKerjas' => $request->has('KontrakKerja'),
+            'Pasports' => $request->has('Paspor'),
+            'FormulirPengajuanVisas' => $request->has('FormulirPengajuanVisa'),
         ]);
+
         return redirect()->back()->with('message', 'Status berhasil diperbarui');
     }
 
@@ -144,9 +172,8 @@ class SswFlowMasterController extends Controller
         foreach ($fields as $field) {
             if ($request->hasFile($field)) {
                 $request->validate([
-                    $field => 'required|mimes:pdf|max:10240', // 10MB in kilobytes
+                    $field => 'required|file|mimetypes:application/pdf,application/vnd.ms-excel,application/msword,image/jpeg,image/png,application/zip|max:10240', // 10MB in kilobytes
                 ]);
-
                 $filenya = $request->file($field);
                 $nama_file_store = "File_" . $field . "_" . $nama_candidate . "_Time_" . $ldate . "_" . $ltime . "." . $filenya->extension();
                 $path = "public/file/user/ssw";

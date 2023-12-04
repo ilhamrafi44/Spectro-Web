@@ -4,6 +4,7 @@
     <!--begin::Content-->
     <!--begin::Faq main-->
     <form action="{{ route('employer_profile_store') }}" method="POST" enctype="multipart/form-data" id="form_profile">
+        @csrf
         <div class="row">
             <div class="col-md-12 mb-10">
                 <!--begin::Accordion-->

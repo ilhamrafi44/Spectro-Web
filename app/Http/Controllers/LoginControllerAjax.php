@@ -13,6 +13,9 @@ class LoginControllerAjax extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email'
+        ], [
+            'email.required' => 'Kolom email harus diisi.',
+            'email.email' => 'Format email tidak valid.'
         ]);
 
         if ($validator->fails()) {
@@ -35,10 +38,14 @@ class LoginControllerAjax extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'Kolom email harus diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Kolom password harus diisi.',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()->first()], 422);
+            return response()->json(['error' => $validator->errors()->first()]);
         }
 
         $credentials = $request->only('email', 'password');

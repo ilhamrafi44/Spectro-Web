@@ -126,18 +126,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-5">
-                                        <label for="exampleFormControlInput1" class="required form-label">Pendidikan
-                                            Terakhir</label>
+                                        <label for="exampleFormControlInput1" class="required form-label">Lama Pengalaman Kerja</label>
                                         <select class="form-select form-select-solid" aria-label="Select example"
-                                            data-control="select2" name="pendidikan_terakhir">
-                                            <option value="">Pilih pendidikan terakhir</option>
+                                                data-control="select2" name="pendidikan_terakhir">
+                                            <option value="">Pilih Lama Pengalaman Kerja</option>
                                             @foreach ($experience as $item_e)
-                                                <option value="{{ $item_e->id }}">{{ $item_e->name }}</option>
+                                                <option value="{{ $item_e->id }}" @if ($item_e->id == $profile->pendidikan_terakhir) selected @endif>{{ $item_e->name }}</option>
                                             @endforeach
                                         </select>
-
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="mb-5">
                                         <label for="exampleFormControlInput1" class="required form-label">Bahasa yang
@@ -367,7 +366,7 @@
                                                                                     class="form-select form-select-solid"
                                                                                     aria-label="Select example"
                                                                                     data-control="select2"
-                                                                                    name="bulan_awal">
+                                                                                    name="bulan_awal" required>
                                                                                     <option>Pilih</option>
                                                                                     @foreach ($monthsx as $month)
                                                                                         @if ($month === $selectedMonthAwal)
@@ -397,7 +396,7 @@
                                                                                     class="form-select form-select-solid"
                                                                                     aria-label="Select example"
                                                                                     data-control="select2"
-                                                                                    name="tahun_awal">
+                                                                                    name="tahun_awal" required>
                                                                                     <option>Pilih</option>
                                                                                     @for ($i = $startYear; $i >= $endYear; $i--)
                                                                                         <option
@@ -425,8 +424,7 @@
                                                                                     class="form-select form-select-solid"
                                                                                     aria-label="Select example"
                                                                                     data-control="select2"
-                                                                                    name="bulan_akhir">
-                                                                                    <option>Pilih</option>
+                                                                                    name="bulan_akhir" required>
                                                                                     @foreach ($monthsg as $month)
                                                                                         @if ($month === $selectedMonthAkhir)
                                                                                             <option
@@ -455,8 +453,7 @@
                                                                                     class="form-select form-select-solid"
                                                                                     aria-label="Select example"
                                                                                     data-control="select2"
-                                                                                    name="tahun_akhir">
-                                                                                    <option>Pilih</option>
+                                                                                    name="tahun_akhir" required>
                                                                                     @for ($i = $startYear; $i >= $endYear; $i--)
                                                                                         <option
                                                                                             value="{{ $i }}"
@@ -472,19 +469,19 @@
                                                                             class="required form-label">Perusahaan</label>
                                                                         <input name="nama_perusahaan" type="text"
                                                                             class="form-control form-control-solid"
-                                                                            value="{{ $item->nama_perusahaan }}" />
+                                                                            value="{{ $item->nama_perusahaan }}" required/>
                                                                     </div>
                                                                     <div class="mb-5">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="required form-label">Jabatan</label>
                                                                         <input name="jabatan" type="text"
                                                                             class="form-control form-control-solid"
-                                                                            value="{{ $item->jabatan }}" />
+                                                                            value="{{ $item->jabatan }}" required/>
                                                                     </div>
                                                                     <div class="mb-5">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="required form-label">Deskripsi</label>
-                                                                        <textarea name="deskripsi" class="form-control form-control-solid" id="" cols="30" rows="10">{{ $item->deskripsi }}</textarea>
+                                                                        <textarea name="deskripsi" class="form-control form-control-solid" id="" cols="30" rows="10" required>{{ $item->deskripsi }}</textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -575,7 +572,7 @@
                                                                         <select class="form-select form-select-solid"
                                                                             aria-label="Select example"
                                                                             data-control="select2" name="jenis"
-                                                                            id="select2">
+                                                                            id="select2" required>
                                                                             <option value="{{ $item->jenis }}" selected>
                                                                                 {{ $item->jenis }}</option>
                                                                             <option value="Instagram">Instagram</option>
@@ -596,7 +593,7 @@
                                                                             class="required form-label">URL</label>
                                                                         <input name="link" type="text"
                                                                             class="form-control form-control-solid"
-                                                                            value="{{ $item->link }}" />
+                                                                            value="{{ $item->link }}" required/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -647,8 +644,8 @@
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">Jenis</label>
                                     <select class="form-select form-select-solid" aria-label="Select example"
-                                        data-control="select2" name="jenis" id="select2">
-                                        <option>Pilih</option>
+                                        data-control="select2" name="jenis" id="select2" required>
+                                        <option value="0">Pilih</option>
                                         <option value="Instagram">Instagram</option>
                                         <option value="Facebook">Facebook</option>
                                         <option value="LinkedIn">LinkedIn</option>
@@ -664,7 +661,7 @@
                                 </div>
                                 <div class="mb-5">
                                     <label for="exampleFormControlInput1" class="required form-label">URL</label>
-                                    <input name="link" type="text" class="form-control form-control-solid" />
+                                    <input name="link" type="text" class="form-control form-control-solid" required/>
                                 </div>
                             </div>
                         </div>
@@ -702,8 +699,7 @@
                                 <div class="col-md-6">
                                     Bulan
                                     <select class="form-select form-select-solid" aria-label="Select example"
-                                        data-control="select2" name="bulan_awal">
-                                        <option>Pilih</option>
+                                        data-control="select2" name="bulan_awal" required>
                                         @php
                                             $months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
                                         @endphp
@@ -721,8 +717,7 @@
                                         $years = range($startYear, $endYear);
                                     @endphp
                                     <select class="form-select form-select-solid" aria-label="Select example"
-                                        data-control="select2" name="tahun_awal">
-                                        <option>Pilih</option>
+                                        data-control="select2" name="tahun_awal" required>
                                         @for ($i = $startYear; $i >= $endYear; $i--)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -736,8 +731,7 @@
                                 <div class="col-md-6">
                                     Bulan
                                     <select class="form-select form-select-solid" aria-label="Select example"
-                                        data-control="select2" name="bulan_akhir">
-                                        <option>Pilih</option>
+                                        data-control="select2" name="bulan_akhir" required>
                                         @foreach ($months as $month)
                                             <option value="{{ $month }}">{{ $month }}</option>
                                         @endforeach
@@ -751,8 +745,7 @@
                                         $years = range($startYear, $endYear);
                                     @endphp
                                     <select class="form-select form-select-solid" aria-label="Select example"
-                                        data-control="select2" name="tahun_akhir">
-                                        <option>Pilih</option>
+                                        data-control="select2" name="tahun_akhir" required>
                                         @for ($i = $startYear; $i >= $endYear; $i--)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -762,15 +755,15 @@
                         </div>
                         <div class="mb-5">
                             <label for="exampleFormControlInput1" class="required form-label">Perusahaan</label>
-                            <input name="nama_perusahaan" type="text" class="form-control form-control-solid" />
+                            <input name="nama_perusahaan" type="text" class="form-control form-control-solid" required/>
                         </div>
                         <div class="mb-5">
                             <label for="exampleFormControlInput1" class="required form-label">Jabatan</label>
-                            <input name="jabatan" type="text" class="form-control form-control-solid" />
+                            <input name="jabatan" type="text" class="form-control form-control-solid" required/>
                         </div>
                         <div class="mb-5">
                             <label for="exampleFormControlInput1" class="required form-label">Deskripsi</label>
-                            <textarea name="deskripsi" class="form-control form-control-solid" id="" cols="30" rows="10"></textarea>
+                            <textarea name="deskripsi" class="form-control form-control-solid" id="" cols="30" rows="10" required></textarea>
 
                         </div>
                     </div>

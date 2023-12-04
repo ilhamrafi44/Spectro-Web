@@ -74,6 +74,8 @@
                             </div>
                         </div>
                         <button class="btn btn-spectro col-12" type="submit">Cari</button>
+                        <button class="btn btn-secondary col-12 mt-3" type="button" onclick="resetForm()">Reset</button>
+
                     </form>
                 </div>
             </div>
@@ -91,14 +93,14 @@
                                 class="card hover-elevate-up border parent-hover mb-6">
                                 <div class="card-body">
                                     <div class="d-flex row">
-                                        <div class="col-md-2">
-                                            <div class="symbol symbol-100px symbol-lg-100px symbol-fixed mb-5">
+                                        <div class="col-md-2 d-flex align-items-center">
+                                            <div class="mb-5">
                                                 @if ($candidate->file_profile_id == null)
-                                                    <img src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" alt=""
-                                                        height="300px">
+                                                    <img src="/assets/media/employer-avatar.jpg" alt=""
+                                                        class="employer-image">
                                                 @else
                                                     <img src="/storage/file/images/profile/{{ $candidate->file_profile_id }}"
-                                                        alt="" height="300px">
+                                                        alt="" class="employer-image">
                                                 @endif
                                             </div>
                                         </div>
@@ -143,3 +145,14 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        function resetForm() {
+            // Dapatkan URL saat ini tanpa parameter
+            let baseUrl = window.location.href.split('?')[0];
+
+            // Redirect ke URL tanpa parameter
+            window.location.href = baseUrl;
+        }
+    </script>
+@endpush

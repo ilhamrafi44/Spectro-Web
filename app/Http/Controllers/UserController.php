@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\News;
 use App\Models\User;
 use App\Models\Rating;
 use App\Models\Following;
 use App\Models\SavedJobs;
+use Illuminate\Support\Str;
 use App\Exports\UsersExport;
 use App\Models\Applications;
 use App\Models\JobsIndustry;
 use App\Models\ProfileViews;
 use Illuminate\Http\Request;
 use App\Models\JobsExperience;
+use App\Exports\EmployerExport;
+use App\Exports\CandidateExport;
 use App\Models\CandidateProfile;
 use App\Models\PrivateNotification;
 use Illuminate\Support\Facades\Auth;
@@ -97,7 +101,8 @@ class UserController extends Controller
             'total_views' => $total_views,
             'total_saved' => $total_saved,
             'total_apply' => $total_apply,
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'data_news' => News::limit(10)->orderBy('created_at', 'desc')->get()
         ]);
     }
 
@@ -116,7 +121,7 @@ class UserController extends Controller
         $request->flash();
 
         $results = User::where('role', 1)
-            ->where(function($query) use ($request) {
+            ->where(function ($query) use ($request) {
                 if ($request->filled('name')) {
                     $query->where('name', 'like', '%' . $request->input('name') . '%');
                 }
@@ -160,7 +165,7 @@ class UserController extends Controller
         $request->flash();
 
         $results = User::where('role', 2)
-            ->where(function($query) use ($request) {
+            ->where(function ($query) use ($request) {
                 if ($request->filled('name')) {
                     $query->where('name', 'like', '%' . $request->input('name') . '%');
                 }
@@ -225,6 +230,14 @@ class UserController extends Controller
     {
         return Excel::download(new UsersExport, 'spectro_users.xlsx');
     }
+    public function candidate_export()
+    {
+        return Excel::download(new CandidateExport, 'spectro_candidate.xlsx');
+    }
+    public function employer_export()
+    {
+        return Excel::download(new EmployerExport, 'spectro_employer.xlsx');
+    }
 
     public function hapus_akun(Request $request)
     {
@@ -264,6 +277,8 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        $action = false;
+
         $ldate = date('Y_m_d');
         $ltime = date('H_i_s');
         $data_candidate = str_replace(' ', '-', Auth::user()->name);
@@ -282,13 +297,25 @@ class UserController extends Controller
             $candidate->update([
                 'file_profile_id' => $nama_profile
             ]);
+            $action = true;
         }
 
-        $action = $candidate->update([
-            'email' => $request->email,
-            'nomor_telepon' => $request->nomor_telepon,
-            'name' => $request->name
-        ]);
+
+
+        if (Str::startsWith($request->nomor_telepon, '0')) {
+            $nomorTelepon = '62' . substr($request->nomor_telepon, 1);
+            $action = $candidate->update([
+                'email' => $request->email,
+                'nomor_telepon' => $nomorTelepon,
+                'name' => $request->name
+            ]);
+        } else {
+            $action = $candidate->update([
+                'email' => $request->email,
+                'nomor_telepon' => $request->nomor_telepon,
+                'name' => $request->name
+            ]);
+        }
 
         $action2 = $candidate_profile->update([
             'jenis_kelamin' => $request->jenis_kelamin,
@@ -312,7 +339,7 @@ class UserController extends Controller
             'total_tahun' => $request->total_tahun
         ]);
 
-        if ($action == true && $action2 == true) {
+        if ($action == true || $action2 == true) {
             return redirect()->back()->with('message', 'Data Berhasil Diubah!');
         } else {
             return redirect()->back()->with('error', 'Data Gagal Diubah! Silakan Ulangi Beberapa Saat Lagi');

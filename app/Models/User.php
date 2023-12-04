@@ -24,7 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
         'nomor_telepon',
         'google_id',
-        'email_verified_at'
+        'email_verified_at',
+        'can_create_job'
     ];
 
     /**

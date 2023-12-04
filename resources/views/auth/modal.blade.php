@@ -35,7 +35,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        name="email" autocomplete="off" id="email" value="{{ old('email') }}" />
+                                        name="email" autocomplete="off" id="email" value="{{ old('email') }}" required/>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -55,7 +55,7 @@
                                     <!--end::Wrapper-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-lg form-control-solid" type="password"
-                                        name="password" autocomplete="off" id="password" />
+                                        name="password" autocomplete="off" id="password" required/>
                                     <!--end::Input-->
                                 </div>
                                 <div class="fv-row mb-7">

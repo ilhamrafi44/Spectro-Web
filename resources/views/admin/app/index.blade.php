@@ -154,12 +154,17 @@
                                                     <tr>
                                                         <td>File CV</td>
                                                         <td>
+                                                            @php
+                                                                    $token = \App\Helpers\TokenHelper::generateToken($jobs->resume->cv_file);
+                                                                @endphp
+
                                                             @if ($jobs->resume->cv_file == null)
                                                                 Kosong
                                                             @else
-                                                                <a target="_blank"
-                                                                    href="/storage/file/user/resume/{{ $jobs->resume->cv_file }}"
-                                                                    class="btn btn-light btn-sm" target="_blank">Lihat</a>
+                                                                <a href="{{ route('file.download', ['token' => $token, 'filename' => $jobs->resume->cv_file, 'type' => 'resume']) }}"
+                                                                    class="btn btn-light btn-sm">Download File</a>
+                                                                <a href="{{ route('user.resume.reset', ['column' => 'cv_file']) }}"
+                                                                    class="btn btn-white text-spectro btn-sm">x</a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -169,9 +174,15 @@
                                                             @if ($jobs->resume->language_certificate_file == null)
                                                                 Kosong
                                                             @else
-                                                                <a target="_blank"
-                                                                    href="/storage/file/user/resume/{{ $jobs->resume->language_certificate_file }}"
-                                                                    class="btn btn-sm btn-light">Lihat</a>
+                                                                @php
+                                                                    $token = \App\Helpers\TokenHelper::generateToken($jobs->resume->language_certificate_file);
+                                                                @endphp
+
+                                                                <a href="{{ route('file.download', ['token' => $token, 'filename' => $jobs->resume->language_certificate_file, 'type' => 'resume']) }}"
+                                                                    class="btn btn-light btn-sm">Download File</a>
+
+                                                                <a href="{{ route('user.resume.reset', ['column' => 'language_certificate_file']) }}"
+                                                                    class="btn btn-white text-spectro btn-sm">x</a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -181,9 +192,15 @@
                                                             @if ($jobs->resume->ssw_certificate_file == null)
                                                                 Kosong
                                                             @else
-                                                                <a target="_blank"
-                                                                    href="/storage/file/user/resume/{{ $jobs->resume->ssw_certificate_file }}"
-                                                                    class="btn btn-sm btn-light">Lihat</a>
+                                                                @php
+                                                                    $token = \App\Helpers\TokenHelper::generateToken($jobs->resume->ssw_certificate_file);
+                                                                @endphp
+
+                                                                <a href="{{ route('file.download', ['token' => $token, 'filename' => $jobs->resume->ssw_certificate_file, 'type' => 'resume']) }}"
+                                                                    class="btn btn-light btn-sm">Download File</a>
+
+                                                                <a href="{{ route('user.resume.reset', ['column' => 'ssw_certificate_file']) }}"
+                                                                    class="btn btn-white text-spectro btn-sm">x</a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -193,9 +210,15 @@
                                                             @if ($jobs->resume->other_certificate_file == null)
                                                                 Kosong
                                                             @else
-                                                                <a target="_blank"
-                                                                    href="/storage/file/user/resume/{{ $jobs->resume->other_certificate_file }}"
-                                                                    class="btn btn-sm btn-light">Lihat</a>
+                                                                @php
+                                                                    $token = \App\Helpers\TokenHelper::generateToken($jobs->resume->other_certificate_file);
+                                                                @endphp
+
+                                                                <a href="{{ route('file.download', ['token' => $token, 'filename' => $jobs->resume->other_certificate_file, 'type' => 'resume']) }}"
+                                                                    class="btn btn-light btn-sm">Download File</a>
+
+                                                                <a href="{{ route('user.resume.reset', ['column' => 'other_certificate_file']) }}"
+                                                                    class="btn btn-white text-spectro btn-sm">x</a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -205,9 +228,15 @@
                                                             @if ($jobs->resume->driving_license_file == null)
                                                                 Kosong
                                                             @else
-                                                                <a target="_blank"
-                                                                    href="/storage/file/user/resume/{{ $jobs->resume->driving_license_file }}"
-                                                                    class="btn btn-sm btn-light">Lihat</a>
+                                                                @php
+                                                                    $token = \App\Helpers\TokenHelper::generateToken($jobs->resume->driving_license_file);
+                                                                @endphp
+
+                                                                <a href="{{ route('file.download', ['token' => $token, 'filename' => $jobs->resume->driving_license_file, 'type' => 'resume']) }}"
+                                                                    class="btn btn-light btn-sm">Download File</a>
+
+                                                                <a href="{{ route('user.resume.reset', ['column' => 'driving_license_file']) }}"
+                                                                    class="btn btn-white text-spectro btn-sm">x</a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -217,9 +246,15 @@
                                                             @if ($jobs->resume->pasport_file == null)
                                                                 Kosong
                                                             @else
-                                                                <a target="_blank"
-                                                                    href="/storage/file/user/resume/{{ $jobs->resume->pasport_file }}"
-                                                                    class="btn btn-sm btn-light">Lihat</a>
+                                                                @php
+                                                                    $token = \App\Helpers\TokenHelper::generateToken($jobs->resume->pasport_file);
+                                                                @endphp
+
+                                                                <a href="{{ route('file.download', ['token' => $token, 'filename' => $jobs->resume->pasport_file, 'type' => 'resume']) }}"
+                                                                    class="btn btn-light btn-sm">Download File</a>
+
+                                                                <a href="{{ route('user.resume.reset', ['column' => 'pasport_file']) }}"
+                                                                    class="btn btn-white text-spectro btn-sm">x</a>
                                                             @endif
                                                         </td>
                                                     </tr>

@@ -40,6 +40,8 @@ use App\Http\Controllers\Application\ApplicationController;
 use App\Http\Controllers\Employer\JobsExperienceController;
 use App\Http\Controllers\Employer\JobsCareerLevelController;
 use App\Http\Controllers\Employer\JobsQualificationController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,6 +135,9 @@ Route::prefix('list')->group(function () {
     Route::get('/employer', [UserController::class, 'employer'])->name('employer.list');
 });
 
+Route::get('/file/download/{token}/{filename}/{type}', [FileController::class, 'download'])->name('file.download');
+
+
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
 
@@ -202,6 +207,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             // Export
             Route::get('/users/export/', [UserController::class, 'export'])->name('user.export');
+            Route::get('/candidate/export/', [UserController::class, 'candidate_export'])->name('candidate.export');
+            Route::get('/employer/export/', [UserController::class, 'employer_export'])->name('employer.export');
             Route::get('/jobs/export/', [JobsController::class, 'export'])->name('jobs.export');
 
 
@@ -211,6 +218,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
             Route::post('/users/add', [UserControler::class, 'store'])->name('admin.add.users');
             Route::post('/users/update', [UserControler::class, 'update'])->name('admin.users.update');
             Route::get('/users/delete/{id}', [UserControler::class, 'delete'])->name('admin.users.delete');
+
+            Route::get('/news', [NewsController::class, 'index'])->name('admin.news');
+            Route::post('/news', [NewsController::class, 'store'])->name('admin.news.add');
+            Route::post('/news/update', [NewsController::class, 'update'])->name('admin.news.update');
+            Route::get('/news/delete/{id}', [NewsController::class, 'destroy'])->name('admin.news.delete');
 
             Route::get('/jobs', [JobsController::class, 'admin'])->name('admin.jobs');
             Route::get('/jobs/add', [JobsController::class, 'ShowEmployer'])->name('admin.jobs.add');

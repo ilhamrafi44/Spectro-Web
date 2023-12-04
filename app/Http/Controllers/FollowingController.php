@@ -35,7 +35,7 @@ class FollowingController extends Controller
             ->appends($request->all());
 
         return view('user.following', [
-            'page_name' => "Daftar Ikuti Perusahaan",
+            'page_name' => "Daftar Perusahaan diikuti",
             'data' => $results,
         ]);
     }
@@ -65,7 +65,7 @@ class FollowingController extends Controller
             ->appends($request->all());
 
         return view('employer.following', [
-            'page_name' => "Daftar Ikuti Candidate",
+            'page_name' => "Daftar Candidate diikuti",
             'data' => $results,
         ]);
     }

@@ -10,30 +10,52 @@ class SocialMediaController extends Controller
 {
     public function sosmed_add(Request $data)
     {
-        $add = SocialMedia::create([
-            'user_id' => Auth::user()->id,
-            'jenis' => $data->jenis,
-            'link' => $data->link
-        ]);
 
-        if ($add) {
-            return redirect()->back()->with('message', 'Berhasil Tambah Data');
+        $validatedData = $data->validate([
+            'jenis' => 'required', // Menyatakan bahwa 'jenis' tidak boleh kosong
+            'link' => 'required', // Menyatakan bahwa 'link' tidak boleh kosong
+        ]);
+        try {
+            $add = SocialMedia::create([
+                'user_id' => Auth::user()->id,
+                'jenis' => $validatedData['jenis'],
+                'link' => $validatedData['link']
+            ]);
+
+            if ($add) {
+                return redirect()->back()->with('message', 'Berhasil Tambah Data');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal / Error: Data tidak ada boleh yang kosong.');
         }
+
         return redirect()->back()->with('error', 'Gagal / Error');
     }
+
 
     public function sosmed_update(Request $data)
     {
-        $update = SocialMedia::findOrFail($data->id);
-        $update->jenis = $data->jenis;
-        $update->link = $data->link;
-        $hasil = $update->update();
+        $validatedData = $data->validate([
+            'jenis' => 'required', // Menyatakan bahwa 'jenis' tidak boleh kosong
+            'link' => 'required', // Menyatakan bahwa 'link' tidak boleh kosong
+        ]);
 
-        if ($hasil) {
-            return redirect()->back()->with('message', 'Berhasil Update Data');
+        try {
+            $update = SocialMedia::findOrFail($data->id);
+            $update->jenis = $validatedData['jenis'];
+            $update->link = $validatedData['link'];
+            $hasil = $update->update();
+
+            if ($hasil) {
+                return redirect()->back()->with('message', 'Berhasil Update Data');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal / Error: Data tidak ada boleh yang kosong.');
         }
+
         return redirect()->back()->with('error', 'Gagal / Error');
     }
+
 
     public function sosmed_delete(string $id)
     {

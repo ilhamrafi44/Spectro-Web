@@ -817,6 +817,14 @@ progress {
     --bs-breakpoint-xxl: 1400px;
 }
 
+.employer-image {
+    width: 100px; /* Atur lebar agar gambar tetap responsif */
+    height: 100px;
+    object-position: top;
+    object-fit: cover; /* Memastikan gambar diisi sepenuhnya tanpa merubah aspek rasio */
+    border-radius: 10px; /* Menambahkan sudut melengkung sebesar 10px */
+}
+
 .row {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
@@ -52595,6 +52603,9 @@ body,
     }
     [data-kt-app-header-stacked="true"] .app-header {
         flex-direction: column;
+        height: calc(
+            var(--bs-app-header-primary-height)
+        );
         /* height: calc(
             var(--bs-app-header-primary-height) +
                 var(--bs-app-header-secondary-height, 0px) +
@@ -52697,6 +52708,9 @@ body,
     }
     [data-kt-app-header-stacked="true"] .app-header {
         /* flex-direction: column; */
+        height: calc(
+            var(--bs-app-header-primary-height)
+        );
         /* height: calc(
             var(--bs-app-header-primary-height) +
                 var(--bs-app-header-secondary-height, 0px) +

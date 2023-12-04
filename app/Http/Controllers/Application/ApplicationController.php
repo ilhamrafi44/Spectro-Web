@@ -30,11 +30,10 @@ class ApplicationController extends Controller
         if ($request->filled('direction')) {
             $order = $request->input('direction');
         }
-        $perPage = 10; // Jumlah item per halaman, dapat disesuaikan sesuai kebutuhan Anda
+        $perPage = 10;
         if ($request->filled('per_page')) {
             $perPage = $request->input('per_page');
         }
-        // Simpan data pencarian dalam sesi
         $request->flash();
 
         $results = Applications::where('candidate_id', Auth::user()->id)
@@ -55,7 +54,6 @@ class ApplicationController extends Controller
             ->paginate($perPage)
             ->appends($request->all());
 
-        // $data = Applications::with('employer', 'jobs')->where('candidate_id', Auth::user()->id)->get();
         $category = JobsCategory::all();
         $industry = JobsIndustry::all();
         $type = JobsType::all();
@@ -78,11 +76,10 @@ class ApplicationController extends Controller
         if ($request->filled('direction')) {
             $order = $request->input('direction');
         }
-        $perPage = 10; // Jumlah item per halaman, dapat disesuaikan sesuai kebutuhan Anda
+        $perPage = 10;
         if ($request->filled('per_page')) {
             $perPage = $request->input('per_page');
         }
-        // Simpan data pencarian dalam sesi
         $request->flash();
 
         $results = Applications::where('employer_id', Auth::user()->id)
@@ -113,11 +110,10 @@ class ApplicationController extends Controller
         if ($request->filled('direction')) {
             $order = $request->input('direction');
         }
-        $perPage = 10; // Jumlah item per halaman, dapat disesuaikan sesuai kebutuhan Anda
+        $perPage = 10;
         if ($request->filled('per_page')) {
             $perPage = $request->input('per_page');
         }
-        // Simpan data pencarian dalam sesi
         $request->flash();
 
         $results = Applications::whereHas('candidate', function ($query) use ($request) {
@@ -151,7 +147,6 @@ class ApplicationController extends Controller
 
     public function apply(Request $request)
     {
-        // Ambil data dari tiga tabel berdasarkan relasi
         $data0 = User::find(Auth::user()->id);
 
         if ($data0->role == 2) {
@@ -161,11 +156,9 @@ class ApplicationController extends Controller
         $data1 = $data0->candidate_profile;
         $data2 = $data0->candidate_resume;
 
-        // Hitung jumlah kolom yang terisi dari ketiga tabel
         $jumlahKolomTerisi = 0;
         $jumlahTotalKolom = 0;
 
-        // Hitung untuk tabel pertama
         foreach ($data1?->toArray() as $key => $value) {
             if ($value !== null) {
                 $jumlahKolomTerisi++;
@@ -174,7 +167,6 @@ class ApplicationController extends Controller
         }
 
         if ($data2 == !null) {
-            // Hitung untuk tabel kedua
             foreach ($data2?->toArray() as $key => $value) {
                 if ($value !== null) {
                     $jumlahKolomTerisi++;
@@ -182,8 +174,6 @@ class ApplicationController extends Controller
                 $jumlahTotalKolom++;
             }
         }
-
-        // Hitung persentase data yang terisi
         if ($jumlahTotalKolom > 0) {
             $persentaseDataTerisi = ($jumlahKolomTerisi / $jumlahTotalKolom) * 100;
             $check_complete = round($persentaseDataTerisi);
@@ -191,19 +181,23 @@ class ApplicationController extends Controller
             return redirect()->back()->with('error', 'User tidak ditemukan');
         }
 
-        // if($check_complete < 85)
-        // {
-        //     return redirect()->back()->with('error', 'Data profile dibawah 85%, silahkan lengkapi terlebih dahulu.');
-        // }
+        if ($check_complete < 85) {
+            return redirect()->back()->with('error', 'Data profile dibawah 85%, silahkan lengkapi terlebih dahulu.');
+        }
 
         $jobs = Jobs::findOrFail($request->job_id);
 
         $expired_date = Carbon::parse($jobs->expired_date);
 
         if ($expired_date->isPast()) {
-            // Lakukan operasi pembatalan di sini
-            // Contoh: Batalkan pesanan atau tindakan lainnya
             return redirect()->back()->with('error', 'Operasi dibatalkan karena tanggal kadaluarsa telah lewat.');
+        }
+        $existingApplication = Applications::where('candidate_id', Auth::user()->id)
+            ->whereIn('status', [1, 2, 3])
+            ->first();
+
+        if ($existingApplication) {
+            return redirect()->back()->with('error', 'Anda sudah melamar sebelumnya dengan status tertentu.');
         }
 
         $apply = Applications::firstOrCreate([

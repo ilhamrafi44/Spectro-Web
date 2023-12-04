@@ -67,6 +67,12 @@ return new class extends Migration
             $table->string('JizenGuidance')->nullable();
             $table->string('MCU')->nullable();
             $table->string('MencetakPasFoto')->nullable();
+            $table->string('TiketPesawatKeberangkatans')->nullable();
+            $table->string('CoEs')->nullable();
+            $table->string('eIDs')->nullable();
+            $table->string('KontrakKerjas')->nullable();
+            $table->string('Pasports')->nullable();
+            $table->string('FormulirPengajuanVisas')->nullable();
             $table->timestamps();
         });
     }

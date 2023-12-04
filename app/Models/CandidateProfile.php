@@ -9,7 +9,6 @@ class CandidateProfile extends Model
 {
     use HasFactory;
 
-
     protected $guarded = [];
 
     public function pengalaman_kerja()
@@ -21,7 +20,10 @@ class CandidateProfile extends Model
     {
         return $this->hasMany(Rating::class, 'user_id', 'user_id');
     }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
     public function social_media()
     {
         return $this->hasMany(SocialMedia::class, 'user_id', 'user_id');

@@ -1,5 +1,4 @@
 <!--begin::Body-->
-
 <body id="kt_body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
     data-kt-app-header-secondary-enabled="true" data-kt-app-toolbar-enabled="true" class="app-default"
     data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on">
@@ -7,7 +6,7 @@
         <span class="spinner-border text-primary" role="status"></span>
         <span class="text-gray-800 fs-6 fw-semibold mt-5">Loading...</span>
     </div>
-    <!--begin::Theme mode setup on page load-->
+    <!-- Konfigurasi tema saat halaman dimuat -->
     <script>
         var defaultThemeMode = "light";
         var themeMode;
@@ -27,24 +26,24 @@
             document.documentElement.setAttribute("data-bs-theme", themeMode);
         }
     </script>
-    <!--end::Theme mode setup on page load-->
-    <!--begin::App-->
+    <!-- Selesai Konfigurasi tema saat halaman dimuat -->
+    <!-- Memulai Aplikasi -->
     <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
-        <!--begin::Page-->
+        <!-- Mulai Halaman -->
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
-            <!--begin::Header-->
+            <!-- Mulai Header -->
             <div id="kt_app_header" class="app-header">
-                <!--begin::Header primary-->
+                <!-- Mulai Header Utama -->
                 <div class="app-header-primary shadow-lg" data-kt-sticky="true"
                     data-kt-sticky-name="app-header-primary-sticky"
                     data-kt-sticky-offset="{default: 'false', lg: '300px'}">
-                    <!--begin::Header primary container-->
+                    <!-- Mulai Kontainer Header Utama -->
                     <div class="app-container container-xxl d-flex align-items-stretch justify-content-between">
-                        <!--begin::Logo and search-->
+                        <!-- Logo dan pencarian -->
                         <div class="d-flex flex-grow-1 flex-lg-grow-0">
-                            <!--begin::Logo wrapper-->
+                            <!-- Pembungkus Logo -->
                             <div class="d-flex align-items-center" id="kt_app_header_logo_wrapper">
-                                <!--begin::Header toggle-->
+                                <!-- Tombol Toggle Header -->
                                 <button
                                     class="d-lg-none btn btn-icon btn-color-danger btn-active-color-dark ms-n4 me-sm-2"
                                     id="kt_app_header_menu_toggle">
@@ -53,17 +52,17 @@
                                         <span class="path2"></span>
                                     </i>
                                 </button>
-                                <!--end::Header toggle-->
-                                <!--begin::Logo-->
+                                <!-- Selesai Tombol Toggle Header -->
+                                <!-- Logo -->
                                 <a href="{{ route('home') }}" class="d-flex align-items-center mb-1 mb-lg-0 pt-lg-1">
                                     <img alt="Logo" src="{{ asset('assets/media/spectro-small.png') }}"
                                         class="d-block d-sm-none" height="30px" />
                                     <img alt="Logo" src="{{ asset('assets/media/spectro.png') }}"
                                         class="d-none d-sm-block" height="40px" />
                                 </a>
-                                <!--end::Logo-->
+                                <!-- Selesai Logo -->
                             </div>
-                            <!--end::Logo wrapper-->
+                            <!-- Selesai Pembungkus Logo -->
                         </div>
                         <div class="app-header-menu app-header-mobile-drawer align-items-stretch flex-grow-1"
                             data-kt-drawer="true" data-kt-drawer-name="app-header-menu"
@@ -72,16 +71,16 @@
                             data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true"
                             data-kt-swapper-mode="{default: 'append', lg: 'prepend'}"
                             data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}">
-                            <!--begin::Menu-->
+                            <!-- Menu -->
                             <div class="menu menu-rounded menu-active-bg menu-state-primary menu-column menu-lg-row menu-title-gray-700 menu-icon-gray-500 menu-arrow-gray-500 menu-bullet-gray-500 my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0"
                                 id="kt_app_header_menu" data-kt-menu="true">
-                                <!--begin:Menu item-->
+                                <!-- Item Menu -->
 
                                 @if (Auth::user())
                                     <div class="menu-item menu-lg me-0 me-lg-2">
-                                        <!--begin:Menu link-->
+                                        <!-- Tautan Menu -->
                                         <a class="menu-link" href="{{ route('home') }}">
-                                            <span class="menu-title">Dashboard</span>
+                                            <span class="menu-title">Dasbor</span>
                                             <span class="menu-arrow d-lg-none"></span>
                                         </a>
                                     </div>
@@ -90,7 +89,7 @@
                                             data-kt-menu-placement="bottom-start"
                                             class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                                             <span class="menu-link">
-                                                <span class="menu-title">User</span>
+                                                <span class="menu-title">Pengguna</span>
                                                 <span class="menu-arrow d-lg-none"></span>
                                             </span>
                                             <div
@@ -100,7 +99,7 @@
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">List User</span>
+                                                        <span class="menu-title">Daftar Pengguna</span>
                                                     </a>
                                                 </div>
                                                 <div class="menu-item">
@@ -108,7 +107,7 @@
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">Create User</span>
+                                                        <span class="menu-title">Tambah Pengguna</span>
                                                     </a>
                                                 </div>
 
@@ -118,18 +117,15 @@
                                             data-kt-menu-placement="bottom-start"
                                             class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                                             <span class="menu-link">
-                                                <span class="menu-title">Jobs Master</span>
+                                                <span class="menu-title">Master Pekerjaan</span>
                                                 <span class="menu-arrow d-lg-none"></span>
                                             </span>
                                             <div
                                                 class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-                                                <div class="menu-item" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                                    <!--begin::Menu link-->
-                                                    <a href="#" class="menu-link py-3">
-                                                        <span class="menu-title">Jobs</span>
-                                                        <span class="menu-arrow"></span>
-                                                    </a>
-                                                    <!--end::Menu link-->
+                                                <div class="menu-item" data-kt-menu-trigger="hover"
+                                                    data-kt-menu-placement="right-start">
+                                                    <!-- Tautan Menu -->
+
 
                                                     <!--begin::Menu sub-->
                                                     <div class="menu-sub menu-sub-dropdown p-3 w-200px">
@@ -139,7 +135,7 @@
                                                                 <span class="menu-bullet">
                                                                     <span class="bullet bullet-dot"></span>
                                                                 </span>
-                                                                <span class="menu-title">List Job</span>
+                                                                <span class="menu-title">Daftar Pekerjaan</span>
                                                             </a>
                                                         </div>
                                                         <div class="menu-item">
@@ -147,7 +143,7 @@
                                                                 <span class="menu-bullet">
                                                                     <span class="bullet bullet-dot"></span>
                                                                 </span>
-                                                                <span class="menu-title">Create Job</span>
+                                                                <span class="menu-title">Buat Pekerjaan</span>
                                                             </a>
                                                         </div>
                                                         <!--end::Menu item-->
@@ -285,6 +281,14 @@
                                                     </a>
                                                 </div>
                                                 <div class="menu-item">
+                                                    <a class="menu-link" href="{{ route('admin.news') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
+                                                        </span>
+                                                        <span class="menu-title">News</span>
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item">
                                                     <a class="menu-link" href="{{ route('admin.web.testimonial') }}">
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
@@ -309,7 +313,6 @@
                                                     </a>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="menu-item menu-lg me-0 me-lg-2">
                                             <a class="menu-link" href="{{ route('blog.index') }}">
@@ -359,7 +362,7 @@
 
                                             <!--begin:Menu link-->
                                             <a class="menu-link" href="{{ route('employer.following.saved') }}">
-                                                <span class="menu-title">Candidate Tersimpan</span>
+                                                <span class="menu-title">Candidate Diikuti</span>
                                                 <span class="menu-arrow d-lg-none"></span>
                                             </a>
 
@@ -421,7 +424,7 @@
                                             data-kt-menu-placement="bottom-start"
                                             class="menu-item menu-lg-down-accordion me-0 me-lg-2">
                                             <span class="menu-link">
-                                                <span class="menu-title">Tersimpan</span>
+                                                <span class="menu-title">Tersimpan/Diikuti</span>
                                                 <span class="menu-arrow d-lg-none"></span>
                                             </span>
                                             <div
@@ -439,7 +442,7 @@
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">Perusahaan Disimpan</span>
+                                                        <span class="menu-title">Perusahaan Diikuti</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -512,7 +515,7 @@
                                         padding-top: 7px;
                                     }
                                 </style>
-                                <div class="menu-item menu-lg me-0 me-lg-2 d-flex align-items-start mt-3">
+                                <div class="menu-item menu-lg me-0 me-lg-2 d-flex align-items-start mt-5">
                                     <!--begin:Menu link-->
                                     <div class="gtranslate_wrapper menu-link"
                                         style="position: relative;
@@ -520,8 +523,9 @@
                                         <script>
                                             window.gtranslateSettings = {
                                                 "default_language": "id",
-                                                "detect_browser_language": true,
-                                                "languages": ["en", "id", "ja"],
+                                                "native_language_names": true,
+                                                "detect_browser_language":true,
+                                                "languages": ["id", "ja", "en"],
                                                 "wrapper_selector": ".gtranslate_wrapper",
                                                 "flag_size": 22,
                                                 "switcher_horizontal_position": "inline",
@@ -537,6 +541,7 @@
                                             }
                                         </script>
                                         <script src="https://cdn.gtranslate.net/widgets/latest/dwf.js" defer></script>
+
                                     </div>
                                 </div>
 
@@ -791,10 +796,10 @@
                                         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
 
                                         @if (Auth::user()?->file_profile_id == null)
-                                            <img alt="Logo" class="symbol symbol-35px"
+                                            <img alt="Logo" class="symbol symbol-35px employer-image"
                                                 src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" />
                                         @else
-                                            <img alt="Logo" class="symbol symbol-35px"
+                                            <img alt="Logo" class="symbol symbol-35px employer-image"
                                                 src="/storage/file/images/profile/{{ Auth::user()->file_profile_id }}" />
                                         @endif
                                     </div>
@@ -806,7 +811,7 @@
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 @if (Auth::user())
                                                     <!--begin::Avatar-->
-                                                    <div class="symbol symbol-50px me-5">
+                                                    <div class="symbol symbol-50px me-5 ">
                                                         @if (Auth::user()->file_profile_id == null)
                                                             <img alt="Logo"
                                                                 src="https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg" />

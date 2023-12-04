@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserResume;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EmployerProfile;
 use App\Models\CandidateProfile;
-use App\Models\UserResume;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -26,31 +27,55 @@ class RegisterControllerAjax extends Controller
                 'regex:/[0-9]/',      // must contain at least one digit
                 'confirmed'
             ],
-            'no_tlp' => ['required', 'int'],
+            'no_tlp' => ['required', 'string'], // Mengubah menjadi 'string' agar dapat menerima nomor telepon sebagai string
             'type' => ['required'],
             'jenis_kelamin' => ['in:1,2'],
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.max' => 'Email tidak boleh lebih dari :max karakter.',
+            'email.unique' => 'Email sudah digunakan.',
+
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal :min karakter.',
+            'password.regex' => 'Password harus mengandung setidaknya satu huruf kecil, satu huruf besar, dan satu angka.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+
+            'no_tlp.required' => 'Nomor telepon wajib diisi.',
+            'no_tlp.string' => 'Format nomor telepon tidak valid.',
+
+            'type.required' => 'Tipe wajib diisi.',
+
+            'jenis_kelamin.in' => 'Jenis kelamin harus dipilih dari opsi yang tersedia.'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()]);
         }
 
+        $noTlp = $request->no_tlp;
+        if (Str::startsWith($noTlp, '0')) {
+            $noTlp = '62' . substr($noTlp, 1);
+        }
+
         $role = $request->type;
-        if($role == "employer") {
+        if ($role == "employer") {
             $role = 2;
-        } else if($role == "candidate") {
+        } else if ($role == "candidate") {
             $role = 1;
         } else {
             return response()->json(['error' => 'Registrasi gagal, aksi dilarang.']);
         }
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'no_tlp' => $request->no_tlp,
-                'role' => $role,
-                'password' => Hash::make($request->password),
-            ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'nomor_telepon' => $noTlp,
+            'role' => $role,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $user->sendEmailVerificationNotification();
 
         if ($role == 1) {
             CandidateProfile::create([

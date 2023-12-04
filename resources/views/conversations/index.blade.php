@@ -96,7 +96,8 @@
 
                                 <a class="btn btn-sm btn-light-primary fw-bold col-12 mb-3 open-chat"
                                     data-bs-toggle="offcanvas" href="#chatOffcanvas" role="button"
-                                    aria-controls="chatOffcanvas" data-conversation-id="{{ $item->id }}">
+                                    aria-controls="chatOffcanvas" data-conversation-id="{{ $item->id }}"
+                                    data-conversation-name="{{ $item->user2->name }}">
                                     Kirim Pesan
                                 </a>
                                 <a href="{{ route('conversations.delete', ['id' => $item->id]) }}"
@@ -158,7 +159,8 @@
 
                                 <a class="btn btn-sm btn-light-primary fw-bold col-12 mb-3 open-chat"
                                     data-bs-toggle="offcanvas" href="#chatOffcanvas" role="button"
-                                    aria-controls="chatOffcanvas" data-conversation-id="{{ $item->id }}">
+                                    aria-controls="chatOffcanvas" data-conversation-id="{{ $item->id }}"
+                                    data-conversation-name="{{ $item->user1->name }}">
                                     Kirim Pesan
                                 </a>
 
@@ -180,12 +182,13 @@
         </div>
     </div>
     <!-- Modal untuk menampilkan percakapan -->
-    <div class="offcanvas offcanvas-end" style="width: 500px;" tabindex="-1" id="chatOffcanvas" data-bs-backdrop="static" aria-labelledby="chatOffcanvasLabel">
+    <div class="offcanvas offcanvas-end" style="width: 500px;" tabindex="-1" id="chatOffcanvas" data-bs-backdrop="static"
+        aria-labelledby="chatOffcanvasLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="chatOffcanvasLabel">Percakapan</h5>
+            <h5 class="offcanvas-title" id="chatOffcanvasLabel">Default Title</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body" >
+        <div class="offcanvas-body p-0">
             <!-- iframe untuk menampilkan percakapan -->
             <iframe id="chatIframe" src="" frameborder="0" width="100%" height="100%"></iframe>
         </div>
@@ -210,6 +213,10 @@
 
                 var conversationId = $(this).data('conversation-id');
                 var iframe = $('#chatIframe');
+
+                var offcanvasTitle = $(this).data('conversation-name');
+                $('#chatOffcanvasLabel').text(offcanvasTitle);
+
                 iframe.attr('src', '/conversations/' + conversationId + '/messages');
             });
         });

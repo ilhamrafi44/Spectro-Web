@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--begin::Head-->
-
 <head>
     <base href="../" />
     <title>@php
@@ -33,28 +31,36 @@
     @yield('seo')
 
     <link rel="shortcut icon" href="{{ asset('assets/media/spectro-small.png') }}" />
-    <!--begin::Fonts(mandatory for all pages)-->
+    <!-- Pemanggilan Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-    <!--end::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Torus&display=swap">
 
-    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <!-- Pemanggilan Stylesheet Global -->
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
     <script src="/assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js"></script>
 
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Pemanggilan Stylesheet Eksternal -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
         integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"
         integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!--end::Global Stylesheets Bundle-->
 
+    <!-- Gaya Khusus -->
+    <style>
+        /* Gunakan font Torus pada elemen teks */
+        body {
+            font-family: 'Torus', sans-serif;
+        }
+    </style>
+
+    <!-- Scripts -->
     <script>
-        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
+        // Frame-busting untuk mencegah situs dimuat dalam bingkai tanpa izin (click-jacking)
+        if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
     </script>
 </head>

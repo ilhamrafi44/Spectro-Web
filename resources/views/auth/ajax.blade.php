@@ -50,7 +50,7 @@
                     blockUI.release();
                     blockUI.destroy();
                     Swal.fire({
-                        text: "Kesalahan Sistem",
+                        text: response.error,
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
@@ -104,7 +104,7 @@
                     blockUI.release();
                     blockUI.destroy();
                     Swal.fire({
-                        text: "Kesalahan Sistem",
+                        text: response.error,
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
@@ -170,7 +170,7 @@
                     blockUI.release();
                     blockUI.destroy();
                     Swal.fire({
-                        text: "Kesalahan Sistem",
+                        text: response.error,
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",

@@ -19,8 +19,12 @@
                                     @if ($data->cv_file == null)
                                         Kosong
                                     @else
-                                        <a href="/storage/file/user/resume/{{ $data->cv_file }}"
-                                            class="btn btn-light btn-sm">Lihat</a>
+                                        @php
+                                            $token = \App\Helpers\TokenHelper::generateToken($data->cv_file)
+
+                                        @endphp
+                                        <a href="{{ route('file.download', ['token' => $token, 'filename' => $data->cv_file, 'type' => 'resume']) }}"
+                                            class="btn btn-light btn-sm">Download File</a>
                                         <a href="{{ route('user.resume.reset', ['column' => 'cv_file']) }}"
                                             class="btn btn-white text-spectro btn-sm">x</a>
                                     @endif
@@ -32,8 +36,13 @@
                                     @if ($data->language_certificate_file == null)
                                         Kosong
                                     @else
-                                        <a href="/storage/file/user/resume/{{ $data->language_certificate_file }}"
-                                            class="btn btn-sm btn-light">Lihat</a>
+                                        @php
+                                            $token = \App\Helpers\TokenHelper::generateToken($data->language_certificate_file);
+                                        @endphp
+
+                                        <a href="{{ route('file.download', ['token' => $token, 'filename' => $data->language_certificate_file, 'type' => 'resume']) }}"
+                                            class="btn btn-light btn-sm">Download File</a>
+
                                         <a href="{{ route('user.resume.reset', ['column' => 'language_certificate_file']) }}"
                                             class="btn btn-white text-spectro btn-sm">x</a>
                                     @endif
@@ -45,8 +54,13 @@
                                     @if ($data->ssw_certificate_file == null)
                                         Kosong
                                     @else
-                                        <a href="/storage/file/user/resume/{{ $data->ssw_certificate_file }}"
-                                            class="btn btn-sm btn-light">Lihat</a>
+                                        @php
+                                            $token = \App\Helpers\TokenHelper::generateToken($data->ssw_certificate_file);
+                                        @endphp
+
+                                        <a href="{{ route('file.download', ['token' => $token, 'filename' => $data->ssw_certificate_file, 'type' => 'resume']) }}"
+                                            class="btn btn-light btn-sm">Download File</a>
+
                                         <a href="{{ route('user.resume.reset', ['column' => 'ssw_certificate_file']) }}"
                                             class="btn btn-white text-spectro btn-sm">x</a>
                                     @endif
@@ -58,8 +72,13 @@
                                     @if ($data->other_certificate_file == null)
                                         Kosong
                                     @else
-                                        <a href="/storage/file/user/resume/{{ $data->other_certificate_file }}"
-                                            class="btn btn-sm btn-light">Lihat</a>
+                                        @php
+                                            $token = \App\Helpers\TokenHelper::generateToken($data->other_certificate_file);
+                                        @endphp
+
+                                        <a href="{{ route('file.download', ['token' => $token, 'filename' => $data->other_certificate_file, 'type' => 'resume']) }}"
+                                            class="btn btn-light btn-sm">Download File</a>
+
                                         <a href="{{ route('user.resume.reset', ['column' => 'other_certificate_file']) }}"
                                             class="btn btn-white text-spectro btn-sm">x</a>
                                     @endif
@@ -71,8 +90,13 @@
                                     @if ($data->driving_license_file == null)
                                         Kosong
                                     @else
-                                        <a href="/storage/file/user/resume/{{ $data->driving_license_file }}"
-                                            class="btn btn-sm btn-light">Lihat</a>
+                                        @php
+                                            $token = \App\Helpers\TokenHelper::generateToken($data->driving_license_file);
+                                        @endphp
+
+                                        <a href="{{ route('file.download', ['token' => $token, 'filename' => $data->driving_license_file, 'type' => 'resume']) }}"
+                                            class="btn btn-light btn-sm">Download File</a>
+
                                         <a href="{{ route('user.resume.reset', ['column' => 'driving_license_file']) }}"
                                             class="btn btn-white text-spectro btn-sm">x</a>
                                     @endif
@@ -84,8 +108,13 @@
                                     @if ($data->pasport_file == null)
                                         Kosong
                                     @else
-                                        <a href="/storage/file/user/resume/{{ $data->pasport_file }}"
-                                            class="btn btn-sm btn-light">Lihat</a>
+                                        @php
+                                            $token = \App\Helpers\TokenHelper::generateToken($data->pasport_file);
+                                        @endphp
+
+                                        <a href="{{ route('file.download', ['token' => $token, 'filename' => $data->pasport_file, 'type' => 'resume']) }}"
+                                            class="btn btn-light btn-sm">Download File</a>
+
                                         <a href="{{ route('user.resume.reset', ['column' => 'pasport_file']) }}"
                                             class="btn btn-white text-spectro btn-sm">x</a>
                                     @endif

@@ -169,7 +169,6 @@ class JobsController extends Controller
 
         $related = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', '!=', $request->id)->limit(5)->get();
 
-
         $job = Jobs::with('category', 'industry', 'user', 'qualifications', 'job_types', 'experiences', 'careers')->where('id', $request->id)->first();
 
         if ($job) {

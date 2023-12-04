@@ -24,36 +24,55 @@ class UserResumeController extends Controller
 
     public function reset(Request $request)
     {
-        $data = UserResume::where('user_id', Auth::user()->id)->first();
+        try {
+            $saved = false;
 
+            $data = UserResume::where('user_id', Auth::user()->id)->first();
 
-        $column = $request->column;
-        $file = $data->$column;
-        $file_path = 'storage/file/user/resume/' . $file;
-        unlink($file_path);
+            if (!$data) {
+                return redirect()->back()->with('error', 'Data tidak ditemukan');
+            }
 
-        $saved = $data->update([
-            $request->column => null
-        ]);
+            $column = $request->column;
+            $file = $data->$column;
+            $saved = $data->update([
+                $column => null
+            ]);
 
+            if (!$file) {
+                return redirect()->back()->with('error', 'File tidak ditemukan');
+            }
 
-        if ($saved) {
-            return redirect()->back()->with('message', 'File Berhasil Dihapus!');
-        } else {
-            return redirect()->back()->with('error', 'Terjadi Kesalahan!');
+            $file_path = 'storage/file/user/resume/' . $file;
+
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
+
+            if ($saved) {
+                return redirect()->back()->with('message', 'File berhasil dihapus!');
+            } else {
+                return redirect()->back()->with('error', 'Gagal menghapus file!');
+            }
+
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
 
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'cv_file' => 'mimes:xls,xlsx|max:10000', // maksimum 10MB
-            'language_certificate_file' => 'mimes:pdf|max:10000', // maksimum 10MB
-            'ssw_certificate_file' => 'mimes:pdf|max:10000', // maksimum 10MB
-            'other_certificate_file' => 'mimes:pdf|max:10000', // maksimum 10MB
-            'driving_license_file' => 'mimes:pdf|max:10000', // maksimum 10MB
-            'pasport_file ' => 'mimes:pdf|max:10000', // maksimum 10MB
+            'cv_file' => 'file|mimes:pdf,xls,xlsx,doc,docx,png,jpg,jpeg,gif,zip|max:10000',
+            'language_certificate_file' => 'file|mimes:pdf,xls,xlsx,doc,docx,png,jpg,jpeg,gif,zip|max:10000',
+            'ssw_certificate_file' => 'file|mimes:pdf,xls,xlsx,doc,docx,png,jpg,jpeg,gif,zip|max:10000',
+            'other_certificate_file' => 'file|mimes:pdf,xls,xlsx,doc,docx,png,jpg,jpeg,gif,zip|max:10000',
+            'driving_license_file' => 'file|mimes:pdf,xls,xlsx,doc,docx,png,jpg,jpeg,gif,zip|max:10000',
+            'passport_file' => 'file|mimes:pdf,xls,xlsx,doc,docx,png,jpg,jpeg,gif,zip|max:10000',
         ]);
+
+        $saved = false;
 
         if ($validator->fails()) {
             return redirect()->back()->with('error', 'File yang diunggah tidak valid. Pastikan ukuran file tidak lebih dari 10MB dan format file sesuai ketentuan.');
@@ -134,7 +153,7 @@ class UserResumeController extends Controller
             ]);
         }
 
-        if ($saved) {
+        if (@$saved) {
             return redirect()->back()->with('message', 'Pesan berhasil dikirim!');
         } else {
             return redirect()->back()->with('error', 'Terjadi Kesalahan!');

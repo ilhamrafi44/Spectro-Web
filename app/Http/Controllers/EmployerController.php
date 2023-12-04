@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\News;
 use App\Models\User;
 use App\Models\Rating;
 use App\Models\Following;
@@ -54,7 +55,9 @@ class EmployerController extends Controller
             'total_views' => $total_views,
             'total_apply' => $total_apply,
             'notifications' => $notifications,
-            'applys' => Applications::where('employer_id', Auth::user()->id)->limit(5)->get()
+            'applys' => Applications::where('employer_id', Auth::user()->id)->limit(5)->get(),
+            'data_news' => News::limit(10)->orderBy('created_at', 'desc')->get()
+
         ]);
     }
 

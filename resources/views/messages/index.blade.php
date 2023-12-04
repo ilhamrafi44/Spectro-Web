@@ -1,7 +1,7 @@
 @extends('layouts.chat')
 @section('content')
-    <div class="card bg-light shadow-sm vh-100 rounded-0">
-        <div class="card-header bg-white shadow-md border border-bottom d-flex align-items-center">
+    <div class="card bg-light vh-100 rounded-0">
+        {{-- <div class="card-header bg-white shadow-md border-bottom d-flex align-items-center">
             @if ($conversation->user1_id === Auth::user()->id)
                 <div class="fs-3 d-flex">
                     <div class="symbol symbol-35px symbol-circle">
@@ -35,12 +35,7 @@
                     </h3>
                 </div>
             @endif
-            {{-- <div class="card-toolbar">
-                <button class="btn-close text-reset"
-                    id="closeIframeBtn"></button>
-
-            </div> --}}
-        </div>
+        </div> --}}
         <div class="card-body card-scroll bg-gray-300" id="cardBody">
             <div class="row">
                 <div id="messages" class="mb-4">
@@ -70,11 +65,6 @@
 @push('scripts')
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
-        document.getElementById('closeIframeBtn').addEventListener('click', function() {
-            window.parent.postMessage('closeOffcanvas', '*');
-        });
-    </script>
-    <script>
         $(document).ready(function() {
             var cardBody = $('#cardBody');
             cardBody.scrollTop(cardBody[0].scrollHeight);
@@ -86,8 +76,6 @@
                 document.getElementById('sendBtn').click(); // Memanggil fungsi yang diinginkan di sini
             }
         }
-
-
         var conversationId = '{{ $conversation->id }}'; // Replace with the correct conversation ID
         var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
             cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
@@ -116,7 +104,6 @@
                     // Halo
                 }
             });
-
         });
 
         function appendMessage(message) {

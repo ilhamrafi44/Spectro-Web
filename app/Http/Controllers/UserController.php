@@ -18,6 +18,7 @@ use App\Models\JobsExperience;
 use App\Exports\EmployerExport;
 use App\Exports\CandidateExport;
 use App\Models\CandidateProfile;
+use App\Models\Jobs;
 use App\Models\PrivateNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -37,13 +38,17 @@ class UserController extends Controller
         $jumlahKolomTerisi = 0;
         $jumlahTotalKolom = 0;
 
-        // Hitung untuk tabel pertama
-        foreach ($data1?->toArray() as $key => $value) {
-            if ($value !== null) {
-                $jumlahKolomTerisi++;
+        if ($data1) {
+            // Hitung untuk tabel pertama
+            foreach ($data1?->toArray() as $key => $value) {
+                if ($value !== null) {
+                    $jumlahKolomTerisi++;
+                }
+                $jumlahTotalKolom++;
             }
-            $jumlahTotalKolom++;
         }
+
+
 
         if ($data2 == !null) {
             // Hitung untuk tabel kedua
@@ -241,13 +246,18 @@ class UserController extends Controller
 
     public function hapus_akun(Request $request)
     {
+        $user = User::findOrFail(Auth::user()->id)->first();
+        $jobs = Jobs::where('user_id', Auth::user()->id)->first();
         if ($request->yakin == 'ya') {
-            User::findOrFail(Auth::user()->id)->delete();
-            return redirect('/');
+            if ($jobs) {
+                return redirect()->back()->with('message', 'Data Gagal Dihapus,Ada job yang terhubung');
+            }
+            $user->delete();
+            return view('auth.delete_account', [
+                'page_name' => 'Hapus Akun'
+            ]);
         }
-        return view('auth.delete_account', [
-            'page_name' => 'Hapus Akun'
-        ]);
+        return redirect()->back()->with('message', 'Data Gagal Dihapus');
     }
 
     public function detail(Request $request)

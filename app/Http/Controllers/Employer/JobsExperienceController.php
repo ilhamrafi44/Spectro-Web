@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employer;
 use Illuminate\Http\Request;
 use App\Models\JobsExperience;
 use App\Http\Controllers\Controller;
+use App\Models\Jobs;
 use Illuminate\Support\Facades\Auth;
 
 class JobsExperienceController extends Controller
@@ -56,12 +57,16 @@ class JobsExperienceController extends Controller
 
     public function destroy(string $id)
     {
-        $Category = JobsExperience::where('id', $id)->delete();
-        if ($Category) {
-            return redirect()->back()->with('message', 'Data berhasil dihapus');
-        } else {
-            return redirect()->back()->with('error', 'Data gagal dihapus');
+        $experience = JobsExperience::where('id', $id)->first();
+        $jobs = Jobs::where('experience', $id)->first();
+        if ($experience) {
+            if ($jobs) {
+                return redirect()->back()->with('message', 'Data Gagal Dihapus,Ada job yang terhubung');
+            }
+            $experience->delete();
+            return redirect()->back()->with('message', 'Data Berhasil Dihapus');
         }
+        return redirect()->back()->with('message', 'Data Gagal Dihapus');
     }
 
     public function update(Request $request)
@@ -75,6 +80,5 @@ class JobsExperienceController extends Controller
             return redirect()->back()->with('message', 'Data Berhasil Diubah');
         }
         return redirect()->back()->with('error', 'Data Berhasil Diubah');
-
     }
 }

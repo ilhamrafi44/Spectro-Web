@@ -22,6 +22,7 @@ use App\Models\PrivateNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -277,6 +278,20 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'file_profile_id' => 'image|mimes:jpeg,jpg,png|max:10000', // Hanya menerima file gambar jpg atau png maksimum 10MB
+        ], [
+            'file_profile_id.image' => 'The :attribute must be an image.',
+            'file_profile_id.mimes' => 'The :attribute must be a file of type: jpeg, jpg, png.',
+            'file_profile_id.max' => 'The :attribute may not be greater than 10MB in size.',
+        ]);
+
+        // Jika validasi gagal, redirect kembali dengan pesan error
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->first());
+        }
+
         $action = false;
 
         $ldate = date('Y_m_d');
@@ -299,8 +314,6 @@ class UserController extends Controller
             ]);
             $action = true;
         }
-
-
 
         if (Str::startsWith($request->nomor_telepon, '0')) {
             $nomorTelepon = '62' . substr($request->nomor_telepon, 1);

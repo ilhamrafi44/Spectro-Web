@@ -238,7 +238,7 @@
                                 <i class="far fa-solid fa-briefcase fs-2qx"></i>
                             </div>
                             <div class="col-9"> Job Type : <b>
-                                    {{ $data->job_types->name }} </b>
+                                    {{ $data->job_types->name ?? 'Data Tidak Tersedia'}} </b>
                             </div>
                         </div>
                         <div class="mb-2 fs-5 row d-flex align-items-center">

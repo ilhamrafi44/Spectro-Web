@@ -43,6 +43,8 @@
                 </div>
             </form>
         </div>
+
+
         @foreach ($data as $item)
             <div class="col-md-6 mb-5">
                 <div class="card border-1">
@@ -57,9 +59,10 @@
                                 class="btn btn-sm rounded-pill border m-1 btn-warning">
                                 Edit
                             </a>
-                            <a type="button" class="btn btn-sm rounded-pill border m-1 btn-spectro">
+                            <a type="button" class="btn btn-sm rounded-pill border m-1 btn-spectro delete-btn" data-id="{{ $item->id }}">
                                 Delete
                             </a>
+
                         </div>
                     </div>
                     <div class="card-body">

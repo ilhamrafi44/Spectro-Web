@@ -12,23 +12,22 @@
                     <form action="{{ route('job.index') }}" method="get">
                         @csrf
                         <div class="mb-5">
-                            <label for="" class="fs-4 fw-semibold mb-3">Cari Bedasarkan Kata Kunci</label>
+                            <label for="" class="fs-4 fw-semibold mb-3">Cari Berdasarkan Kata Kunci</label>
                             <div class="input-group flex-nowrap">
-                                <span class="input-group-text bg-white" id="addon-wrapping"><i
-                                        class="fas fa-solid fa-magnifying-glass fs-3"></i></span>
-                                <input type="text" name="name" class="form-control" placeholder="Cari...">
+                                <span class="input-group-text bg-white" id="addon-wrapping"><i class="fas fa-solid fa-magnifying-glass fs-3"></i></span>
+                                <input type="text" name="name" class="form-control" placeholder="Cari..." value="{{ request()->get('name') }}">
                             </div>
                         </div>
                         <div class="mb-5">
-                            <label for="" class="fs-4 fw-semibold mb-3">Cari Bedasarkan Kategori</label>
+                            <label for="" class="fs-4 fw-semibold mb-3">Cari Berdasarkan Kategori</label>
                             <div class="input-group flex-nowrap">
-                                <span class="input-group-text bg-white" id="addon-wrapping"><i
-                                        class="fas fa-solid fa-briefcase fs-3"></i></span>
-                                <select class="form-select" aria-label="Select example" data-control="select2"
-                                    name="category_id">
+                                <span class="input-group-text bg-white" id="addon-wrapping"><i class="fas fa-solid fa-briefcase fs-3"></i></span>
+                                <select class="form-select" aria-label="Pilih Kategori" data-control="select2" name="category_id">
                                     <option value="" selected>Pilih Kategori</option>
                                     @foreach ($category as $item_c)
-                                        <option value="{{ $item_c->id }}">{{ $item_c->name }}</option>
+                                        <option value="{{ $item_c->id }}" {{ request()->get('category_id') == $item_c->id ? 'selected' : '' }}>
+                                            {{ $item_c->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -36,14 +35,13 @@
                         <div class="mb-5">
                             <label for="" class="fs-4 fw-semibold mb-3">Cari Bedasarkan Industry</label>
                             <div class="input-group flex-nowrap">
-                                <span class="input-group-text bg-white" id="addon-wrapping"><i
-                                        class="fas fa-solid fa-briefcase fs-3"></i></span>
-                                <select class="form-select" aria-label="Select example" data-control="select2"
-                                    name="industry_id">
+                                <span class="input-group-text bg-white" id="addon-wrapping"><i class="fas fa-solid fa-briefcase fs-3"></i></span>
+                                <select class="form-select" aria-label="Pilih Industry" data-control="select2" name="industry_id">
                                     <option value="" selected>Pilih Industry</option>
-
                                     @foreach ($industry as $industry)
-                                        <option value="{{ $industry->id }}">{{ $industry->name }}</option>
+                                        <option value="{{ $industry->id }}" {{ request()->get('industry_id') == $industry->id ? 'selected' : '' }}>
+                                            {{ $industry->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -51,14 +49,13 @@
                         <div class="mb-5">
                             <label for="" class="fs-4 fw-semibold mb-3">Cari Bedasarkan Lokasi</label>
                             <div class="input-group flex-nowrap">
-                                <span class="input-group-text bg-white" id="addon-wrapping"><i
-                                        class="fas fa-solid fa-location-dot fs-3"></i></span>
-                                <select class="form-select" aria-label="Select example" data-control="select2"
-                                    name="location_id">
+                                <span class="input-group-text bg-white" id="addon-wrapping"><i class="fas fa-solid fa-location-dot fs-3"></i></span>
+                                <select class="form-select" aria-label="Pilih Lokasi" data-control="select2" name="location_id">
                                     <option value="" selected>Pilih Lokasi</option>
-
                                     @foreach ($location as $loc)
-                                        <option value="{{ $loc->location_id }}">{{ $loc->location_id }}</option>
+                                        <option value="{{ $loc->location_id }}" {{ request()->get('location_id') == $loc->location_id ? 'selected' : '' }}>
+                                            {{ $loc->location_id }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -66,29 +63,27 @@
                         <div class="mb-5">
                             <label for="" class="fs-4 fw-semibold mb-3">Urutkan Bedasarkan</label>
                             <div class="input-group flex-nowrap">
-                                <span class="input-group-text bg-white" id="addon-wrapping"><i
-                                        class="fas fa-solid fa-clock fs-3"></i></span>
-                                <select class="form-select" aria-label="Select example" data-control="select2"
-                                    name="direction">
-                                    <option value="asc">Terlama</option>
-                                    <option value="desc">Terbaru</option>
+                                <span class="input-group-text bg-white" id="addon-wrapping"><i class="fas fa-solid fa-clock fs-3"></i></span>
+                                <select class="form-select" aria-label="Pilih Urutan" data-control="select2" name="direction">
+                                    <option value="asc" {{ request()->get('direction') == 'asc' ? 'selected' : '' }}>Terlama</option>
+                                    <option value="desc" {{ request()->get('direction') == 'desc' ? 'selected' : '' }}>Terbaru</option>
                                 </select>
                             </div>
                         </div>
                         <div class="mb-5">
                             <label for="" class="fs-4 fw-semibold mb-3">Jumlah Perhalaman</label>
                             <div class="input-group flex-nowrap">
-                                <span class="input-group-text bg-white" id="addon-wrapping"><i
-                                        class="fas fa-solid fa-file-lines fs-3"></i></span>
-                                <select class="form-select" aria-label="Select example" data-control="select2"
-                                    name="per_page">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
+                                <span class="input-group-text bg-white" id="addon-wrapping"><i class="fas fa-solid fa-file-lines fs-3"></i></span>
+                                <select class="form-select" aria-label="Pilih Jumlah" data-control="select2" name="per_page">
+                                    <option value="10" {{ request()->get('per_page') == '10' ? 'selected' : '' }}>10</option>
+                                    <option value="25" {{ request()->get('per_page') == '25' ? 'selected' : '' }}>25</option>
+                                    <option value="50" {{ request()->get('per_page') == '50' ? 'selected' : '' }}>50</option>
+                                    <option value="100" {{ request()->get('per_page') == '100' ? 'selected' : '' }}>100</option>
                                 </select>
                             </div>
                         </div>
+                        <!-- Ulangi struktur ini untuk bidang input lainnya agar nilainya tetap menggunakan 'old()' -->
+
                         <button class="btn btn-spectro col-12" type="submit">Cari</button>
                         <button class="btn btn-secondary col-12 mt-3" type="button" onclick="resetForm()">Reset</button>
                     </form>

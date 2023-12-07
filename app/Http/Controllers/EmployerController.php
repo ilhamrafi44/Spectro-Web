@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\EmployerProfile;
 use App\Models\PrivateNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EmployerController extends Controller
 {
@@ -100,6 +101,19 @@ class EmployerController extends Controller
 
     public function update(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'file_profile_id' => 'image|mimes:jpeg,jpg,png|max:10000', // Hanya menerima file gambar jpg atau png maksimum 10MB
+        ], [
+            'file_profile_id.image' => 'The :attribute must be an image.',
+            'file_profile_id.mimes' => 'The :attribute must be a file of type: jpeg, jpg, png.',
+            'file_profile_id.max' => 'The :attribute may not be greater than 10MB in size.',
+        ]);
+
+        // Jika validasi gagal, redirect kembali dengan pesan error
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->first());
+        }
 
         $ldate = date('Y_m_d');
         $ltime = date('H_i_s');

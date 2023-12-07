@@ -163,7 +163,9 @@ class JobsController extends Controller
         $check_saved = 0;
 
         if (Auth::user()) {
-            $check = Applications::where('candidate_id', Auth::user()->id)->where('job_id', $request->id)->count();
+            $check = Applications::where('candidate_id', Auth::user()->id)
+            ->whereIn('status', [1, 2, 3])
+            ->first();
             $check_saved = SavedJobs::where('user_id', Auth::user()->id)->where('job_id', $request->id)->count();
         }
 

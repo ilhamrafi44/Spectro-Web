@@ -109,20 +109,21 @@
                                     <div class="card hover-elevate-up border parent-hover mb-6">
                                         <div class="card-body">
                                             <div class="row d-flex">
-                                                <div class="col-md-2">
-                                                    <div class="symbol symbol-100px symbol-lg-100px symbol-fixed mb-5">
+                                                <div class="col-md-2 d-flex align-items-center">
+                                                    <div class="mb-5">
                                                         @if ($jobs->employer->file_profile_id == null)
                                                             <img src="/assets/media/employer-avatar.jpg" alt=""
-                                                                height="300px">
+                                                                class="employer-image">
                                                         @else
                                                             <img src="/storage/file/images/profile/{{ $jobs->employer->file_profile_id }}"
-                                                                alt="" height="300px">
+                                                                alt="" class="employer-image">
                                                         @endif
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-10">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h3> {{ $jobs->jobs->name }} ({{ $jobs->employer->name }})
+                                                        <h3> {{ $jobs->jobs->name ?? 'Job sudah dihapus.'}} ({{ $jobs->employer->name }})
                                                         </h3>
                                                         <div class="d-flex">
                                                             @if ($jobs->status == 1)

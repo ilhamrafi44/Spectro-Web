@@ -486,7 +486,7 @@
                                     <div class="menu-item menu-lg me-0 me-lg-2">
 
                                         <!--begin:Menu link-->
-                                        <a class="menu-link" href="{{ route('blog.index') }}">
+                                        <a class="menu-link" href="/blog">
                                             <span class="menu-title">Blog</span>
                                             <span class="menu-arrow d-lg-none"></span>
                                         </a>

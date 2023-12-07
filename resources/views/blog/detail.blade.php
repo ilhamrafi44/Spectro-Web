@@ -88,7 +88,7 @@
                                 <i class="fab fa-linkedin"></i>
                                 LinkedIn
                             </a>
-                        </div>
+                        </div><hr>
                         <a href="/blog" class="btn btn-primary col-12"> Kembali</a>
                     </div>
                 </div>

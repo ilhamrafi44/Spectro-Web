@@ -149,6 +149,33 @@ class BlogController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        // Validasi request jika diperlukan
+        $validatedData = $request->validate([
+            'edit-title' => 'required|string|max:255',
+            'edit-content' => 'required|string',
+            // ... (validasi untuk input lain jika diperlukan)
+        ]);
+
+        try {
+            $blogPost = BlogPost::findOrFail($id);
+
+            // Update nilai-nila pada model BlogPost
+            $blogPost->title = $request->input('edit-title');
+            $blogPost->content = $request->input('edit-content');
+            // ... (update atribut lain jika ada)
+
+            // Simpan perubahan ke dalam database
+            $blogPost->save();
+
+            return redirect()->back()->with('message', 'Blog berhasil diperbarui.');
+        } catch (\Exception $e) {
+            // Tindakan jika terjadi kesalahan saat update
+            return redirect()->back()->with('error', 'Gagal memperbarui blog. Silakan coba lagi.');
+        }
+    }
+
     public function store_tags(Request $request)
     {
         try {

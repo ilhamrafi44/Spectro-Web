@@ -166,6 +166,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     //role admin
     Route::middleware(['admin'])->group(function () {
         Route::prefix('admin')->group(function () {
+            Route::put('/blog/{id}', [BlogController::class, 'update'])->name('blog.update');
+
             Route::prefix('blog')->group(function () {
                 Route::get('/', [BlogController::class, 'index'])->name('blog.index');
                 Route::post('/', [BlogController::class, 'index'])->name('blog.index.filter');
@@ -345,7 +347,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('ssw-flow', [SswFlowMasterController::class, 'index'])->name('ssw.index');
             Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'detail'])->name('ssw.detail');
-
         });
     });
 });

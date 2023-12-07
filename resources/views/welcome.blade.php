@@ -172,7 +172,7 @@
             <div class="row d-flex justify-content-center">
                 @forelse ($client as $cl)
                     <div class="col-md-2 mx-5 my-10 col-auto">
-                        <img src="/storage/file/images/testimonial/{{ $cl->picture }}" class="img-fluid"
+                        <img src="/assets/media/misc/spinner.gif" data-src="/storage/file/images/testimonial/{{ $cl->picture }}" class="img-fluid lozad"
                             style="height: 50px;" alt="">
                     </div>
                 @empty
@@ -192,9 +192,9 @@
                                 <div class="card border m-2">
                                     <div class="card-body text-center">
                                         <div class="text-center">
-                                            <div class="symbol symbol-75px symbol-circle">
-                                                <img alt="Logo"
-                                                    src="/storage/file/images/testimonial/{{ $testimoni->picture }}" />
+                                            <div class="symbol symbol-75px symbol-circle lozad">
+                                                <img alt="Logo" src="/assets/media/misc/spinner.gif"
+                                                data-src="/storage/file/images/testimonial/{{ $testimoni->picture }}" />
                                             </div>
                                             <figure>
                                                 <blockquote class="blockquote">

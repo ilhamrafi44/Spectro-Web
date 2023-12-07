@@ -6,7 +6,7 @@
             <!-- Form Pencarian -->
             <form action="" method="GET" class="search-form">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Cari artikel..." name="query">
+                    <input type="text" class="form-control" placeholder="Cari artikel..." name="title">
                     <button class="btn btn-primary" type="submit">Cari</button>
                 </div>
             </form>
@@ -16,7 +16,7 @@
                     <div class="col-md-6 mb-4">
                         <a href="{{ route('blog.show', ['slug' => $post->slug]) }}" class="card-link text-decoration-none">
                             <div class="card border">
-                                <img src="{{ asset('storage/' . $post->image) }}" alt="..." class="card-img-top" style="height: 220px; object-fit: cover; object-position: top;">
+                                <img src="/assets/media/misc/spinner.gif" data-src="{{ asset('storage/' . $post->image) }}" alt="..." class="card-img-top lozad" style="height: 220px; object-fit: cover; object-position: top;">
 
                                 <div class="card-body">
                                     <h5 class="card-title text-dark">{{ $post->title }}</h5>
@@ -40,7 +40,8 @@
             <!-- Tampilkan link pagination -->
             @if ($results->count() > 0)
                 <div class="d-flex justify-content-center">
-                    {{ $results->links() }}
+                    {{ $results->appends(request()->query())->links() }}
+
                 </div>
             @else
                 @include('layouts.data404')

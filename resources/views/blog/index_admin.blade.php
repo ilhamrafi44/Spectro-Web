@@ -128,8 +128,6 @@
                         <i class="fa fa-plus" aria-hidden="true"></i> Tambah Tags
                     </a>
                 </div>
-
-
             </div>
 
         </div>
@@ -139,14 +137,13 @@
                     <div class="card-header">
                         <h3 class="card-title">{{ $post->title }}</h3>
                         <div class="card-toolbar">
-                            <a href="{{ route('job.detail', ['id' => $post->id]) }}"
+                            <a href="{{ route('blog.show', ['slug' => $post->slug]) }}"
                                 class="btn btn-sm rounded-pill border m-1 btn-light">
                                 Open
                             </a>
-                            <a href="{{ route('admin.jobs.update', ['id' => $post->id]) }}"
-                                class="btn btn-sm rounded-pill border m-1 btn-warning">
+                            <button type="button" class="btn btn-sm rounded-pill border m-1 btn-warning" data-bs-toggle="modal" data-bs-target="#editPostModal{{$post->id}}">
                                 Edit
-                            </a>
+                            </button>
                             <form method="post" action="{{ route('blog.destroy', $post) }}">
                                 @method('DELETE')
                                 @csrf
@@ -182,6 +179,38 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="editPostModal{{$post->id}}" tabindex="-1" aria-labelledby="editPostModalLabel{{$post->id}}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editPostModalLabel{{$post->id}}">Edit Blog</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="POST" action="{{ route('blog.update', ['id' => $post->id]) }}">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-body">
+                                <!-- Form fields for editing the blog post -->
+                                <div class="mb-3">
+                                    <label for="edit-title" class="form-label">Judul</label>
+                                    <input type="text" name="edit-title" class="form-control" id="edit-title" value="{{ $post->title }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit-content" class="form-label">Konten</label>
+                                    <textarea name="edit-content" class="form-control" id="edit-content">{{ $post->content }}</textarea>
+                                </div>
+                                <!-- Other input fields as needed for editing -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Update Blog</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
         @endforeach
         @if ($results->count() > 0)
             <!-- Tampilkan link pagination -->
@@ -195,6 +224,7 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
             CKEDITOR.replace('content');
+            CKEDITOR.replace('edit-content');
             $(document).ready(function() {
                 $('#tags').select2({
                     placeholder: 'Select Tag',

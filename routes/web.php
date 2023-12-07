@@ -42,6 +42,7 @@ use App\Http\Controllers\Employer\JobsCareerLevelController;
 use App\Http\Controllers\Employer\JobsQualificationController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\FileController;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +60,7 @@ Route::get('/', function () {
     $industry = JobsIndustry::all();
     $show_category = JobsCategory::limit(5)->get();
     $location = Jobs::distinct()->get(['location_id']);
-    $job = Jobs::limit(5)->get();
+    $job = Jobs::limit(6)->get();
     return view('welcome', [
         'page_name' => "Landing Page",
         'category' => $category,
@@ -75,6 +76,7 @@ Route::get('/', function () {
 Route::post('/login/ajaxs', [LoginControllerAjax::class, 'login'])->name('login.ajax');
 Route::post('/register/ajaxs', [RegisterControllerAjax::class, 'register'])->name('register.ajax');
 Route::post('/verify/ajaxs', [LoginControllerAjax::class, 'sendEmailVerification'])->name('verify.ajax');
+
 
 Route::get('/about', function () {
     return view('page.about', [
@@ -152,8 +154,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/rating/add', [RatingController::class, 'store'])->name('rating.store');
     Route::get('/rating/delete/{id}', [RatingController::class, 'destroy'])->name('rating.destroy');
 
-    Route::get('/password/resetsss', [UserController::class, 'reset_index'])->name('reset.index');
-    Route::post('/password/resetss', [UserController::class, 'reset_update'])->name('reset.update');
+    Route::get('/user/password/resets', [UserController::class, 'reset_index'])->name('reset.index');
+    Route::post('/user/password/resets', [UserController::class, 'reset_update'])->name('reset.update');
 
     Route::get('/account/delete', [UserController::class, 'hapus_akun'])->name('hapus.akun');
 
@@ -309,6 +311,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
             Route::get('ssw-flow', [SswFlowMasterController::class, 'employer_index'])->name('employer.ssw.index');
             Route::get('ssw-flow/detail/{id}', [SswFlowMasterController::class, 'detail'])->name('employer.ssw.detail');
+
+            // new
+            Route::get('/jobs/delete/{id}', [JobsController::class, 'destroy'])->name('jobs.destroy');
         });
     });
 

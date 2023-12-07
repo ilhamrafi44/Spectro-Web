@@ -57,9 +57,9 @@
                                 class="btn btn-sm rounded-pill border m-1 btn-warning">
                                 Edit
                             </a>
-                            <button type="button" class="btn btn-sm rounded-pill border m-1 btn-spectro">
+                            <a type="button" class="btn btn-sm rounded-pill border m-1 btn-spectro">
                                 Delete
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">

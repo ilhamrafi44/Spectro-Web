@@ -1,4 +1,5 @@
 <!--begin::Body-->
+
 <body id="kt_body" data-kt-app-header-stacked="true" data-kt-app-header-primary-enabled="true"
     data-kt-app-header-secondary-enabled="true" data-kt-app-toolbar-enabled="true" class="app-default"
     data-kt-app-page-loading-enabled="true" data-kt-app-page-loading="on">
@@ -120,13 +121,18 @@
                                                 <span class="menu-title">Master Pekerjaan</span>
                                                 <span class="menu-arrow d-lg-none"></span>
                                             </span>
+
                                             <div
                                                 class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
                                                 <div class="menu-item" data-kt-menu-trigger="hover"
                                                     data-kt-menu-placement="right-start">
                                                     <!-- Tautan Menu -->
 
+                                                    <a href="#" class="menu-link py-3">
 
+                                                        <span class="menu-title">Jobs </span>
+                                                        <span class="menu-arrow"></span>
+                                                    </a>
                                                     <!--begin::Menu sub-->
                                                     <div class="menu-sub menu-sub-dropdown p-3 w-200px">
                                                         <!--begin::Menu item-->
@@ -524,7 +530,7 @@
                                             window.gtranslateSettings = {
                                                 "default_language": "id",
                                                 "native_language_names": true,
-                                                "detect_browser_language":true,
+                                                "detect_browser_language": true,
                                                 "languages": ["id", "ja", "en"],
                                                 "wrapper_selector": ".gtranslate_wrapper",
                                                 "flag_size": 22,
@@ -844,20 +850,16 @@
                                             <div class="separator my-2"></div>
                                             <!--end::Menu separator-->
                                             <!--begin::Menu item-->
-                                            <div class="menu-item px-5">
-                                                <a href="{{ route('profile') }}" class="menu-link px-5">My
-                                                    Profile</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-
-                                            <!--begin::Menu item-->
+                                            @if (Auth::user()->role != 3)
+                                                <div class="menu-item px-5">
+                                                    <a href="{{ route('profile') }}" class="menu-link px-5">My
+                                                        Profile</a>
+                                                </div>
+                                            @endif
                                             <div class="menu-item px-5">
                                                 <a href="{{ route('conversations.index') }}"
                                                     class="menu-link px-5">Private Message</a>
                                             </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu separator-->
                                             <div class="separator my-2"></div>
                                             <!--end::Menu separator-->
                                             <!--begin::Menu item-->

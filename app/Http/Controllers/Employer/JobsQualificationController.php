@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employer;
 use Illuminate\Http\Request;
 use App\Models\JobsQualification;
 use App\Http\Controllers\Controller;
+use App\Models\Jobs;
 use Illuminate\Support\Facades\Auth;
 
 class JobsQualificationController extends Controller
@@ -56,12 +57,16 @@ class JobsQualificationController extends Controller
 
     public function destroy(string $id)
     {
-        $Category = JobsQualification::where('id', $id)->delete();
-        if ($Category) {
-            return redirect()->back()->with('message', 'Data berhasil dihapus');
-        } else {
-            return redirect()->back()->with('error', 'Data gagal dihapus');
+        $qualification = JobsQualification::where('id', $id)->first();
+        $jobs = Jobs::where('kualifikasi', $id)->first();
+        if ($qualification) {
+            if ($jobs) {
+                return redirect()->back()->with('message', 'Data Gagal Dihapus,Ada job yang terhubung');
+            }
+            $qualification->delete();
+            return redirect()->back()->with('message', 'Data Berhasil Dihapus');
         }
+        return redirect()->back()->with('message', 'Data Gagal Dihapus');
     }
 
     public function update(Request $request)
@@ -75,6 +80,5 @@ class JobsQualificationController extends Controller
             return redirect()->back()->with('message', 'Data Berhasil Diubah');
         }
         return redirect()->back()->with('error', 'Data Berhasil Diubah');
-
     }
 }

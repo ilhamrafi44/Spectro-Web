@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\JobsIndustry;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Jobs;
 use Illuminate\Support\Facades\Auth;
 
 class JobsIndustryController extends Controller
@@ -53,18 +54,20 @@ class JobsIndustryController extends Controller
             return redirect()->back()->with('message', 'Industry Berhasil Ditambah');
         }
         return redirect()->back()->with('error', 'Industry Berhasil Ditambah');
-
-
     }
 
     public function destroy(string $id)
     {
-        $Industry = JobsIndustry::where('id', $id)->delete();
-        if ($Industry) {
-            return redirect()->back()->with('message', 'Data berhasil dihapus');
-        } else {
-            return redirect()->back()->with('error', 'Data gagal dihapus');
+        $industry = JobsIndustry::where('id', $id)->first();
+        $jobs = Jobs::where('industry_id', $id)->first();
+        if ($industry) {
+            if ($jobs) {
+                return redirect()->back()->with('message', 'Data Gagal Dihapus,Ada job yang terhubung');
+            }
+            $industry->delete();
+            return redirect()->back()->with('message', 'Data Berhasil Dihapus');
         }
+        return redirect()->back()->with('message', 'Data Gagal Dihapus');
     }
 
     public function update(Request $request)
@@ -78,8 +81,5 @@ class JobsIndustryController extends Controller
             return redirect()->back()->with('message', 'Industry Berhasil Diubah');
         }
         return redirect()->back()->with('error', 'Industry Berhasil Diubah');
-
     }
-
-
 }

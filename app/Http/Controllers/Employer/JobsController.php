@@ -193,7 +193,7 @@ class JobsController extends Controller
 
     public function add()
     {
-        if(Auth::user()->role == 2 && Auth::user()->can_create_job == 0){
+        if (Auth::user()->role == 2 && Auth::user()->can_create_job == 0) {
             return redirect()->back()->with('error', 'Anda belum diizinkan untuk membuat pekerjaan');
         }
         $category = JobsCategory::all();
@@ -327,7 +327,7 @@ class JobsController extends Controller
     public function updates(Request $request)
     {
         $id = $request->id;
-        if(Auth::user()->role != 3) {
+        if (Auth::user()->role != 3) {
             $job = Jobs::where('id', $id)->where('user_id', Auth::user()->id)->first();
         } else {
             $job = Jobs::where('id', $id)->first();

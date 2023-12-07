@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employer;
 use Illuminate\Http\Request;
 use App\Models\JobsCareerLevel;
 use App\Http\Controllers\Controller;
+use App\Models\Jobs;
 use Illuminate\Support\Facades\Auth;
 
 class JobsCareerLevelController extends Controller
@@ -56,12 +57,16 @@ class JobsCareerLevelController extends Controller
 
     public function destroy(string $id)
     {
-        $Category = JobsCareerLevel::where('id', $id)->delete();
-        if ($Category) {
-            return redirect()->back()->with('message', 'Data berhasil dihapus');
-        } else {
-            return redirect()->back()->with('error', 'Data gagal dihapus');
+        $carrer_level = JobsCareerLevel::where('id', $id)->first();
+        $jobs = Jobs::where('career_level', $id)->first();
+        if ($carrer_level) {
+            if ($jobs) {
+                return redirect()->back()->with('message', 'Data Gagal Dihapus,Ada job yang terhubung');
+            }
+            $carrer_level->delete();
+            return redirect()->back()->with('message', 'Data Berhasil Dihapus');
         }
+        return redirect()->back()->with('message', 'Data Gagal Dihapus');
     }
 
     public function update(Request $request)
@@ -75,6 +80,5 @@ class JobsCareerLevelController extends Controller
             return redirect()->back()->with('message', 'Data Berhasil Diubah');
         }
         return redirect()->back()->with('error', 'Data Berhasil Diubah');
-
     }
 }

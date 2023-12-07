@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jobs;
 use App\Models\JobsCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -58,12 +59,16 @@ class JobsCategoryController extends Controller
 
     public function destroy(string $id)
     {
-        $Category = JobsCategory::where('id', $id)->delete();
-        if ($Category) {
-            return redirect()->back()->with('message', 'Data berhasil dihapus');
-        } else {
-            return redirect()->back()->with('error', 'Data gagal dihapus');
+        $category = JobsCategory::where('id', $id)->first();
+        $jobs = Jobs::where('category_id', $id)->first();
+        if ($category) {
+            if ($jobs) {
+                return redirect()->back()->with('message', 'Data Gagal Dihapus,Ada job yang terhubung');
+            }
+            $category->delete();
+            return redirect()->back()->with('message', 'Data Berhasil Dihapus');
         }
+        return redirect()->back()->with('message', 'Data Gagal Dihapus');
     }
 
     public function update(Request $request)
@@ -77,7 +82,5 @@ class JobsCategoryController extends Controller
             return redirect()->back()->with('message', 'Category Berhasil Diubah');
         }
         return redirect()->back()->with('error', 'Category Berhasil Diubah');
-
     }
-
 }

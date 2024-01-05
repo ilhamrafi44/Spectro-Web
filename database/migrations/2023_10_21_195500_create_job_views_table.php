@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('job_views', function (Blueprint $table) {
             $table->id();
-            $table->string('job_id')->nullable();
+            $table->unsignedBigInteger('job_id')->nullable();
             $table->string('ip')->nullable();
             $table->timestamps();
+            $table->foreign('job_id')->references('id')->on('jobs')->cascadeOnDelete();
+
+
         });
     }
 

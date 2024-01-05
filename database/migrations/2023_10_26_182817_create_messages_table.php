@@ -17,6 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('content');
             $table->timestamps();
+
+            // foreignkey
+            $table->foreign('conversation_id')->references('id')->on('conversations')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+
         });
     }
 

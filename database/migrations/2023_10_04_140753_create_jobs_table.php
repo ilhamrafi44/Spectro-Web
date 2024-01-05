@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name')->nullable();
             $table->text('deskripsi')->nullable();
             $table->string('link')->nullable();
@@ -32,18 +32,29 @@ return new class extends Migration
             $table->string('salary')->nullable();
             $table->string('total_tunjangan')->nullable();
             $table->string('salary_type')->nullable();
-            $table->string('experience')->nullable();
-            $table->string('career_level')->nullable();
-            $table->string('qualification')->nullable();
+            $table->unsignedBigInteger('experience')->nullable();
+            $table->unsignedBigInteger('career_level')->nullable();
+            $table->unsignedBigInteger('qualification')->nullable();
             $table->string('file_photos_id')->nullable();
             $table->string('location_id')->nullable();
-            $table->string('category_id')->nullable();
-            $table->string('industry_id')->nullable();
-            $table->string('job_type')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('industry_id')->nullable();
+            $table->unsignedBigInteger('job_type')->nullable();
             $table->string('mata_gaji')->nullable();
             $table->string('mata_tunjangan')->nullable();
             $table->string('slug')->nullable()->unique();
             $table->timestamps();
+
+            // foreign key
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+
+            $table->foreign('experience')->references('id')->on('jobs_experiences')->cascadeOnDelete();
+            $table->foreign('career_level')->references('id')->on('jobs_career_levels')->cascadeOnDelete();
+            $table->foreign('industry_id')->references('id')->on('jobs_industries')->cascadeOnDelete();
+            $table->foreign('qualification')->references('id')->on('jobs_qualifications')->cascadeOnDelete();
+            $table->foreign('category_id')->references('id')->on('jobs_categories')->cascadeOnDelete();
+            $table->foreign('job_type')->references('id')->on('jobs_types')->cascadeOnDelete();
+
         });
     }
 

@@ -88,7 +88,6 @@ class UserController extends Controller
         }
         $collect_profile_views = collect(ProfileViews::where('user_id', Auth::user()->id)->whereBetween('created_at', [Carbon::parse($date_list[0]), $date_list[6] . ' 23:59:59'])->get());
         for ($i = 0; $i < count($date_list); $i++) {
-
             $data_hasil = $collect_profile_views->whereBetween('created_at', [$date_list[$i] . ' 00:00:00', $date_list[$i] . ' 23:59:59'])->count();
             $data[] = ['date' => $date_list[$i], 'total_data' => $data_hasil];
         }
@@ -201,20 +200,52 @@ class UserController extends Controller
 
     public function reset_update(Request $request)
     {
-        $request->validate([
-            'current_password' => 'required',
-            'password' => 'required|confirmed|min:8',
+        $validator = Validator::make($request->all(), [
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'confirmed'
+            ],
+        ], [
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal :min karakter.',
+            'password.regex' => 'Password harus mengandung setidaknya satu huruf kecil, satu huruf besar, dan satu angka.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
         ]);
+
+        if ($validator->fails()) {
+            return response()->back()->with('error', $validator->errors()->first());
+        }
 
         $user = User::findOrFail(Auth::user()->id);
 
-        if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()->back()->with('error', 'Password Saat ini Salah');
+        if ($user->password == null && !empty($user->google_id)) {
+            $user->password = Hash::make($request->password);
+            $user->update();
+        } else {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return redirect()->back()->with('error', 'Password Saat ini Salah');
+            } else {
+                $validator = Validator::make($request->all(), [
+                    'current_password' => [
+                        'required',
+                    ],
+                ], [
+                    'current_password.required' => 'Password saat ini wajib diisi.',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->back()->with('error', $validator->errors()->first());
+                }
+
+                $user->password = Hash::make($request->password);
+                $user->update();
+            }
         }
-
-        $user->password = Hash::make($request->password);
-        $user->update();
-
         return redirect()->back()->with('message', 'Berhasil memperbarui Password');
     }
 
@@ -238,11 +269,21 @@ class UserController extends Controller
     }
     public function candidate_export()
     {
-        return Excel::download(new CandidateExport, 'spectro_candidate.xlsx');
+        // $candidates = CandidateProfile::with('datas')->get();
+        
+        $candidates = User::join('candidate_profiles', 'users.id', '=', 'candidate_profiles.user_id')
+    ->select('users.*', 'candidate_profiles.*')->where('users.role', 1) // Pilih kolom yang ingin ditampilkan dari kedua tabel
+    ->get();
+            return Excel::download(new CandidateExport($candidates), 'spectro_candidate.xlsx');
     }
     public function employer_export()
     {
-        return Excel::download(new EmployerExport, 'spectro_employer.xlsx');
+        $employer = User::join('employer_profiles', 'users.id', '=', 'employer_profiles.user_id')
+    ->select('users.*', 'employer_profiles.*')->where('users.role', 2) // Pilih kolom yang ingin ditampilkan dari kedua tabel
+    ->get();
+    
+        
+        return Excel::download(new EmployerExport($employer), 'spectro_employer.xlsx');
     }
 
     public function hapus_akun(Request $request)

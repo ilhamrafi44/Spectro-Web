@@ -18,6 +18,7 @@ use App\Models\JobsExperience;
 use App\Models\JobsCareerLevel;
 use App\Models\JobsQualification;
 use App\Http\Controllers\Controller;
+use App\Models\SswFlowMaster;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -164,8 +165,8 @@ class JobsController extends Controller
 
         if (Auth::user()) {
             $check = Applications::where('candidate_id', Auth::user()->id)
-            ->whereIn('status', [1, 2, 3])
-            ->first();
+                ->whereIn('status', [1, 2, 3])
+                ->first();
             $check_saved = SavedJobs::where('user_id', Auth::user()->id)->where('job_id', $request->id)->count();
         }
 
@@ -454,9 +455,21 @@ class JobsController extends Controller
 
     public function destroy($id)
     {
-        $job = Jobs::where('id', $id)->where('user_id', Auth::user()->id)->delete();
-        if ($job) {
-            return redirect()->back()->with('message', 'Data Berhasil Dihapus');
+        if (Auth::user()->role !== 3) {
+
+            $job = Jobs::where('id', $id)->where('user_id', Auth::user()->id)->delete();
+            if ($job) {
+                Applications::where('job_id', $id)->delete();
+                SswFlowMaster::where('job_id', $id)->delete();
+                return redirect()->back()->with('message', 'Data Berhasil Dihapus');
+            }
+        } else {
+            $job = Jobs::where('id', $id)->delete();
+            if ($job) {
+                Applications::where('job_id', $id)->delete();
+                SswFlowMaster::where('job_id', $id)->delete();
+                return redirect()->back()->with('message', 'Data Berhasil Dihapus');
+            }
         }
         return redirect()->back()->with('error', 'Data Gagal Dihapus');
     }

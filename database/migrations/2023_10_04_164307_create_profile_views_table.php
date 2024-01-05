@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('profile_views', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('ip')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+
         });
     }
 

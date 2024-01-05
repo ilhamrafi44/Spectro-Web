@@ -37,7 +37,7 @@ class Approve extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail_template\reject',
+            view: 'mail_template.approve',
             with: [
                 'UserName' => $this->apply->candidate->name,
                 'Date' => $this->apply->created_at,

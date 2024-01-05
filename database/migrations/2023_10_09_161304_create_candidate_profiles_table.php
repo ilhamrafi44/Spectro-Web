@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('candidate_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->string('kota')->nullable();
             $table->date('tanggal_lahir')->nullable();
@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('total_tahun')->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

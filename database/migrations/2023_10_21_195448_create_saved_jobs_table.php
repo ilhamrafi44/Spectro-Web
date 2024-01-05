@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('saved_jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('job_id')->nullable();
-            $table->string('user_id')->nullable();
+            $table->unsignedBigInteger('job_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('job_id')->references('id')->on('jobs')->cascadeOnDelete();
+
         });
     }
 

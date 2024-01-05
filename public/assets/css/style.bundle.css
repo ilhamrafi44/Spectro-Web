@@ -819,7 +819,6 @@ progress {
 
 .employer-image {
     width: 100px; /* Atur lebar agar gambar tetap responsif */
-    height: 100px;
     object-position: top;
     object-fit: cover; /* Memastikan gambar diisi sepenuhnya tanpa merubah aspek rasio */
     border-radius: 10px; /* Menambahkan sudut melengkung sebesar 10px */

@@ -9,9 +9,16 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class CandidateExport implements FromCollection, WithHeadings
 {
+    protected $candidates;
+
+    public function __construct($candidates)
+    {
+        $this->candidates = $candidates;
+    }
+
     public function collection()
     {
-        return CandidateProfile::with('user')->get();
+        return $this->candidates;
     }
 
     public function headings(): array
@@ -24,7 +31,7 @@ class CandidateExport implements FromCollection, WithHeadings
             return 'user_' . $column;
         }, $userColumns);
 
-        $headings = array_merge($profileColumns, $userColumns);
+        $headings = array_merge($userColumns, $profileColumns);
 
         return $headings;
     }

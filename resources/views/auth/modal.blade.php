@@ -122,7 +122,7 @@
                                     <div class="fv-row mb-7">
                                         <label class="form-label fw-bold text-dark fs-6">Nomor
                                             HP</label>
-                                        <input class="form-control form-control-lg form-control-solid" type="text"
+                                        <input class="form-control form-control-lg form-control-solid" type="number"
                                             placeholder="628xxxxx" id="no_tlp_candidate" autocomplete="off"
                                             required />
                                     </div>
@@ -235,7 +235,7 @@
                                     <div class="fv-row mb-7">
                                         <label class="form-label fw-bold text-dark fs-6">Nomor
                                             HP Perusahaan</label>
-                                        <input class="form-control form-control-lg form-control-solid" type="text"
+                                        <input class="form-control form-control-lg form-control-solid" type="number"
                                             placeholder="628xxxxx" id="no_tlp_employer" autocomplete="off"
                                             required />
                                     </div>

@@ -12,25 +12,29 @@
                         <form action="{{ route('reset.update') }}" method="post">
                             @csrf
                             <div class="row d-flex">
-                                <div class="mb-5">
-                                    <label for="">Kata Sandi Saat Ini</label>
-                                    <input type="password" name="current_password" class="form-control form-control-solid">
-                                </div>
+                                @if (!Auth::user()->password == null)
+                                    <div class="mb-5">
+                                        <label for="">Kata Sandi Saat Ini</label>
+                                        <input type="password" name="current_password"
+                                            class="form-control form-control-solid">
+                                    </div>
+                                @endif
                                 <div class="mb-5">
                                     <label for="">Kata Sandi Baru</label>
                                     <input type="password" name="password" class="form-control form-control-solid">
                                 </div>
                                 <div class="mb-5">
                                     <label for="">Ulangi Kata Sandi Baru</label>
-                                    <input type="password" name="password_confirmation" class="form-control form-control-solid">
+                                    <input type="password" name="password_confirmation"
+                                        class="form-control form-control-solid">
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit" >Update</button>
+                            <button class="btn btn-primary" type="submit">Update</button>
                         </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     </div>
 @endsection

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('ssw_flow_masters', function (Blueprint $table) {
             $table->id();
-            $table->string('job_id')->nullable();
-            $table->string('employer_id')->nullable();
-            $table->integer('candidate_id')->nullable();
+            $table->unsignedBigInteger('job_id')->nullable();
+            $table->unsignedBigInteger('employer_id')->nullable();
+            $table->unsignedBigInteger('candidate_id')->nullable();
             $table->string('OfferingLetter')->nullable();
             $table->text('OfferingLetter_deskripsi')->nullable();
             $table->string('SuratPernyataan')->nullable();
@@ -74,6 +74,12 @@ return new class extends Migration
             $table->string('Pasports')->nullable();
             $table->string('FormulirPengajuanVisas')->nullable();
             $table->timestamps();
+
+            // foreign key
+            $table->foreign('job_id')->references('id')->on('jobs')->cascadeOnDelete();
+            $table->foreign('employer_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('candidate_id')->references('id')->on('users')->cascadeOnDelete();
+
         });
     }
 

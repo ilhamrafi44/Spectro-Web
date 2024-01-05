@@ -28,7 +28,7 @@ class RegisterControllerAjax extends Controller
                     'regex:/[0-9]/',      // must contain at least one digit
                     'confirmed'
                 ],
-                'no_tlp' => ['required', 'string'], // Mengubah menjadi 'string' agar dapat menerima nomor telepon sebagai string
+                'no_tlp' => ['required', 'integer'], // Mengubah menjadi 'string' agar dapat menerima nomor telepon sebagai string
                 'type' => ['required'],
                 'jenis_kelamin' => ['in:1,2'],
             ], [
@@ -43,7 +43,7 @@ class RegisterControllerAjax extends Controller
                 'password.confirmed' => 'Konfirmasi password tidak sesuai.',
 
                 'no_tlp.required' => 'Nomor telepon wajib diisi.',
-                'no_tlp.string' => 'Format nomor telepon tidak valid.',
+                'no_tlp.integer' => 'Format nomor telepon tidak valid.',
 
                 'type.required' => 'Tipe wajib diisi.',
 

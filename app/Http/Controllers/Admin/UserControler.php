@@ -115,6 +115,8 @@ class UserControler extends Controller
         $data_candidate = $request->name;
         $nama_candidate = $data_candidate[0];
 
+	$nama_profile= "";
+
         if ($request->file('image')) {
             $foto_profile = $request->file('image');
             $nama_profile = "Profile_" . $nama_candidate . "_Time_" . $ldate . "_" . $ltime . "." . $foto_profile->extension();

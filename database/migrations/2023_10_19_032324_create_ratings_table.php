@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
-            $table->string('from_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('from_id')->nullable();
             $table->integer('rating')->default(1);
             $table->string('comment')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('from_id')->references('id')->on('users')->cascadeOnDelete();
+
         });
     }
 

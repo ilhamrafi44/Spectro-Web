@@ -38,7 +38,7 @@ class ApplyMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail_template\apply',
+            view: 'mail_template.apply',
             with: [
                 'UserName' => $this->apply->candidate->name,
                 'JobName' => $this->apply->jobs->name,

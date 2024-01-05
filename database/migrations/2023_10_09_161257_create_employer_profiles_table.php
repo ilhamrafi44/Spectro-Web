@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employer_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('file_logo_id')->nullable();
             $table->string('file_sampul_id')->nullable();
             $table->string('situs_web')->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('anggota_id')->nullable();
             $table->string('alamat')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

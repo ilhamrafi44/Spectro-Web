@@ -13,12 +13,15 @@ return new class extends Migration
         {
             Schema::create('karyawans', function (Blueprint $table) {
                 $table->id();
-                $table->string('user_id')->nullable();
+                $table->unsignedBigInteger('user_id')->nullable();
                 $table->string('nama')->nullable();
                 $table->string('jabatan')->nullable();
                 $table->string('pengalaman')->nullable();
                 $table->string('email')->nullable();
                 $table->timestamps();
+
+                $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+
             });
         }
 

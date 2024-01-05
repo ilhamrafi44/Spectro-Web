@@ -38,7 +38,7 @@ class EmployerMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail_template\employer',
+            view: 'mail_template.employer',
             with: [
                 'UserName' => $this->apply->candidate->name,
                 'UserEmail' => $this->apply->candidate->email,

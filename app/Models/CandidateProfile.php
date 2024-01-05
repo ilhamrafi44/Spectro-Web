@@ -24,6 +24,10 @@ class CandidateProfile extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    public function datas()
+{
+    return $this->hasOne(User::class, 'id', 'user_id');
+}
     public function social_media()
     {
         return $this->hasMany(SocialMedia::class, 'user_id', 'user_id');

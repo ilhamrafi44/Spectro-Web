@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_resumes', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('cv_file')->nullable();
             $table->string('language_certificate_file')->nullable();
             $table->string('ssw_certificate_file')->nullable();
@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('driving_license_file')->nullable();
             $table->string('pasport_file')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+
         });
     }
 

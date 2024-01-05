@@ -10,14 +10,17 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class EmployerExport implements FromCollection, WithHeadings
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    protected $employer;
+
+    public function __construct($employer)
     {
-        return EmployerProfile::with('user')->get();
+        $this->employer = $employer;
     }
 
+    public function collection()
+    {
+        return $this->employer;
+    }
     public function headings(): array
     {
         $userColumns = Schema::getColumnListing('users');
@@ -28,7 +31,7 @@ class EmployerExport implements FromCollection, WithHeadings
             return 'user_' . $column;
         }, $userColumns);
 
-        $headings = array_merge($profileColumns, $userColumns);
+        $headings = array_merge($userColumns, $profileColumns);
 
         return $headings;
     }

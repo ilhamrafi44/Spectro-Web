@@ -28,9 +28,15 @@ class LoginControllerAjax extends Controller
             return response()->json(['error' => 'User not found']);
         }
 
-        $user->sendEmailVerificationNotification();
+        if (!$user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+            return response()->json(['success' => 'Verification link has been sent to the email provided.']);
 
-        return response()->json(['success' => 'Verification link has been sent to the email provided.']);
+        } else {
+            return response()->json(['error' => 'Akun anda sudah terverifikasi.']);
+
+        }
+
     }
 
     public function login(Request $request)

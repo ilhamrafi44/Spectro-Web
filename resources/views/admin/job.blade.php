@@ -59,10 +59,10 @@
                                 class="btn btn-sm rounded-pill border m-1 btn-warning">
                                 Edit
                             </a>
-                            <a type="button" class="btn btn-sm rounded-pill border m-1 btn-spectro delete-btn" data-id="{{ $item->id }}">
+                            <button type="button" class="btn btn-sm rounded-pill border m-1 btn-spectro delete-btn"
+                                data-id="{{ $item->id }}">
                                 Delete
-                            </a>
-
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -116,3 +116,29 @@
 
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('.delete-btn').click(function() {
+            var jobId = $(this).data('id');
+
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: 'Data Pelamar & File SSW pada pekerjaan ini tidak akan bisa diakses selanjutnya!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect langsung setelah konfirmasi penghapusan
+                    window.location.href = '/employer/jobs/delete/' +  jobId;
+                }
+            });
+        });
+    });
+</script>
+
+@endpush
